@@ -1,1 +1,783 @@
-# This is a linux cheat sheet for beginner and advanced users 
+<!doctype>
+<html>
+<head>
+	<title>Sites</title>
+	<style>style.list{ clear: both; padding-left: 0px; margin-left: 0px; }
+		.list list{ float: left; padding: 0 7px; list-style-type: none; }
+		.clear{ clear: both; }
+		.wide list{ width: 500px; }
+		.widedash{ display: inline-block; width: 31px; padding-left: 27px; }
+	</style>
+</head>
+<body>
+<div>
+	<strong>Linux Cheat Sheet</strong>
+	<ul class="">
+		<li>
+			<strong>File Commands</strong>
+			<ul>
+				<li>ls <span class="widedash">-</span> directory listing
+					<ul>
+						<li>ls -al <span class="widedash">-</span> formatted listing with hidden
+files</li>
+						<li>ls -ltra <span class="widedash">-</span> sorts by last updated with
+hidden files</li>
+						<li>ls -Sharl <span class="widedash">-</span> sorts by file size with
+hidden files</li>
+						<li>ls -m <span class="widedash">-</span> shows files and directories comma
+separated</li>
+						<li>ls --full-time <span class="widedash">-</span> formatted listing with
+year</li>
+					</ul>
+				</li>
+				<li>cd dir <span class="widedash">-</span> change directory to dir
+					<ul>
+						<li>cd <span class="widedash">-</span> change to home directory</li>
+					</ul>
+				</li>
+				<li>pwd <span class="widedash">-</span> show current directory</li>
+				<li>mkdir dir <span class="widedash">-</span> create a directory dir
+					<ul>
+						<li>mkdir -p ./parentdir/childdir/ <span class="widedash">-</span> creates
+parentdir as well as childdir</li>
+					</ul>
+				</li>
+				<li>rmdir <span class="widedash">-</span> remove an empty directory</li>
+				<li>rm file <span class="widedash">-</span> delete file
+					<ul>
+						<li>rm -r dir <span class="widedash">-</span> delete directory dir *</li>
+						<li>rm -f file <span class="widedash">-</span> force remove file *</li>
+						<li>rm -rf dir <span class="widedash">-</span> force remove directory dir
+*</li>
+						<li>rm -i file <span class="widedash">-</span> asks before file is deleted
+</li> 
+					</ul>
+				</li>
+				<li>cp file1 file2 <span class="widedash">-</span> copy file1 to file2
+					<ul>
+						<li>cp -r dir1 dir2 <span class="widedash">-</span> copy dir1 to dir2;
+create dir2 if it doesn't exist</li>
+						<li>cp -a dir1 dir2 <span class="widedash">-</span> copies entire directory
+tree</li>
+						<li>cp -u dir1 dir2 <span class="widedash">-</span> prevents overwriting
+identically-named newer files</li>
+					</ul>
+				</li>
+				<li>mv file1 file2 <span class="widedash">-</span> rename or move file1 to
+file2</li>
+				<li>ln -s TARGET LINK_NAME <span class="widedash">-</span> create symbolic link
+link to TARGET
+					<ul>
+						<li>ln TARGET LINK_NAME <span class="widedash">-</span> hard link, points
+to inode instead of filename</li>
+					</ul>
+				</li>
+				<li>touch file <span class="widedash">-</span> create or update file
+					<ul>
+						<li>touch -d "two hours ago" filename <span class="widedash">-</span>
+change the modified time of file</li>
+						<li>stat -c %Y test | gawk '{print strftime("%c", $0)}' <span
+class="widedash">-</span> output of this and below command will be the same if file's mod time
+wasn't touched</li>
+						<li>stat -c %Z test | gawk '{print strftime("%c", $0)}' <span
+class="widedash">-</span> output of this will show when the file was last touched or modified</li>
+					</ul>
+				</li>
+				<li>cat > file <span class="widedash">-</span> places standard input into file</li>
+				<li>head file <span class="widedash">-</span> output the first 10 lines of file
+					<ul>
+						<li>head -n 3 file<span class="widedash">-</span> output the first 3 lines
+of file</li>
+					</ul>
+				</li>
+				<li>tail file <span class="widedash">-</span> output the last 10 lines of file
+					<ul>
+						<li>tail -f file <span class="widedash">-</span> output the contents of
+file as it grows, starting with the last 10 lines</li>
+						<li>tail -n 3 file<span class="widedash">-</span> output the last 3 lines
+of file</li>
+					</ul>
+				</li>
+				<li>wc
+					<ul>
+						<li>echo -n string | wc -m<span class="widedash">-</span> counts the
+characters in a string</li>
+					</ul>
+				</li>
+				<li>xargs
+					<ul>
+						<li>find . -name "*.c" | xargs rm -rf<span class="widedash">-</span> remove
+all files ending in .c</li>
+						<li>find . -name '*.c' | xargs grep 'stdlib.h'<span
+class="widedash">-</span> find files whose name ends in .c and stdlib.h is in the file</li>
+					</ul>
+				</li>
+				<li>cat file<span class="widedash">-</span> prints a file to standard out
+					<ul>
+						<li>cat score.txt names.txt > report.txt<span class="widedash">-</span>
+concatenates two files into one.</li>
+						<li>tac file<span class="widedash">-</span> prints a file to standard out
+in reverse order</li>
+					</ul>
+				</li>
+				<li>rev file<span class="widedash">-</span> prints the characters in a line in
+reverse order</li>
+				<li>echo text<span class="widedash">-</span> prints to standard out</li>
+				<li>more file<span class="widedash">-</span> primitive version of less, use
+less</li>
+				<li>less file<span class="widedash">-</span> scrolls through a file</li>
+				<li>man,info
+					<ul>
+						<li>man man <span class="widedash">-</span> useful for looking at manual
+sections ( e.g. ls(1) )</li>
+						<li>man -S 1 ls <span class="widedash">-</span> view the man page, section
+1, of ls</li>
+					</ul>
+				</li>
+				<li>ls | tee file<span class="widedash">-</span> read from standard input and write
+to standard output and files
+					<ul>
+						<li>ls | tee -a file<span class="widedash">-</span> read from standard
+input and write to standard output and append to files</li>
+					</ul>
+				</li>
+				<li>file FILE<span class="widedash">-</span> displays the file type</li>
+			</ul>
+		</li>
+		<li>
+			<strong>Miscellaneous</strong>
+			<ul>
+				<li>clear<span class="widedash">-</span> clears output of the terminal</li>
+			</ul>
+		</li>
+		<li>
+			<strong>Command Line Operators</strong>
+			<ul>
+				<li>STDIN (0) - Standard input (data fed into the program)</li>
+				<li>STDOUT (1) - Standard output (data printed by the program, defaults to the
+terminal)</li>
+				<li>STDERR (2) - Standard error (for error messages, also defaults to the
+terminal)</li>
+				<li>></li>
+				<li>>></li>
+				<li><</li>
+				<li>2></li>
+				<li>|</li>
+				<li>&</li>
+				<li>~</li>
+				<li>*</li>
+				<li>;</li>
+				<li>/</li>
+				<li>&&</li>
+				<li>||</li>
+				<li>&& and ||</li>
+				<li>!</li>
+				<li>!!</li>
+				<li>`` (backticks)</li>
+				<li>for in do</li>
+			</ul>
+		</li>
+		<li>
+			<strong>User Management</strong>
+			<ul>
+				<li>sudo useradd USERNAME</li>
+				<li>/etc/passwd</li>
+				<li>account:password:UID:GID:GECOS:directory:shell</li>
+				<li>/etc/shadow</li>
+				<li>/etc/group</li>
+				<li>/etc/gshadow</li>
+				<li>/etc/sudoers</li>
+				<li>useradd -G GROUPNAME USERNAME</li>
+				<li>useradd -m -g INITIALGROUP -G ADDITIONALGROUPS -s LOGINSHELL USERNAME</li>
+				<li>passwd, passwd USER</li>
+				<li>chfn</li>
+				<li>chage</li>
+				<li>userdel -r</li>
+				<li>groups USERNAME</li>
+				<li>id USERNAME</li>
+				<li>groupadd GROUP</li>
+				<li>gpasswd -a USER GROUP</li>
+				<li>groupdel GROUP</li>
+				<li>groupmod -n NEWGROUP OLDGROUP</li>
+				<li>gpasswd -d USER GROUP</li>
+				<li>visudo</li>
+			</ul>
+		</li>
+		<li>
+			<strong>Process Management</strong>
+			<ul>
+				<li>ps <span class="widedash">-</span> display your currently active processes</li>
+				<li>ps auwx <span class="widedash">-</span> </li>
+				<li>ps axf <span class="widedash">-</span> lists processes in a tree view</li>
+				<li>ps axf | grep raid<span class="widedash">-</span> </li>
+				<li>top <span class="widedash">-</span> display all running processes</li>
+				<li>kill pid <span class="widedash">-</span> kill process id pid</li>
+				<li>killall proc <span class="widedash">-</span> kill all processes named proc
+*</li>
+				<li>Control + c <span class="widedash">-</span> halts the current command</li>
+				<li>Control + d <span class="widedash">-</span> log out of current session, similar
+to exit</li>
+				<li>Control + s, Control + q <span class="widedash">-</span> stops output, resumes
+output</li>
+				<li>Control + z <span class="widedash">-</span> stops the current command, resume
+with fg in the foreground or bg in the background</li>
+				<li>bg <span class="widedash">-</span> lists stopped or background jobs; resume a
+stopped job in the background</li>
+				<li>fg <span class="widedash">-</span> brings the most recent job to
+foreground</li>
+				<li>COMMAND &<span class="widedash">-</span> runs command in the background</li>
+				<li>fg n% <span class="widedash">-</span> brings job n to the foreground</li>
+				<li>kill n% <span class="widedash">-</span> kills job n</li>
+				<li>jobs <span class="widedash">-</span> lists jobs</li>
+sudo update-rc.d -f process remove
+sudo chkconfig apache2 off
+pgrep
+pstree
+sudo 
+			</ul>
+		</li>
+		<li>
+			<strong>Permissions</strong>
+			<ul>
+				<li>chmod octal file <span class="widedash">-</span> change the permissions of file
+to octal, which can be found separately for user, group, and world.
+					<ul>
+						<li>chmod 777 file<span class="widedash">-</span> read, write, execute for
+all</li>
+						<li>chmod 755 file<span class="widedash">-</span> rwx for owner, rx for
+group and world</li>
+stat -c %U /media/sf_Shared/
+stat -c %G /media/sf_Shared/
+stat -c %A /media/sf_Shared/
+find / -group [group]
+find / -user [user]
+
+					</ul>
+				</li>
+				<li>chown --preserve-root
+					<ul>
+						<li>chown --preserve-root user:group -R /home/user/*<span
+class="widedash">-</span> chowns all files except hidden files</li>
+						<li><strike>chown --preserve-root user:group -R /home/user/.*</strike><span
+class="widedash">-</span> DO NOT DO THIS (This command will start chowning .. directories)</li>
+						<li>chown --preserve-root user:group -R /home/user/.[^.]*<span
+class="widedash">-</span> chowns all hidden files</li>
+						<li>chown --preserve-root user:group -R /home/user<span
+class="widedash">-</span> chowns all files in user but also chows the directory user</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<strong>SSH</strong>
+			<ul>
+				<li>ssh user@host <span class="widedash">-</span> connect to host as user</li>
+				<li>ssh -p port user@host <span class="widedash">-</span> connect to host on
+port</li>
+				<li>ssh-copy-id user@host <span class="widedash">-</span> add your key to host for
+user to enable a keyed or passwordless login</li>
+			</ul>
+		</li>
+		<li>
+			<strong>Searching</strong>
+			<ul>
+				<li>grep pattern files <span class="widedash">-</span> search for pattern in
+files</li>
+				<li>grep -r pattern dir <span class="widedash">-</span> search recursively for
+pattern in dir</li>
+				<li>command | grep pattern <span class="widedash">-</span> search for pattern in
+the output of command</li>
+				<li>locate file <span class="widedash">-</span> find all instances of file</li>
+				<li>sudo updatedb <span class="widedash">-</span> updates the database that locate
+uses to search for files.</li>
+				<li>find <span class="widedash">-</span> </li>
+			</ul>
+		</li>
+		<li>
+			<strong>Shells</strong>
+			<ul>
+				<li>bash</li>
+				<li>dash</li>
+				<li>sh</li>
+				<li>csh</li>
+				<li>tcsh</li>
+			</ul>
+		</li>
+		<li>
+			<strong>Disk Usage</strong>
+			<ul>
+				<li>df <span class="widedash">-</span> show disk usage</li>
+				<li>df -ih</li>
+				<li>df -h</li>
+				<li>find / -xdev -printf '%h\n' | sort | uniq -c | sort -k 1 -n</li>
+				<li>du <span class="widedash">-</span> show directory space usage</li>
+				<li>du -sch *</li>
+				<li>du -sch .[!.]* * |sort -h</li>
+			</ul>
+		</li>
+		<li>
+			<strong>File Comparison</strong>
+			<ul>
+				<li>diff -u file1 file2 > file3</li>
+			</ul>
+		</li>
+		<li>
+			<strong>IP Addresses</strong>
+			<ul>
+				<li>ifconfig</li>
+				<li>ip addr show | perl -ne '/inet\s*([\d\.]+).*global/ && do {print "$1\n"}'</li>
+				<li>ip addr | grep inet</li>
+				<li>curl ifconfig.me</li>
+				<li><a href="http://vlsm-calc.net/ipclasses.php" target="_blank">IP Address
+Classes</a> (Replaced by <a href="http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing"
+target="_blank">CIDR</a>)</li>
+				<li><a href="http://en.wikipedia.org/wiki/Reserved_IP_addresses"
+target="_blank">Reserved IP Addresses</a></li>
+				<li><a href="http://www.subnet-calculator.com/subnet.php" target="_blank">IP Subnet
+Calculator</a></li>
+				<li><a href="http://www.subnet-calculator.com/cidr.php" target="_blank">CIDR
+Calculator</a></li>
+			</ul>
+		</li>
+		<li>
+			<strong>System Info</strong>
+			<ul>
+				<li>date <span class="widedash">-</span> show the current date and time</li>
+				<li>cal <span class="widedash">-</span> show this month's calendar</li>
+				<li>uptime <span class="widedash">-</span> show current uptime</li>
+				<li>w <span class="widedash">-</span> display who is online</li>
+				<li>whoami <span class="widedash">-</span> who you are logged in as</li>
+				<li>finger user <span class="widedash">-</span> display information about user</li>
+				<li>uname -a <span class="widedash">-</span> show kernel information</li>
+				<li>cat /proc/cpuinfo <span class="widedash">-</span> cpu information</li>
+				<li>cat /proc/meminfo <span class="widedash">-</span> memory information</li>
+				<li>cat /proc/version <span class="widedash">-</span> version information</li>
+				<li>cat /etc/*-release <span class="widedash">-</span> distribution and version (no
+such file in Debian)</li>
+				<li>lsb_release -a <span class="widedash">-</span> distribution and version</li>
+				<li>cat /etc/issue <span class="widedash">-</span> distribution and version</li>
+				<li>man command <span class="widedash">-</span> show the manual for command</li>
+				<li>free <span class="widedash">-</span> show memory and swap usage</li>
+				<li>whereis app <span class="widedash">-</span> show possible locations of app</li>
+				<li>which app <span class="widedash">-</span> show which app will be run by
+default</li>
+				<li>ls -l /usr/share/xsessions <span class="widedash">-</span> show desktop
+environments</li>
+			</ul>
+		</li>
+		<li>
+			<strong>Compression</strong>
+			<ul>
+				<li>tar cf file.tar files <span class="widedash">-</span> create a tar named
+file.tar containing files</li>
+				<li>tar xf file.tar <span class="widedash">-</span> extract the files from
+file.tar</li>
+				<li>tar czf file.tar.gz files <span class="widedash">-</span> create a tar with
+Gzip compression</li>
+				<li>tar xzf file.tar.gz <span class="widedash">-</span> extract a tar using
+Gzip</li>
+				<li>tar cjf file.tar.bz2 <span class="widedash">-</span> create a tar with Bzip2
+compression</li>
+				<li>tar xjf file.tar.bz2 <span class="widedash">-</span> extract a tar using
+Bzip2</li>
+				<li>gzip file <span class="widedash">-</span> compresses file and renames it to
+file.gz</li>
+				<li>gzip -d file.gz <span class="widedash">-</span> decompresses file.gz back to
+file</li>
+				<li>bunzip2</li>
+			</ul>
+		</li>
+		<li>
+			<strong>Network</strong>
+			<ul>
+				<li>ping host <span class="widedash">-</span> ping host and output results</li>
+				<li>fping</li>
+				<li>whois domain <span class="widedash">-</span> get whois information for
+domain</li>
+				<li>dig domain dig mx domain<span class="widedash">-</span> get DNS information for
+domain</li>
+				<li>dig -x host <span class="widedash">-</span> reverse lookup host</li>
+				<li>wget file <span class="widedash">-</span> download file</li>
+				<li>wget -c file <span class="widedash">-</span> continue a stopped download</li>
+				<li>host</li>
+				<li>nslookup</li>
+				<li>nmap</li>
+				<li>traceroute</li>
+				<li>netstat -nat | grep LISTEN</li>
+				
+			</ul>
+		</li>
+		<li>
+			<strong>Packaging Commands</strong>
+			<ul>
+				<li>rpm -qa --last | less</li>last<li>sudo apt-get update</li>
+				<li>sudo apt-get upgrade</li>
+				<li>sudo apt-get autoremove</li>
+				<li>sudo apt-get autoclean</li>
+				<li>Install form source: ./configure -> make -> make install</li>
+				<li>dpkg -i pkg.deb <span class="widedash">-</span> install a package (Debian)</li>
+				<li>dpkg -l | grep PACKAGE <span class="widedash">-</span> see if a package is
+installed (Debian)
+				<li>dpkg -s PACKAGE <span class="widedash">-</span> see if package is installed and
+get info (Debian)</li>
+				<li>dpkg-query -L PACKAGE <span class="widedash">-</span> view the files that are
+associated in the bash package</li>
+				<li>rpm -Uvh pkg.rpm <span class="widedash">-</span> install a package (RPM)</li>
+				<li>rpm -qa | grep PACKAGE <span class="widedash">-</span> see if a package is
+installed (RPM)</li>
+				<li>rpm -ql PACKAGE <span class="widedash">-</span> view the files that are
+associated in the bash package (RPM)</li>
+					<strong>Remove Kernels In /boot (Debian)</strong>
+					<ul>
+						<li>df -h</li>
+						<li>uname -r</li>
+						<li>dpkg -l | grep linux-image</li>
+						<li>dpkg -r linux-image-3.2.0-65-generic</li>
+						<li>dpkg --purge linux-image-3.2.0-65-generic</li>
+						<li>df -h</li>
+					</ul>
+				</li>
+				<li>lsmod</li>
+				<li>modprobe</li>
+			</ul>
+		</li>
+		<li>
+			<strong>gpg</strong>
+			<ul>
+				<li>gpg --gen-key</li>
+				<li>gpg --list-keys</li>
+				<li>gpg --list-secret-keys</li>
+				<li>gpg --keyserver pgp.mit.edu --search-keys user@example.com</li>
+				<li><a href="https://kb.iu.edu/d/awiu">https://kb.iu.edu/d/awiu</a></li>
+				<li><a href="https://pgp.mit.edu/">https://pgp.mit.edu/</a></li>
+				<li><a href="https://futureboy.us/pgp.html">https://futureboy.us/pgp.html</a></li>
+				<li><a
+href="https://www.gnupg.org/index.html">https://www.gnupg.org/index.html</a></li>
+				<li><a
+href="https://www.digitalocean.com/community/tutorials/how-to-use-gpg-to-encrypt-and-sign-messages-on-an-ubuntu-12-04-vps">https://www.digitalocean.com/community/tutorials/how-to-use-gpg</a></li>
+				<li><a
+href="http://www.thegeekstuff.com/2012/10/gnupg-basics/">thegeekstuff.com/2012/10/gnupg-basics/</a></li>
+			</ul>
+		</li>
+		<li>
+			<strong>Logs</strong>
+			<ul>
+				<li>/var/log/</li>
+				<li>/etc/cron.daily/logrotate</li>
+				<li>/etc/logrotate.conf</li>
+				<li>/etc/logrotate.d/</li>
+				<li>logrotate -d /etc/logrotate.conf</li>
+				<li>logrotate -f /etc/logrotate.conf</li>
+			</ul>
+		</li>
+		<li>
+			<strong>Cron</strong>
+			<ul>
+				<li>/etc/crontab</li>
+				<li>/etc/cron.hourly/, /etc/cron.daily/, /etc/cron.weekly/, /etc/cron.monthly/</li>
+				<li>/etc/cron.d/</li>
+				<li>/var/spool/cron/crontabs/</li>
+			</ul>
+		</li>
+		<li>
+			<strong>Backups</strong>
+			<ul>
+				<li>rsync -havPn $FILE root@$HOSTNAME:/$RESTORE-DIR</li>
+			</ul>
+		</li>
+		<li>
+			<strong><a href="http://en.wikipedia.org/wiki/ZFS" target="_blank">ZFS</a></strong>
+			<ul>
+				<li>zfs create pool/dataset</li>
+				<li>zfs create -o OPTION=OPTIONVALUE pool/dataset</li>
+				<li>zfs list</li>
+				<li>zfs destroy</li>
+				<li>zfs umount</li>
+				<li>zfs rename</li>
+				<li>zfs mount</li>
+				<li>zpool status</li>
+				<li>zpool history</li>
+				<li>zfs get all pool/dataset</li>
+				<li><a href="http://docs.oracle.com/cd/E18752_01/html/819-5461/zfsover-1.html"
+target="_blank">Oracle ZFS Docs</a></li>
+			</ul>
+		</li>
+		<li>
+			<strong>psql</strong>
+			<ul>
+				<li>psql -d DATABASE</li>
+				<li>\l</li>
+				<li>\dt</li>
+				<li>\q</li>
+				<li>\d+ backups</li
+			</ul>
+		</li>
+		<li>
+			<strong>iptables</strong>
+			<ul>
+				<li>iptables -L -v</li>
+				<li>iptables -L -vt nat</li>
+				<li>iptables-save | less</li>
+				<li>iptables -L --line-numbers</li>
+				<li>
+					<strong><a href="http://www.fail2ban.org/"
+target="_blank">fail2ban</a></strong>
+					<ul>
+						<li>/var/log/secure fail2ban scans this file for multiple login
+attempts</li>
+						<li>/etc/fail2ban/</li>
+					</ul>
+				</li>
+				<li>denyhosts</li>
+			</ul>
+		</li>
+		<li>
+			<strong>Misc.</strong>
+			<ul>
+				<li>vimtutor</li>
+				<li>apropos COMMAND</li>
+			</ul>
+		</li>
+		<li>
+			<strong>Mail Servers</strong>
+			<ul>
+				<li><a href="http://en.wikipedia.org/wiki/Comparison_of_mail_servers"
+target="_blank">Comparison Of Mail Servers</a></li>
+				<li>
+					<strong>Postfix Commands</strong>
+					<ul>
+						<li>postqueue -p</li>
+						<li>postcat -q MSGID | cat</li>
+						<li>postcat MSGID</li>
+						<li><a href="http://www.greylisting.org/"
+target="_blank">greylisting.org</a></li>
+						<li><a
+href="http://forum.centos-webpanel.com/e-mail/postfix-mail-server-commands/"
+target="_blank">http://forum.centos-webpanel.com/e-mail/postfix-mail-server-commands/</a></li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<strong>Editors</strong>
+			<ul>
+				<li>vi,vim</li>
+				<li>vi -r .file.swp</li>
+				<li>nano</li>
+				<li>emacs</li>
+				<li>pico</li>
+				<li>gvim</li>
+				<li>gedit</li>
+				<li>geany</li>
+			</ul>
+		</li>
+		<li>
+			<strong>RAID</strong>
+			<ul>
+				<li><a href="http://en.wikipedia.org/wiki/Standard_RAID_levels"
+target="_blank">Standard RAID Levels</a></li>
+				<li><a href="http://en.wikipedia.org/wiki/Nested_RAID_levels"
+target="_blank">Nested RAID Levels</li>
+				<li>/proc/mdstat</li>
+				<li>mdadm - assemble, build, create, monitor, grow, manage, and misc</li>
+			</ul>
+		</li>
+		<li>
+			<strong>SSL</strong>
+			<ul>
+				<li>/etc/ssl/</li>
+				<li>/etc/httpd/conf.d/</li>
+				<li><a href="https://www.sslshopper.com/ssl-checker.html" target="_blank">SSL
+Checker</a></li>
+				<strong>SSL Generation</strong>
+				<ul>
+					<li>openssl req -out CSR.csr -sha256 -new -newkey rsa:2048 -nodes -keyout
+privateKey.key <span class="widedash">-</span> Generate a new private key and Certificate Signing
+Request</li>
+					<li>openssl req -x509 -nodes -sha256 -days 365 -newkey rsa:2048 -keyout
+privateKey.key -out certificate.crt <span class="widedash">-</span> Generate a self-signed
+certificate</li>
+					<li>openssl req -out CSR.csr -sha256 -key privateKey.key -new <span
+class="widedash">-</span> Generate a certificate signing request (CSR) for an existing private
+key</li>
+					<li>penssl x509 -x509toreq -sha256 -in certificate.crt -out CSR.csr -signkey
+privateKey.key <span class="widedash">-</span> Generate a certificate signing request based on an
+existing certificate</li>
+					<li>penssl rsa -in privateKey.pem -out new <span class="widedash">-</span>
+PrivateKey.pem Remove a passphrase from a private key</li>
+				</ul>
+				<strong>SSL Checking</strong>
+				<ul>
+					<li>openssl req -text -noout -verify -in CSR.csr <span
+class="widedash">-</span> Check a Certificate Signing Request (CSR)</li>
+					<li>openssl rsa -in privateKey.key -check <span class="widedash">-</span> Check
+a private key</li>
+					<li>openssl x509 -in certificate.crt -text -noout <span
+class="widedash">-</span> Check a certificate</li>
+					<li>openssl pkcs12 -info -in keyStore.p12 <span class="widedash">-</span> Check
+a PKCS#12 file (.pfx or .p12)</li>
+				</ul>
+				<li>Wildcard vs. SAN Certificate</li>
+				<li>Domain Validated vs. Business Validated</li>
+			</ul>
+		</li>
+		<li>
+			<strong>System Discovery</strong>
+			<ul>
+				<li>xinput, xinput disable</li>
+				<li>lsmod</li>
+				<li>lspci</li>
+				<li>netstat -pnatu</li>
+			</ul>
+		</li>
+		<li>
+			<strong>System Migration/Comparison</strong>
+			<ul>
+				<li>rpm -qa | sort > packages</li>
+			</ul>
+		</li>
+		<li>
+			<strong>SVN</strong>
+			<ul>
+				<li>svn log | head -n 30</li>
+				<li>svn diff -r r12345:r12346</li>
+				<li>http://svnbook.red-bean.com/en/1.7/svn.ref.svn.c.status.html</li>
+			</ul>
+		</li>
+		<li>
+			<strong><a href="http://en.wikipedia.org/wiki/Lists_of_network_protocols"
+target="_blank">Protocols</a></strong>
+			<ul>
+				<li><a href="http://en.wikipedia.org/wiki/Simple_Network_Management_Protocol"
+target="_blank">SNMP</a></li>
+				<li><a href="http://en.wikipedia.org/wiki/List_of_HTTP_status_codes"
+target="_blank">HTTP Error Codes</a></li>
+			</ul>
+		</li>
+		<li>
+			<strong>File Systems</strong>
+			<ul>
+				<li><a href="http://en.wikipedia.org/wiki/Comparison_of_file_systems"
+target="_blank">Comparison</a></li>
+				<li><a href="http://en.wikipedia.org/wiki/List_of_file_systems"
+target="_blank">List of File Systems</a></li>
+				<li>df -T</li>
+				<li><a href="http://en.wikipedia.org/wiki/Network_File_System"
+target="_blank">NFS</a></li>
+				<li><a href="http://en.wikipedia.org/wiki/ZFS" target="_blank">ZFS</a></li>
+			</ul>
+		</li>
+		<li>
+			<strong>FTP</strong>
+			<ul>
+				<li></li>
+			</ul>
+		</li>
+		<li>
+			<strong>Math</strong>
+			<ul>
+				<li>echo $(( ... ))</li>
+			</ul>
+		</li>
+		<li>
+			<strong>Programming</strong>
+			<ul>
+				<li>bash</li>
+				<li>python</li>
+				<li>perl</li>
+				<li>C,C++</li>
+				<li>Java</li>
+				<li>php</li>
+			</ul>
+		</li>
+		<li>xinput, xinput disable NUMBER</li>
+		<li>lsblk</li>
+		<li>fdisk -l</li>
+		<li>drbd</li>
+		<li>heartbeat</li>
+		<li>dd</li>
+		<li>df, df -a, df -h</li>
+		<li>uname, uname -a</li>
+		<li>history</li>
+		<li>cut</li>
+		<li>sudo</li>
+		<li>apt, apt-get, apt-cache</li>
+		<li>touch</li>
+		<li>md5sum</li>
+		<li>tar</li>
+		<li>screen</li>
+		<li>cal, cal 09 1987</li>
+		<li>date, date --set='19 september 2015 12:00</li>
+		<li>cat, cat a b ab</li>
+		<li>wc, wc -l</li>
+		<li>Processes
+			<ul>
+				<strong>Processes</strong>
+				<li>postfix, /usr/libexec/postfix/master, /etc/postfix/main.cf,
+/etc/postfix/virtual</li>
+				<li>cyrus, /etc/sasl2/smtpd.conf, /etc/imapd.conf</li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul></li>
+		<li>
+			<strong>Shell Variables</strong>
+			<ul>
+				<li>$0, $1, $2, $3... - positional parameters</li>
+				<li>${10} ... ${N} - positional parameters beyond 9</li>
+				<li>$* - $1 $2 $3 ... ${N}</li>
+				<li>$@ - $1 $2 $3 ... ${N}</li>
+				<li>"$*" - "$1c$2c$3c...c${N}"</li>
+				<li>"$@" - "$1" "$2" "$3" ... "${N}"</li>
+				<li>$# - total number of parameters</li>
+				<li></li>
+				<li>gedit</li>
+				<li>geany</li>
+			</ul>
+		</li>
+		<li>
+			<strong>Languages</strong>
+			<ul>
+				<li>Perl
+					<ul>
+						<li>CPAN</li>
+					</ul>
+				</li>
+			</ul>
+		<li>
+			<strong>VPN</strong>
+			<ul>
+				<li></li>
+			</ul>
+		</li>
+		<li>
+			<strong>Proxy</strong>
+			<ul>
+				<li></li>
+			</ul>
+		</li>
+	</ul>
+</div>
+<div>
+End Of Life
+</div>
+<div>
+<a
+href="http://wiki.centos.org/FAQ/General#head-fe8a0be91ee3e7dea812e8694491e1dde5b75e6d">Centos</a>
+<a href="http://en.wikipedia.org/wiki/Fedora_(operating_system)#Releases">Fedora</a>
+<a href="http://en.wikipedia.org/wiki/Red_Hat_Enterprise_Linux#Product_life_cycle" >Red Hat</a>
+</div>
+</body>
+</html>
