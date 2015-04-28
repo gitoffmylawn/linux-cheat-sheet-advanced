@@ -62,7 +62,7 @@
 						<li>stat -c %Z test | gawk '{print strftime("%c", $0)}' <span class="widedash">-</span> output of this will show when the file was last touched or modified</li>
 					</ul>
 				</li>
-				<li>cat > file <span class="widedash">-</span> places standard input into file</li>
+				<li>cat &gt; file <span class="widedash">-</span> places standard input into file</li>
 				<li>head file <span class="widedash">-</span> output the first 10 lines of file
 					<ul>
 						<li>head -n 3 file<span class="widedash">-</span> output the first 3 lines of file</li>
@@ -121,19 +121,19 @@
 				<li>STDIN (0) - Standard input (data fed into the program)</li>
 				<li>STDOUT (1) - Standard output (data printed by the program, defaults to the terminal)</li>
 				<li>STDERR (2) - Standard error (for error messages, also defaults to the terminal)</li>
-				<li>></li>
-				<li>>></li>
-				<li><</li>
-				<li>2></li>
+				<li>&gt;</li>
+				<li>&gt;&gt;</li>
+				<li>&lt;</li>
+				<li>2&gt;</li>
 				<li>|</li>
-				<li>&</li>
+				<li>&amp;</li>
 				<li>~</li>
 				<li>*</li>
 				<li>;</li>
 				<li>/</li>
-				<li>&&</li>
+				<li>&amp;&amp;</li>
 				<li>||</li>
-				<li>&& and ||</li>
+				<li>&amp;&amp; and ||</li>
 				<li>!</li>
 				<li>!!</li>
 				<li>`` (backticks)</li>
@@ -269,7 +269,7 @@ find / -user [user]
 			<strong>IP Addresses</strong>
 			<ul>
 				<li>ifconfig</li>
-				<li>ip addr show | perl -ne '/inet\s*([\d\.]+).*global/ && do {print "$1\n"}'</li>
+				<li>ip addr show | perl -ne '/inet\s*([\d\.]+).*global/ &amp;&amp; do {print "$1\n"}'</li>
 				<li>ip addr | grep inet</li>
 				<li>curl ifconfig.me</li>
 				<li><a href="http://vlsm-calc.net/ipclasses.php" target="_blank">IP Address Classes</a> (Replaced by <a href="http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing" target="_blank">CIDR</a>)</li>
@@ -340,7 +340,7 @@ find / -user [user]
 				<li>sudo apt-get upgrade</li>
 				<li>sudo apt-get autoremove</li>
 				<li>sudo apt-get autoclean</li>
-				<li>Install form source: ./configure -> make -> make install</li>
+				<li>Install form source: ./configure -&gt; make -&gt; make install</li>
 				<li>dpkg -i pkg.deb <span class="widedash">-</span> install a package (Debian)</li>
 				<li>dpkg -l | grep PACKAGE <span class="widedash">-</span> see if a package is installed (Debian)
 				<li>dpkg -s PACKAGE <span class="widedash">-</span> see if package is installed and get info (Debian)</li>
@@ -531,7 +531,7 @@ existing certificate</li>
 		<li>
 			<strong>System Migration/Comparison</strong>
 			<ul>
-				<li>rpm -qa | sort > packages</li>
+				<li>rpm -qa | sort &gt; packages</li>
 			</ul>
 		</li>
 		<li>
