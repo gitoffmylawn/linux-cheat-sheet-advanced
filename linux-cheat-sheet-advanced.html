@@ -1,33 +1,25 @@
 <!doctype>
 <html>
 <head>
-	<title>Sites</title>
-	<style>style.list{ clear: both; padding-left: 0px; margin-left: 0px; }
-		.list list{ float: left; padding: 0 7px; list-style-type: none; }
-		.clear{ clear: both; }
-		.wide list{ width: 500px; }
+	<title>Linux Cheat Sheet</title>
+	<style>
 		.widedash{ display: inline-block; width: 31px; padding-left: 27px; }
 	</style>
 </head>
 <body>
 <div>
 	<strong>Linux Cheat Sheet</strong>
-	<ul class="">
+	<ul>
 		<li>
 			<strong>File Commands</strong>
 			<ul>
 				<li>ls <span class="widedash">-</span> directory listing
 					<ul>
-						<li>ls -al <span class="widedash">-</span> formatted listing with hidden
-files</li>
-						<li>ls -ltra <span class="widedash">-</span> sorts by last updated with
-hidden files</li>
-						<li>ls -Sharl <span class="widedash">-</span> sorts by file size with
-hidden files</li>
-						<li>ls -m <span class="widedash">-</span> shows files and directories comma
-separated</li>
-						<li>ls --full-time <span class="widedash">-</span> formatted listing with
-year</li>
+						<li>ls -al <span class="widedash">-</span> formatted listing with hidden files</li>
+						<li>ls -ltra <span class="widedash">-</span> sorts by last updated with hidden files</li>
+						<li>ls -Sharl <span class="widedash">-</span> sorts by file size with hidden files</li>
+						<li>ls -m <span class="widedash">-</span> shows files and directories comma separated</li>
+						<li>ls --full-time <span class="widedash">-</span> formatted listing with year</li>
 					</ul>
 				</li>
 				<li>cd dir <span class="widedash">-</span> change directory to dir
@@ -38,8 +30,7 @@ year</li>
 				<li>pwd <span class="widedash">-</span> show current directory</li>
 				<li>mkdir dir <span class="widedash">-</span> create a directory dir
 					<ul>
-						<li>mkdir -p ./parentdir/childdir/ <span class="widedash">-</span> creates
-parentdir as well as childdir</li>
+						<li>mkdir -p ./parentdir/childdir/ <span class="widedash">-</span> creates parentdir as well as childdir</li>
 					</ul>
 				</li>
 				<li>rmdir <span class="widedash">-</span> remove an empty directory</li>
@@ -47,98 +38,72 @@ parentdir as well as childdir</li>
 					<ul>
 						<li>rm -r dir <span class="widedash">-</span> delete directory dir *</li>
 						<li>rm -f file <span class="widedash">-</span> force remove file *</li>
-						<li>rm -rf dir <span class="widedash">-</span> force remove directory dir
-*</li>
-						<li>rm -i file <span class="widedash">-</span> asks before file is deleted
-</li> 
+						<li>rm -rf dir <span class="widedash">-</span> force remove directory dir *</li>
+						<li>rm -i file <span class="widedash">-</span> asks before file is deleted</li> 
 					</ul>
 				</li>
 				<li>cp file1 file2 <span class="widedash">-</span> copy file1 to file2
 					<ul>
-						<li>cp -r dir1 dir2 <span class="widedash">-</span> copy dir1 to dir2;
-create dir2 if it doesn't exist</li>
-						<li>cp -a dir1 dir2 <span class="widedash">-</span> copies entire directory
-tree</li>
-						<li>cp -u dir1 dir2 <span class="widedash">-</span> prevents overwriting
-identically-named newer files</li>
+						<li>cp -r dir1 dir2 <span class="widedash">-</span> copy dir1 to dir2; create dir2 if it doesn't exist</li>
+						<li>cp -a dir1 dir2 <span class="widedash">-</span> copies entire directory tree</li>
+						<li>cp -u dir1 dir2 <span class="widedash">-</span> prevents overwriting identically-named newer files</li>
 					</ul>
 				</li>
-				<li>mv file1 file2 <span class="widedash">-</span> rename or move file1 to
-file2</li>
-				<li>ln -s TARGET LINK_NAME <span class="widedash">-</span> create symbolic link
-link to TARGET
+				<li>mv file1 file2 <span class="widedash">-</span> rename or move file1 to file2</li>
+				<li>ln -s TARGET LINK_NAME <span class="widedash">-</span> create symbolic link link to TARGET
 					<ul>
-						<li>ln TARGET LINK_NAME <span class="widedash">-</span> hard link, points
-to inode instead of filename</li>
+						<li>ln TARGET LINK_NAME <span class="widedash">-</span> hard link, points to inode instead of filename</li>
 					</ul>
 				</li>
 				<li>touch file <span class="widedash">-</span> create or update file
 					<ul>
-						<li>touch -d "two hours ago" filename <span class="widedash">-</span>
-change the modified time of file</li>
-						<li>stat -c %Y test | gawk '{print strftime("%c", $0)}' <span
-class="widedash">-</span> output of this and below command will be the same if file's mod time
-wasn't touched</li>
-						<li>stat -c %Z test | gawk '{print strftime("%c", $0)}' <span
-class="widedash">-</span> output of this will show when the file was last touched or modified</li>
+						<li>touch -d "two hours ago" filename <span class="widedash">-</span> change the modified time of file</li>
+						<li>stat -c %Y test | gawk '{print strftime("%c", $0)}' <span class="widedash">-</span> output of this and below command will be the same if file's mod time wasn't touched</li>
+						<li>stat -c %Z test | gawk '{print strftime("%c", $0)}' <span class="widedash">-</span> output of this will show when the file was last touched or modified</li>
 					</ul>
 				</li>
 				<li>cat > file <span class="widedash">-</span> places standard input into file</li>
 				<li>head file <span class="widedash">-</span> output the first 10 lines of file
 					<ul>
-						<li>head -n 3 file<span class="widedash">-</span> output the first 3 lines
-of file</li>
+						<li>head -n 3 file<span class="widedash">-</span> output the first 3 lines of file</li>
 					</ul>
 				</li>
 				<li>tail file <span class="widedash">-</span> output the last 10 lines of file
 					<ul>
-						<li>tail -f file <span class="widedash">-</span> output the contents of
-file as it grows, starting with the last 10 lines</li>
-						<li>tail -n 3 file<span class="widedash">-</span> output the last 3 lines
-of file</li>
+						<li>tail -f file <span class="widedash">-</span> output the contents of file as it grows, starting with the last 10 lines</li>
+						<li>tail -n 3 file<span class="widedash">-</span> output the last 3 lines of file</li>
 					</ul>
 				</li>
 				<li>wc
 					<ul>
-						<li>echo -n string | wc -m<span class="widedash">-</span> counts the
-characters in a string</li>
+						<li>echo -n string | wc -m<span class="widedash">-</span> counts the characters in a string</li>
 					</ul>
 				</li>
 				<li>xargs
 					<ul>
-						<li>find . -name "*.c" | xargs rm -rf<span class="widedash">-</span> remove
-all files ending in .c</li>
-						<li>find . -name '*.c' | xargs grep 'stdlib.h'<span
-class="widedash">-</span> find files whose name ends in .c and stdlib.h is in the file</li>
+						<li>find . -name "*.c" | xargs rm -rf<span class="widedash">-</span> remove all files ending in .c</li>
+						<li>find . -name '*.c' | xargs grep 'stdlib.h'<span class="widedash">-</span> find files whose name ends in .c and stdlib.h is in the file</li>
 					</ul>
 				</li>
 				<li>cat file<span class="widedash">-</span> prints a file to standard out
 					<ul>
-						<li>cat score.txt names.txt > report.txt<span class="widedash">-</span>
-concatenates two files into one.</li>
-						<li>tac file<span class="widedash">-</span> prints a file to standard out
-in reverse order</li>
+						<li>cat score.txt names.txt > report.txt<span class="widedash">-</span> concatenates two files into one.</li>
+						<li>tac file<span class="widedash">-</span> prints a file to standard out in reverse order</li>
 					</ul>
 				</li>
-				<li>rev file<span class="widedash">-</span> prints the characters in a line in
-reverse order</li>
+				<li>rev file<span class="widedash">-</span> prints the characters in a line in reverse order</li>
 				<li>echo text<span class="widedash">-</span> prints to standard out</li>
-				<li>more file<span class="widedash">-</span> primitive version of less, use
-less</li>
+				<li>more file<span class="widedash">-</span> primitive version of less, use less</li>
 				<li>less file<span class="widedash">-</span> scrolls through a file</li>
 				<li>man,info
 					<ul>
-						<li>man man <span class="widedash">-</span> useful for looking at manual
-sections ( e.g. ls(1) )</li>
-						<li>man -S 1 ls <span class="widedash">-</span> view the man page, section
-1, of ls</li>
+						<li>man man <span class="widedash">-</span> useful for looking at manual sections ( e.g. ls(1) )</li>
+						<li>man -S 1 ls <span class="widedash">-</span> view the man page, section 1, of ls</li>
 					</ul>
 				</li>
-				<li>ls | tee file<span class="widedash">-</span> read from standard input and write
-to standard output and files
+				<li>ls | tee file<span class="widedash">-</span> read from standard input and write to standard output and files
 					<ul>
-						<li>ls | tee -a file<span class="widedash">-</span> read from standard
-input and write to standard output and append to files</li>
+						<li>ls | tee -a file<span class="widedash">-</span> read from standard input and write to standard output and append to files</li>
 					</ul>
 				</li>
 				<li>file FILE<span class="widedash">-</span> displays the file type</li>
@@ -154,10 +119,8 @@ input and write to standard output and append to files</li>
 			<strong>Command Line Operators</strong>
 			<ul>
 				<li>STDIN (0) - Standard input (data fed into the program)</li>
-				<li>STDOUT (1) - Standard output (data printed by the program, defaults to the
-terminal)</li>
-				<li>STDERR (2) - Standard error (for error messages, also defaults to the
-terminal)</li>
+				<li>STDOUT (1) - Standard output (data printed by the program, defaults to the terminal)</li>
+				<li>STDERR (2) - Standard error (for error messages, also defaults to the terminal)</li>
 				<li>></li>
 				<li>>></li>
 				<li><</li>
@@ -212,19 +175,13 @@ terminal)</li>
 				<li>ps axf | grep raid<span class="widedash">-</span> </li>
 				<li>top <span class="widedash">-</span> display all running processes</li>
 				<li>kill pid <span class="widedash">-</span> kill process id pid</li>
-				<li>killall proc <span class="widedash">-</span> kill all processes named proc
-*</li>
+				<li>killall proc <span class="widedash">-</span> kill all processes named proc *</li>
 				<li>Control + c <span class="widedash">-</span> halts the current command</li>
-				<li>Control + d <span class="widedash">-</span> log out of current session, similar
-to exit</li>
-				<li>Control + s, Control + q <span class="widedash">-</span> stops output, resumes
-output</li>
-				<li>Control + z <span class="widedash">-</span> stops the current command, resume
-with fg in the foreground or bg in the background</li>
-				<li>bg <span class="widedash">-</span> lists stopped or background jobs; resume a
-stopped job in the background</li>
-				<li>fg <span class="widedash">-</span> brings the most recent job to
-foreground</li>
+				<li>Control + d <span class="widedash">-</span> log out of current session, similar to exit</li>
+				<li>Control + s, Control + q <span class="widedash">-</span> stops output, resumes output</li>
+				<li>Control + z <span class="widedash">-</span> stops the current command, resume with fg in the foreground or bg in the background</li>
+				<li>bg <span class="widedash">-</span> lists stopped or background jobs; resume a stopped job in the background</li>
+				<li>fg <span class="widedash">-</span> brings the most recent job to foreground</li>
 				<li>COMMAND &<span class="widedash">-</span> runs command in the background</li>
 				<li>fg n% <span class="widedash">-</span> brings job n to the foreground</li>
 				<li>kill n% <span class="widedash">-</span> kills job n</li>
@@ -239,13 +196,10 @@ sudo
 		<li>
 			<strong>Permissions</strong>
 			<ul>
-				<li>chmod octal file <span class="widedash">-</span> change the permissions of file
-to octal, which can be found separately for user, group, and world.
+				<li>chmod octal file <span class="widedash">-</span> change the permissions of file to octal, which can be found separately for user, group, and world.
 					<ul>
-						<li>chmod 777 file<span class="widedash">-</span> read, write, execute for
-all</li>
-						<li>chmod 755 file<span class="widedash">-</span> rwx for owner, rx for
-group and world</li>
+						<li>chmod 777 file<span class="widedash">-</span> read, write, execute for all</li>
+						<li>chmod 755 file<span class="widedash">-</span> rwx for owner, rx for group and world</li>
 stat -c %U /media/sf_Shared/
 stat -c %G /media/sf_Shared/
 stat -c %A /media/sf_Shared/
@@ -256,14 +210,10 @@ find / -user [user]
 				</li>
 				<li>chown --preserve-root
 					<ul>
-						<li>chown --preserve-root user:group -R /home/user/*<span
-class="widedash">-</span> chowns all files except hidden files</li>
-						<li><strike>chown --preserve-root user:group -R /home/user/.*</strike><span
-class="widedash">-</span> DO NOT DO THIS (This command will start chowning .. directories)</li>
-						<li>chown --preserve-root user:group -R /home/user/.[^.]*<span
-class="widedash">-</span> chowns all hidden files</li>
-						<li>chown --preserve-root user:group -R /home/user<span
-class="widedash">-</span> chowns all files in user but also chows the directory user</li>
+						<li>chown --preserve-root user:group -R /home/user/*<span class="widedash">-</span> chowns all files except hidden files</li>
+						<li><strike>chown --preserve-root user:group -R /home/user/.*</strike><span class="widedash">-</span> DO NOT DO THIS (This command will start chowning .. directories)</li>
+						<li>chown --preserve-root user:group -R /home/user/.[^.]*<span class="widedash">-</span> chowns all hidden files</li>
+						<li>chown --preserve-root user:group -R /home/user<span class="widedash">-</span> chowns all files in user but also chows the directory user</li>
 					</ul>
 				</li>
 			</ul>
@@ -272,24 +222,18 @@ class="widedash">-</span> chowns all files in user but also chows the directory 
 			<strong>SSH</strong>
 			<ul>
 				<li>ssh user@host <span class="widedash">-</span> connect to host as user</li>
-				<li>ssh -p port user@host <span class="widedash">-</span> connect to host on
-port</li>
-				<li>ssh-copy-id user@host <span class="widedash">-</span> add your key to host for
-user to enable a keyed or passwordless login</li>
+				<li>ssh -p port user@host <span class="widedash">-</span> connect to host on port</li>
+				<li>ssh-copy-id user@host <span class="widedash">-</span> add your key to host for user to enable a keyed or passwordless login</li>
 			</ul>
 		</li>
 		<li>
 			<strong>Searching</strong>
 			<ul>
-				<li>grep pattern files <span class="widedash">-</span> search for pattern in
-files</li>
-				<li>grep -r pattern dir <span class="widedash">-</span> search recursively for
-pattern in dir</li>
-				<li>command | grep pattern <span class="widedash">-</span> search for pattern in
-the output of command</li>
+				<li>grep pattern files <span class="widedash">-</span> search for pattern in files</li>
+				<li>grep -r pattern dir <span class="widedash">-</span> search recursively for pattern in dir</li>
+				<li>command | grep pattern <span class="widedash">-</span> search for pattern in the output of command</li>
 				<li>locate file <span class="widedash">-</span> find all instances of file</li>
-				<li>sudo updatedb <span class="widedash">-</span> updates the database that locate
-uses to search for files.</li>
+				<li>sudo updatedb <span class="widedash">-</span> updates the database that locate uses to search for files.</li>
 				<li>find <span class="widedash">-</span> </li>
 			</ul>
 		</li>
@@ -328,15 +272,10 @@ uses to search for files.</li>
 				<li>ip addr show | perl -ne '/inet\s*([\d\.]+).*global/ && do {print "$1\n"}'</li>
 				<li>ip addr | grep inet</li>
 				<li>curl ifconfig.me</li>
-				<li><a href="http://vlsm-calc.net/ipclasses.php" target="_blank">IP Address
-Classes</a> (Replaced by <a href="http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing"
-target="_blank">CIDR</a>)</li>
-				<li><a href="http://en.wikipedia.org/wiki/Reserved_IP_addresses"
-target="_blank">Reserved IP Addresses</a></li>
-				<li><a href="http://www.subnet-calculator.com/subnet.php" target="_blank">IP Subnet
-Calculator</a></li>
-				<li><a href="http://www.subnet-calculator.com/cidr.php" target="_blank">CIDR
-Calculator</a></li>
+				<li><a href="http://vlsm-calc.net/ipclasses.php" target="_blank">IP Address Classes</a> (Replaced by <a href="http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing" target="_blank">CIDR</a>)</li>
+				<li><a href="http://en.wikipedia.org/wiki/Reserved_IP_addresses" target="_blank">Reserved IP Addresses</a></li>
+				<li><a href="http://www.subnet-calculator.com/subnet.php" target="_blank">IP Subnet Calculator</a></li>
+				<li><a href="http://www.subnet-calculator.com/cidr.php" target="_blank">CIDR Calculator</a></li>
 			</ul>
 		</li>
 		<li>
@@ -352,38 +291,27 @@ Calculator</a></li>
 				<li>cat /proc/cpuinfo <span class="widedash">-</span> cpu information</li>
 				<li>cat /proc/meminfo <span class="widedash">-</span> memory information</li>
 				<li>cat /proc/version <span class="widedash">-</span> version information</li>
-				<li>cat /etc/*-release <span class="widedash">-</span> distribution and version (no
-such file in Debian)</li>
+				<li>cat /etc/*-release <span class="widedash">-</span> distribution and version (no such file in Debian)</li>
 				<li>lsb_release -a <span class="widedash">-</span> distribution and version</li>
 				<li>cat /etc/issue <span class="widedash">-</span> distribution and version</li>
 				<li>man command <span class="widedash">-</span> show the manual for command</li>
 				<li>free <span class="widedash">-</span> show memory and swap usage</li>
 				<li>whereis app <span class="widedash">-</span> show possible locations of app</li>
-				<li>which app <span class="widedash">-</span> show which app will be run by
-default</li>
-				<li>ls -l /usr/share/xsessions <span class="widedash">-</span> show desktop
-environments</li>
+				<li>which app <span class="widedash">-</span> show which app will be run by default</li>
+				<li>ls -l /usr/share/xsessions <span class="widedash">-</span> show desktop environments</li>
 			</ul>
 		</li>
 		<li>
 			<strong>Compression</strong>
 			<ul>
-				<li>tar cf file.tar files <span class="widedash">-</span> create a tar named
-file.tar containing files</li>
-				<li>tar xf file.tar <span class="widedash">-</span> extract the files from
-file.tar</li>
-				<li>tar czf file.tar.gz files <span class="widedash">-</span> create a tar with
-Gzip compression</li>
-				<li>tar xzf file.tar.gz <span class="widedash">-</span> extract a tar using
-Gzip</li>
-				<li>tar cjf file.tar.bz2 <span class="widedash">-</span> create a tar with Bzip2
-compression</li>
-				<li>tar xjf file.tar.bz2 <span class="widedash">-</span> extract a tar using
-Bzip2</li>
-				<li>gzip file <span class="widedash">-</span> compresses file and renames it to
-file.gz</li>
-				<li>gzip -d file.gz <span class="widedash">-</span> decompresses file.gz back to
-file</li>
+				<li>tar cf file.tar files <span class="widedash">-</span> create a tar named file.tar containing files</li>
+				<li>tar xf file.tar <span class="widedash">-</span> extract the files from file.tar</li>
+				<li>tar czf file.tar.gz files <span class="widedash">-</span> create a tar with Gzip compression</li>
+				<li>tar xzf file.tar.gz <span class="widedash">-</span> extract a tar using Gzip</li>
+				<li>tar cjf file.tar.bz2 <span class="widedash">-</span> create a tar with Bzip2 compression</li>
+				<li>tar xjf file.tar.bz2 <span class="widedash">-</span> extract a tar using Bzip2</li>
+				<li>gzip file <span class="widedash">-</span> compresses file and renames it to file.gz</li>
+				<li>gzip -d file.gz <span class="widedash">-</span> decompresses file.gz back to file</li>
 				<li>bunzip2</li>
 			</ul>
 		</li>
@@ -392,10 +320,8 @@ file</li>
 			<ul>
 				<li>ping host <span class="widedash">-</span> ping host and output results</li>
 				<li>fping</li>
-				<li>whois domain <span class="widedash">-</span> get whois information for
-domain</li>
-				<li>dig domain dig mx domain<span class="widedash">-</span> get DNS information for
-domain</li>
+				<li>whois domain <span class="widedash">-</span> get whois information for domain</li>
+				<li>dig domain dig mx domain<span class="widedash">-</span> get DNS information for domain</li>
 				<li>dig -x host <span class="widedash">-</span> reverse lookup host</li>
 				<li>wget file <span class="widedash">-</span> download file</li>
 				<li>wget -c file <span class="widedash">-</span> continue a stopped download</li>
@@ -416,17 +342,12 @@ domain</li>
 				<li>sudo apt-get autoclean</li>
 				<li>Install form source: ./configure -> make -> make install</li>
 				<li>dpkg -i pkg.deb <span class="widedash">-</span> install a package (Debian)</li>
-				<li>dpkg -l | grep PACKAGE <span class="widedash">-</span> see if a package is
-installed (Debian)
-				<li>dpkg -s PACKAGE <span class="widedash">-</span> see if package is installed and
-get info (Debian)</li>
-				<li>dpkg-query -L PACKAGE <span class="widedash">-</span> view the files that are
-associated in the bash package</li>
+				<li>dpkg -l | grep PACKAGE <span class="widedash">-</span> see if a package is installed (Debian)
+				<li>dpkg -s PACKAGE <span class="widedash">-</span> see if package is installed and get info (Debian)</li>
+				<li>dpkg-query -L PACKAGE <span class="widedash">-</span> view the files that are associated in the bash package</li>
 				<li>rpm -Uvh pkg.rpm <span class="widedash">-</span> install a package (RPM)</li>
-				<li>rpm -qa | grep PACKAGE <span class="widedash">-</span> see if a package is
-installed (RPM)</li>
-				<li>rpm -ql PACKAGE <span class="widedash">-</span> view the files that are
-associated in the bash package (RPM)</li>
+				<li>rpm -qa | grep PACKAGE <span class="widedash">-</span> see if a package is installed (RPM)</li>
+				<li>rpm -ql PACKAGE <span class="widedash">-</span> view the files that are associated in the bash package (RPM)</li>
 					<strong>Remove Kernels In /boot (Debian)</strong>
 					<ul>
 						<li>df -h</li>
@@ -451,12 +372,9 @@ associated in the bash package (RPM)</li>
 				<li><a href="https://kb.iu.edu/d/awiu">https://kb.iu.edu/d/awiu</a></li>
 				<li><a href="https://pgp.mit.edu/">https://pgp.mit.edu/</a></li>
 				<li><a href="https://futureboy.us/pgp.html">https://futureboy.us/pgp.html</a></li>
-				<li><a
-href="https://www.gnupg.org/index.html">https://www.gnupg.org/index.html</a></li>
-				<li><a
-href="https://www.digitalocean.com/community/tutorials/how-to-use-gpg-to-encrypt-and-sign-messages-on-an-ubuntu-12-04-vps">https://www.digitalocean.com/community/tutorials/how-to-use-gpg</a></li>
-				<li><a
-href="http://www.thegeekstuff.com/2012/10/gnupg-basics/">thegeekstuff.com/2012/10/gnupg-basics/</a></li>
+				<li><a href="https://www.gnupg.org/index.html">https://www.gnupg.org/index.html</a></li>
+				<li><a href="https://www.digitalocean.com/community/tutorials/how-to-use-gpg-to-encrypt-and-sign-messages-on-an-ubuntu-12-04-vps">https://www.digitalocean.com/community/tutorials/how-to-use-gpg</a></li>
+				<li><a href="http://www.thegeekstuff.com/2012/10/gnupg-basics/">thegeekstuff.com/2012/10/gnupg-basics/</a></li>
 			</ul>
 		</li>
 		<li>
@@ -498,8 +416,7 @@ href="http://www.thegeekstuff.com/2012/10/gnupg-basics/">thegeekstuff.com/2012/1
 				<li>zpool status</li>
 				<li>zpool history</li>
 				<li>zfs get all pool/dataset</li>
-				<li><a href="http://docs.oracle.com/cd/E18752_01/html/819-5461/zfsover-1.html"
-target="_blank">Oracle ZFS Docs</a></li>
+				<li><a href="http://docs.oracle.com/cd/E18752_01/html/819-5461/zfsover-1.html" target="_blank">Oracle ZFS Docs</a></li>
 			</ul>
 		</li>
 		<li>
@@ -509,7 +426,7 @@ target="_blank">Oracle ZFS Docs</a></li>
 				<li>\l</li>
 				<li>\dt</li>
 				<li>\q</li>
-				<li>\d+ backups</li
+				<li>\d+ backups</li>
 			</ul>
 		</li>
 		<li>
@@ -520,11 +437,9 @@ target="_blank">Oracle ZFS Docs</a></li>
 				<li>iptables-save | less</li>
 				<li>iptables -L --line-numbers</li>
 				<li>
-					<strong><a href="http://www.fail2ban.org/"
-target="_blank">fail2ban</a></strong>
+					<strong><a href="http://www.fail2ban.org/" target="_blank">fail2ban</a></strong>
 					<ul>
-						<li>/var/log/secure fail2ban scans this file for multiple login
-attempts</li>
+						<li>/var/log/secure fail2ban scans this file for multiple login attempts</li>
 						<li>/etc/fail2ban/</li>
 					</ul>
 				</li>
@@ -541,19 +456,15 @@ attempts</li>
 		<li>
 			<strong>Mail Servers</strong>
 			<ul>
-				<li><a href="http://en.wikipedia.org/wiki/Comparison_of_mail_servers"
-target="_blank">Comparison Of Mail Servers</a></li>
+				<li><a href="http://en.wikipedia.org/wiki/Comparison_of_mail_servers" target="_blank">Comparison Of Mail Servers</a></li>
 				<li>
 					<strong>Postfix Commands</strong>
 					<ul>
 						<li>postqueue -p</li>
 						<li>postcat -q MSGID | cat</li>
 						<li>postcat MSGID</li>
-						<li><a href="http://www.greylisting.org/"
-target="_blank">greylisting.org</a></li>
-						<li><a
-href="http://forum.centos-webpanel.com/e-mail/postfix-mail-server-commands/"
-target="_blank">http://forum.centos-webpanel.com/e-mail/postfix-mail-server-commands/</a></li>
+						<li><a href="http://www.greylisting.org/" target="_blank">greylisting.org</a></li>
+						<li><a href="http://forum.centos-webpanel.com/e-mail/postfix-mail-server-commands/" target="_blank">http://forum.centos-webpanel.com/e-mail/postfix-mail-server-commands/</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -574,10 +485,8 @@ target="_blank">http://forum.centos-webpanel.com/e-mail/postfix-mail-server-comm
 		<li>
 			<strong>RAID</strong>
 			<ul>
-				<li><a href="http://en.wikipedia.org/wiki/Standard_RAID_levels"
-target="_blank">Standard RAID Levels</a></li>
-				<li><a href="http://en.wikipedia.org/wiki/Nested_RAID_levels"
-target="_blank">Nested RAID Levels</li>
+				<li><a href="http://en.wikipedia.org/wiki/Standard_RAID_levels" target="_blank">Standard RAID Levels</a></li>
+				<li><a href="http://en.wikipedia.org/wiki/Nested_RAID_levels" target="_blank">Nested RAID Levels</li>
 				<li>/proc/mdstat</li>
 				<li>mdadm - assemble, build, create, monitor, grow, manage, and misc</li>
 			</ul>
@@ -587,35 +496,24 @@ target="_blank">Nested RAID Levels</li>
 			<ul>
 				<li>/etc/ssl/</li>
 				<li>/etc/httpd/conf.d/</li>
-				<li><a href="https://www.sslshopper.com/ssl-checker.html" target="_blank">SSL
-Checker</a></li>
+				<li><a href="https://www.sslshopper.com/ssl-checker.html" target="_blank">SSL Checker</a></li>
 				<strong>SSL Generation</strong>
 				<ul>
-					<li>openssl req -out CSR.csr -sha256 -new -newkey rsa:2048 -nodes -keyout
-privateKey.key <span class="widedash">-</span> Generate a new private key and Certificate Signing
-Request</li>
-					<li>openssl req -x509 -nodes -sha256 -days 365 -newkey rsa:2048 -keyout
-privateKey.key -out certificate.crt <span class="widedash">-</span> Generate a self-signed
+					<li>openssl req -out CSR.csr -sha256 -new -newkey rsa:2048 -nodes -keyout privateKey.key <span class="widedash">-</span> Generate a new private key and Certificate Signing Request</li>
+					<li>openssl req -x509 -nodes -sha256 -days 365 -newkey rsa:2048 -keyout privateKey.key -out certificate.crt <span class="widedash">-</span> Generate a self-signed
 certificate</li>
-					<li>openssl req -out CSR.csr -sha256 -key privateKey.key -new <span
-class="widedash">-</span> Generate a certificate signing request (CSR) for an existing private
+					<li>openssl req -out CSR.csr -sha256 -key privateKey.key -new <span class="widedash">-</span> Generate a certificate signing request (CSR) for an existing private
 key</li>
-					<li>penssl x509 -x509toreq -sha256 -in certificate.crt -out CSR.csr -signkey
-privateKey.key <span class="widedash">-</span> Generate a certificate signing request based on an
+					<li>penssl x509 -x509toreq -sha256 -in certificate.crt -out CSR.csr -signkey privateKey.key <span class="widedash">-</span> Generate a certificate signing request based on an
 existing certificate</li>
-					<li>penssl rsa -in privateKey.pem -out new <span class="widedash">-</span>
-PrivateKey.pem Remove a passphrase from a private key</li>
+					<li>penssl rsa -in privateKey.pem -out new <span class="widedash">-</span> PrivateKey.pem Remove a passphrase from a private key</li>
 				</ul>
 				<strong>SSL Checking</strong>
 				<ul>
-					<li>openssl req -text -noout -verify -in CSR.csr <span
-class="widedash">-</span> Check a Certificate Signing Request (CSR)</li>
-					<li>openssl rsa -in privateKey.key -check <span class="widedash">-</span> Check
-a private key</li>
-					<li>openssl x509 -in certificate.crt -text -noout <span
-class="widedash">-</span> Check a certificate</li>
-					<li>openssl pkcs12 -info -in keyStore.p12 <span class="widedash">-</span> Check
-a PKCS#12 file (.pfx or .p12)</li>
+					<li>openssl req -text -noout -verify -in CSR.csr <span class="widedash">-</span> Check a Certificate Signing Request (CSR)</li>
+					<li>openssl rsa -in privateKey.key -check <span class="widedash">-</span> Check a private key</li>
+					<li>openssl x509 -in certificate.crt -text -noout <span class="widedash">-</span> Check a certificate</li>
+					<li>openssl pkcs12 -info -in keyStore.p12 <span class="widedash">-</span> Check a PKCS#12 file (.pfx or .p12)</li>
 				</ul>
 				<li>Wildcard vs. SAN Certificate</li>
 				<li>Domain Validated vs. Business Validated</li>
@@ -645,25 +543,19 @@ a PKCS#12 file (.pfx or .p12)</li>
 			</ul>
 		</li>
 		<li>
-			<strong><a href="http://en.wikipedia.org/wiki/Lists_of_network_protocols"
-target="_blank">Protocols</a></strong>
+			<strong><a href="http://en.wikipedia.org/wiki/Lists_of_network_protocols" target="_blank">Protocols</a></strong>
 			<ul>
-				<li><a href="http://en.wikipedia.org/wiki/Simple_Network_Management_Protocol"
-target="_blank">SNMP</a></li>
-				<li><a href="http://en.wikipedia.org/wiki/List_of_HTTP_status_codes"
-target="_blank">HTTP Error Codes</a></li>
+				<li><a href="http://en.wikipedia.org/wiki/Simple_Network_Management_Protocol" target="_blank">SNMP</a></li>
+				<li><a href="http://en.wikipedia.org/wiki/List_of_HTTP_status_codes" target="_blank">HTTP Error Codes</a></li>
 			</ul>
 		</li>
 		<li>
 			<strong>File Systems</strong>
 			<ul>
-				<li><a href="http://en.wikipedia.org/wiki/Comparison_of_file_systems"
-target="_blank">Comparison</a></li>
-				<li><a href="http://en.wikipedia.org/wiki/List_of_file_systems"
-target="_blank">List of File Systems</a></li>
+				<li><a href="http://en.wikipedia.org/wiki/Comparison_of_file_systems" target="_blank">Comparison</a></li>
+				<li><a href="http://en.wikipedia.org/wiki/List_of_file_systems" target="_blank">List of File Systems</a></li>
 				<li>df -T</li>
-				<li><a href="http://en.wikipedia.org/wiki/Network_File_System"
-target="_blank">NFS</a></li>
+				<li><a href="http://en.wikipedia.org/wiki/Network_File_System" target="_blank">NFS</a></li>
 				<li><a href="http://en.wikipedia.org/wiki/ZFS" target="_blank">ZFS</a></li>
 			</ul>
 		</li>
@@ -713,8 +605,7 @@ target="_blank">NFS</a></li>
 		<li>Processes
 			<ul>
 				<strong>Processes</strong>
-				<li>postfix, /usr/libexec/postfix/master, /etc/postfix/main.cf,
-/etc/postfix/virtual</li>
+				<li>postfix, /usr/libexec/postfix/master, /etc/postfix/main.cf, /etc/postfix/virtual</li>
 				<li>cyrus, /etc/sasl2/smtpd.conf, /etc/imapd.conf</li>
 				<li></li>
 				<li></li>
@@ -774,8 +665,7 @@ target="_blank">NFS</a></li>
 End Of Life
 </div>
 <div>
-<a
-href="http://wiki.centos.org/FAQ/General#head-fe8a0be91ee3e7dea812e8694491e1dde5b75e6d">Centos</a>
+<a href="http://wiki.centos.org/FAQ/General#head-fe8a0be91ee3e7dea812e8694491e1dde5b75e6d">Centos</a>
 <a href="http://en.wikipedia.org/wiki/Fedora_(operating_system)#Releases">Fedora</a>
 <a href="http://en.wikipedia.org/wiki/Red_Hat_Enterprise_Linux#Product_life_cycle" >Red Hat</a>
 </div>
