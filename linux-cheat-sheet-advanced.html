@@ -20,6 +20,7 @@
 						<li>ls -Sharl <span class="widedash">-</span> sorts by file size with hidden files</li>
 						<li>ls -m <span class="widedash">-</span> shows files and directories comma separated</li>
 						<li>ls --full-time <span class="widedash">-</span> formatted listing with year</li>
+						<li>ls -R <span class="widedash">-</span> list files and subdirectories recursively</li>
 					</ul>
 				</li>
 				<li>cd dir <span class="widedash">-</span> change directory to dir
@@ -95,12 +96,13 @@
 				<li>echo text<span class="widedash">-</span> prints to standard out</li>
 				<li>more file<span class="widedash">-</span> primitive version of less, use less</li>
 				<li>less file<span class="widedash">-</span> scrolls through a file</li>
-				<li>man,info
+				<li>man command<span class="widedash">-</span> view the linux manual for the specified command 
 					<ul>
 						<li>man man <span class="widedash">-</span> useful for looking at manual sections ( e.g. ls(1) )</li>
 						<li>man -S 1 ls <span class="widedash">-</span> view the man page, section 1, of ls</li>
 					</ul>
 				</li>
+                <li>info<span class="widedash">-</span> </li>
 				<li>ls | tee file<span class="widedash">-</span> read from standard input and write to standard output and files
 					<ul>
 						<li>ls | tee -a file<span class="widedash">-</span> read from standard input and write to standard output and append to files</li>
@@ -113,8 +115,23 @@
 			<strong>Miscellaneous</strong>
 			<ul>
 				<li>clear<span class="widedash">-</span> clears output of the terminal</li>
+                <li>vimtutor<span class="widedash">-</span> </li>
+                <li>apropos<span class="widedash">-</span> </li>
 			</ul>
 		</li>
+        <li>
+            <strong>Administration</strong>
+            <ul>
+                <li>sudo <span class="widedash">-</span> 
+                    <ul>
+						<li>sudo -s<span class="widedash">-</span> </li>
+                		<li>sudo -i<span class="widedash">-</span> </li>
+					</ul>
+                </li>
+                <li>visudo<span class="widedash">-</span> </li>
+                <li><span class="widedash">-</span> </li>
+            </ul>
+        </li>
 		<li>
 			<strong>Command Line Operators</strong>
 			<ul>
@@ -336,7 +353,8 @@ find / -user [user]
 		<li>
 			<strong>Packaging Commands</strong>
 			<ul>
-				<li>rpm -qa --last | less</li>last<li>sudo apt-get update</li>
+				<li>rpm -qa --last | less</li>
+                <li>sudo apt-get update</li>
 				<li>sudo apt-get upgrade</li>
 				<li>sudo apt-get autoremove</li>
 				<li>sudo apt-get autoclean</li>
@@ -444,13 +462,6 @@ find / -user [user]
 					</ul>
 				</li>
 				<li>denyhosts</li>
-			</ul>
-		</li>
-		<li>
-			<strong>Misc.</strong>
-			<ul>
-				<li>vimtutor</li>
-				<li>apropos COMMAND</li>
 			</ul>
 		</li>
 		<li>
@@ -671,3 +682,14 @@ End Of Life
 </div>
 </body>
 </html>
+
+
+
+TODO: 
+mount, umount 
+dd
+parted 
+mkfs 
+sudo !! 
+sudo command 
+
