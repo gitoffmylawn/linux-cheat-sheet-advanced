@@ -1,53 +1,53 @@
-#####
+#############################################################
 # This is a linux cheat sheet for beginner to advanced users. 
-#####
+#############################################################
 
-##### Linux Cheat Sheet #####
+####### Linux Cheat Sheet #######
 
 
 ### File Commands ###
 
-ls          # directory listing
-	ls -al          # formatted listing with hidden files
-	ls -ltra          # sorts by last updated with hidden files
-	ls -Sharl         # sorts by file size with hidden files
-	ls -m         # shows files and directories comma separated
-	ls --full-time          # formatted listing with year
-	ls -R         # list files and subdirectories recursively
+ls					# directory listing
+	ls -al				# formatted listing with hidden files
+	ls -ltra			# sorts by last updated with hidden files
+	ls -Sharl			# sorts by file size with hidden files
+	ls -m				# shows files and directories comma separated
+	ls --full-time			# formatted listing with year
+	ls -R				# list files and subdirectories recursively
 
-cd dir          # change directory to dir
-	cd          # change to home directory
+cd dir					# change directory to dir
+	cd				# change to home directory
 
-pwd         # show current directory 
+pwd					# show current directory 
 
-mkdir dir         # create a directory dir
-	mkdir -p ./parentdir/childdir/          # creates parentdir as well as childdir
+mkdir dir				# create a directory dir
+	mkdir -p ./parentdir/childdir/	# creates parentdir as well as childdir
 
-rmdir         # remove an empty directory
+rmdir					# remove an empty directory
 
-rm file         # delete file
-	rm -r dir         # delete directory dir
-	rm -f file          # force remove file
-	rm -rf dir          # force remove directory dir
-	rm -i file          # asks before file is deleted 
+rm file					# delete file
+	rm -r dir			# delete directory dir
+	rm -f file			# force remove file
+	rm -rf dir			# force remove directory dir
+	rm -i file			# asks before file is deleted 
 
-cp file1 file2          # copy file1 to file2
-	cp -r dir1 dir2         # copy dir1 to dir2; create dir2 if it doesn't exist
-	cp -a dir1 dir2         # copies entire directory tree
-	cp -u dir1 dir2           # prevents overwriting identically-named newer files
+cp file1 file2				# copy file1 to file2
+	cp -r dir1 dir2			# copy dir1 to dir2; create dir2 if it doesn't exist
+	cp -a dir1 dir2			# copies entire directory tree
+	cp -u dir1 dir2			# prevents overwriting identically-named newer files
 
-mv file1 file2  rename or move file1 to file2
+mv file1 file2  			# rename or move file1 to file2
 
-ln -s TARGET LINK_NAME  create symbolic link link to TARGET
-	ln TARGET LINK_NAME  hard link, points to inode instead of filename
+ln -s TARGET LINK_NAME			# create symbolic link link to TARGET
+	ln TARGET LINK_NAME		# hard link, points to inode instead of filename
 
-touch file  create or update file
-	touch -d "two hours ago" filename  change the modified time of file
+touch file				# create or update file
+	touch -d "two hours ago" filename	# change the modified time of file
 
-stat -c %Y test | gawk '{print strftime("%c", $0)}'  output of this and below command will be the same if file's mod time wasn't touched
-stat -c %Z test | gawk '{print strftime("%c", $0)}'  output of this will show when the file was last touched or modified
+stat -c %Y test | gawk '{print strftime("%c", $0)}'	# output of this and below command will be the same if file's mod time wasn't touched
+stat -c %Z test | gawk '{print strftime("%c", $0)}'	# output of this will show when the file was last touched or modified
 
-cat > file  places standard input into file
+cat > file				# places standard input into file
 
 head file  output the first 10 lines of file
 	head -n 3 file output the first 3 lines of file
