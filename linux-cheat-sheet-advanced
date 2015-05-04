@@ -5,7 +5,8 @@
 ####### Linux Cheat Sheet #######
 
 
-### File Commands ###
+
+### File Commands and Basics ###
 
 ls					# directory listing
 	ls -al				# formatted listing with hidden files
@@ -49,187 +50,187 @@ stat -c %Z test | gawk '{print strftime("%c", $0)}'	# output of this will show w
 
 cat > file				# places standard input into file
 
-head file  output the first 10 lines of file
-	head -n 3 file output the first 3 lines of file
+head file				# output the first 10 lines of file
+	head -n 3 file			#output the first 3 lines of file
 
-tail file  output the last 10 lines of file
-	tail -f file  output the contents of file as it grows, starting with the last 10 lines
-	tail -n 3 file output the last 3 lines of file
+tail file				# output the last 10 lines of file
+	tail -f file			# output the contents of file as it grows, starting with the last 10 lines
+	tail -n 3 file			# output the last 3 lines of file
 
 wc
-	echo -n string | wc -m counts the characters in a string
+	echo -n string | wc -m		# counts the characters in a string
 
 xargs
-	find . -name "*.c" | xargs rm -rf remove all files ending in .c
-	find . -name '*.c' | xargs grep 'stdlib.h' find files whose name ends in .c and stdlib.h is in the file
+	find . -name "*.c" | xargs rm -rf	# remove all files ending in .c
+	find . -name '*.c' | xargs grep 'stdlib.h'	# find files whose name ends in .c and stdlib.h is in the file
 
-cat file prints a file to standard out
-	cat score.txt names.txt > report.txt concatenates two files into one.
+cat file				# prints a file to standard out
+	cat score.txt names.txt > report.txt	# concatenates two files into one.
 
-tac file prints a file to standard out in reverse order
+tac file				# prints a file to standard out in reverse order
 
-rev file prints the characters in a line in reverse order
+rev file				# prints the characters in a line in reverse order
 
-echo text prints to standard out
+echo text				# prints to standard out
 
-more file primitive version of less, use less
+more file				# primitive version of less, use less
 
-less file scrolls through a file
+less file				# scrolls through a file
 
-man command view the linux manual for the specified command 
-	man man  useful for looking at manual sections ( e.g. ls(1) )
-	man -S 1 ls  view the man page, section 1, of ls
+man command				# view the linux manual for the specified command 
+	man man				# useful for looking at manual sections ( e.g. ls(1) )
+	man -S 1 ls			# view the man page, section 1, of ls
 
-info 
+info
+	info ls				# some mor info on the ls command 
+	
+ls | tee file 				# read from standard input and write to standard output and files
+	ls | tee -a file		# read from standard input and write to standard output and append to files
 
-ls | tee file read from standard input and write to standard output and files
-	ls | tee -a file read from standard input and write to standard output and append to files
+file FILE				# displays the file type
 
-file FILE displays the file type
 
-### Miscellaneous
 
-clear clears output of the terminal
+### Miscellaneous Commands ###
 
-vimtutor 
+clear					# clears output of the terminal
 
-apropos
+vimtutor				# 
 
-### Administration ###
+apropos					# 
 
-sudo command run a command as root 
 
-sudo -s run the shell specified by the SHELL environment variable
 
-sudo -i
+### Administrative Commands ###
 
-visudo 
+sudo command				# run a command as root 
 
-exit 
+sudo -s					# run the shell specified by the SHELL environment variable
+
+sudo -i					# 
+
+visudo					# 
+
+exit					# 
 
 <a href="https://prasadlinuxblog.wordpress.com/2012/09/04/392/" target="_blank">su vs sudo vs runuser</a>
-            
-        
-		
-			<strong>Command Line Operators</strong>
-			
-				STDIN (0) - Standard input (data fed into the program)
-				STDOUT (1) - Standard output (data printed by the program, defaults to the terminal)
-				STDERR (2) - Standard error (for error messages, also defaults to the terminal)
-				&gt;
-				&gt;&gt;
-				&lt;
-				2&gt;
-				|
-				&amp;
-				~
-				*
-				;
-				/
-				&amp;&amp;
-				||
-				&amp;&amp; and ||
-				!
-				!!
-				`` (backticks)
-				for in do
-			
-		
-		
-			<strong>User Management</strong>
-			
-				sudo useradd USERNAME
-				/etc/passwd
-				account:password:UID:GID:GECOS:directory:shell
-				/etc/shadow
-				/etc/group
-				/etc/gshadow
-				/etc/sudoers
-				useradd -G GROUPNAME USERNAME
-				useradd -m -g INITIALGROUP -G ADDITIONALGROUPS -s LOGINSHELL USERNAME
-				passwd, passwd USER
-				chfn
-				chage
-				userdel -r
-				groups USERNAME
-				id USERNAME
-				groupadd GROUP
-				gpasswd -a USER GROUP
-				groupdel GROUP
-				groupmod -n NEWGROUP OLDGROUP
-				gpasswd -d USER GROUP
-				visudo
-			
-		
-		
-			<strong>Process Management</strong>
-			
-				ps  display your currently active processes
-				ps auwx  
-				ps axf  lists processes in a tree view
-				ps axf | grep raid 
-				top  display all running processes
-				kill pid  kill process id pid
-				killall proc  kill all processes named proc *
-				Control + c  halts the current command
-				Control + d  log out of current session, similar to exit
-				Control + s, Control + q  stops output, resumes output
-				Control + z  stops the current command, resume with fg in the foreground or bg in the background
-				bg  lists stopped or background jobs; resume a stopped job in the background
-				fg  brings the most recent job to foreground
-				COMMAND &amp; runs command in the background
-				fg n%  brings job n to the foreground
-				kill n%  kills job n
-				jobs  lists jobs
+
+
+
+### Command Line Operators ### 
+
+STDIN (0) - Standard input (data fed into the program)
+STDOUT (1) - Standard output (data printed by the program, defaults to the terminal)
+STDERR (2) - Standard error (for error messages, also defaults to the terminal)
+>
+>>
+<
+2>
+|
+&amp;
+~
+*
+;
+/
+&amp;&amp;
+||
+&amp;&amp; and ||
+!
+!!
+`` (backticks)
+for in do
+	
+	
+	
+### User Management ###
+
+sudo useradd USERNAME
+
+/etc/passwd
+account:password:UID:GID:GECOS:directory:shell
+/etc/shadow
+/etc/group
+/etc/gshadow
+/etc/sudoers
+useradd -G GROUPNAME USERNAME
+useradd -m -g INITIALGROUP -G ADDITIONALGROUPS -s LOGINSHELL USERNAME
+passwd, passwd USER
+chfn
+chage
+userdel -r
+groups USERNAME
+id USERNAME
+groupadd GROUP
+gpasswd -a USER GROUP
+groupdel GROUP
+groupmod -n NEWGROUP OLDGROUP
+gpasswd -d USER GROUP
+
+
+
+### Process Management ###
+
+ps  display your currently active processes
+ps auwx  
+ps axf  lists processes in a tree view
+ps axf | grep raid 
+top  display all running processes
+kill pid  kill process id pid
+killall proc  kill all processes named proc *
+Control + c  halts the current command
+Control + d  log out of current session, similar to exit
+Control + s, Control + q  stops output, resumes output
+Control + z  stops the current command, resume with fg in the foreground or bg in the background
+bg  lists stopped or background jobs; resume a stopped job in the background
+fg  brings the most recent job to foreground
+COMMAND &amp; runs command in the background
+fg n%  brings job n to the foreground
+kill n%  kills job n
+jobs  lists jobs
 sudo update-rc.d -f process remove
 sudo chkconfig apache2 off
 pgrep
 pstree
-sudo 
-			
-		
-		
-			<strong>Permissions</strong>
-			
-				chmod octal file  change the permissions of file to octal, which can be found separately for user, group, and world.
-					
-						chmod 777 file read, write, execute for all
-						chmod 755 file rwx for owner, rx for group and world
+sudo
+
+
+
+### Permissions ###
+
+chmod octal file  change the permissions of file to octal, which can be found separately for user, group, and world.
+	chmod 777 file read, write, execute for all
+	chmod 755 file rwx for owner, rx for group and world
+
 stat -c %U /media/sf_Shared/
 stat -c %G /media/sf_Shared/
 stat -c %A /media/sf_Shared/
 find / -group [group]
 find / -user [user]
 
-					
-				
-				chown --preserve-root
-					
-						chown --preserve-root user:group -R /home/user/* chowns all files except hidden files
-						<strike>chown --preserve-root user:group -R /home/user/.*</strike> DO NOT DO THIS (This command will start chowning .. directories)
-						chown --preserve-root user:group -R /home/user/.[^.]* chowns all hidden files
-						chown --preserve-root user:group -R /home/user chowns all files in user but also chows the directory user
-					
-				
-			
-		
-		
-			<strong>SSH</strong>
-			
-				ssh user@host  connect to host as user
-				ssh -p port user@host  connect to host on port
-				ssh-copy-id user@host  add your key to host for user to enable a keyed or passwordless login
-			
-		
-		
-			<strong>Searching</strong>
-			
-				grep pattern files  search for pattern in files
-				grep -r pattern dir  search recursively for pattern in dir
-				command | grep pattern  search for pattern in the output of command
-				locate file  find all instances of file
-				sudo updatedb  updates the database that locate uses to search for files.
-				find  
+chown --preserve-root
+	chown --preserve-root user:group -R /home/user/* chowns all files except hidden files
+	<strike>chown --preserve-root user:group -R /home/user/.*</strike> DO NOT DO THIS (This command will start chowning .. directories)
+	chown --preserve-root user:group -R /home/user/.[^.]* chowns all hidden files
+	chown --preserve-root user:group -R /home/user chowns all files in user but also chows the directory user
+
+
+
+### SSH ### 
+
+ssh user@host  connect to host as user
+ssh -p port user@host  connect to host on port
+ssh-copy-id user@host  add your key to host for user to enable a keyed or passwordless login
+
+
+
+### Searching ###
+
+grep pattern files  search for pattern in files
+grep -r pattern dir  search recursively for pattern in dir
+command | grep pattern  search for pattern in the output of command
+locate file  find all instances of file
+sudo updatedb  updates the database that locate uses to search for files.
+find  
 			
 		
 		
