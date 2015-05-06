@@ -7,7 +7,6 @@
 
 
 ### File Commands and Basics ###
-
 ls					# directory listing
 	ls -al				# formatted listing with hidden files
 	ls -ltra			# sorts by last updated with hidden files
@@ -15,84 +14,58 @@ ls					# directory listing
 	ls -m				# shows files and directories comma separated
 	ls --full-time			# formatted listing with year
 	ls -R				# list files and subdirectories recursively
-
 cd dir					# change directory to dir
 	cd				# change to home directory
-
 pwd					# show current directory 
-
 mkdir dir				# create a directory dir
 	mkdir -p ./parentdir/childdir/	# creates parentdir as well as childdir
-
 rmdir					# remove an empty directory
-
 rm file					# delete file
 	rm -r dir			# delete directory dir
 	rm -f file			# force remove file
 	rm -rf dir			# force remove directory dir
 	rm -i file			# asks before file is deleted 
-
 cp file1 file2				# copy file1 to file2
 	cp -r dir1 dir2			# copy dir1 to dir2; create dir2 if it doesn't exist
 	cp -a dir1 dir2			# copies entire directory tree
 	cp -u dir1 dir2			# prevents overwriting identically-named newer files
-
 mv file1 file2  			# rename or move file1 to file2
-
 ln -s TARGET LINK_NAME			# create symbolic link link to TARGET
 	ln TARGET LINK_NAME		# hard link, points to inode instead of filename
-
-touch file# create or update file
+touch file				# create or update file
 	touch -d "two hours ago" filename	# change the modified time of file
-
 stat -c %Y test | gawk '{print strftime("%c", $0)}'	# output of this and below command will be the same if file's mod time wasn't touched
 stat -c %Z test | gawk '{print strftime("%c", $0)}'	# output of this will show when the file was last touched or modified
-
 cat > file				# places standard input into file
-
 head file				# output the first 10 lines of file
-	head -n 3 file			#output the first 3 lines of file
-
+	head -n 3 file			# output the first 3 lines of file
 tail file				# output the last 10 lines of file
 	tail -f file			# output the contents of file as it grows, starting with the last 10 lines
 	tail -n 3 file			# output the last 3 lines of file
-
-wc
+wc					# 
 	echo -n string | wc -m		# counts the characters in a string
-
-xargs
+xargs					#
 	find . -name "*.c" | xargs rm -rf	# remove all files ending in .c
 	find . -name '*.c' | xargs grep 'stdlib.h'	# find files whose name ends in .c and stdlib.h is in the file
-
 cat file				# prints a file to standard out
 	cat score.txt names.txt > report.txt	# concatenates two files into one.
-
 tac file				# prints a file to standard out in reverse order
-
 rev file				# prints the characters in a line in reverse order
-
 echo text				# prints to standard out
-
 more file				# primitive version of less, use less
-
 less file				# scrolls through a file
-
 man command				# view the linux manual for the specified command 
 	man man				# useful for looking at manual sections ( e.g. ls(1) )
 	man -S 1 ls			# view the man page, section 1, of ls
-
-info
+info					#
 	info ls				# some mor info on the ls command 
-	
 ls | tee file 				# read from standard input and write to standard output and files
 	ls | tee -a file		# read from standard input and write to standard output and append to files
-
-file FILE# displays the file type
+file FILE				# displays the file type
 
 
 
 ### Miscellaneous Commands ###
-
 clear					# clears output of the terminal
 vimtutor				# 
 apropos					# 
@@ -100,21 +73,16 @@ apropos					#
 
 
 ### Administrative Commands ###
-
 sudo command				# run a command as root 
 sudo -s					# run the shell specified by the SHELL environment variable
 sudo -i					# 
 visudo					# 
-
 exit					# 
-
-su vs sudo vs runuser
-https://prasadlinuxblog.wordpress.com/2012/09/04/392/
+<a href="https://prasadlinuxblog.wordpress.com/2012/09/04/392/" target="_blank">su vs sudo vs runuser</a>	# su vs sudo vs runuser
 
 
 
 ### Command Line Operators ### 
-
 STDIN (0) - Standard input (data fed into the program)
 STDOUT (1) - Standard output (data printed by the program, defaults to the terminal)
 STDERR (2) - Standard error (for error messages, also defaults to the terminal)
@@ -139,9 +107,7 @@ for in do
 	
 	
 ### User Management ###
-
 sudo useradd USERNAME
-
 /etc/passwd
 account:password:UID:GID:GECOS:directory:shell
 /etc/shadow
@@ -165,7 +131,6 @@ gpasswd -d USER GROUP
 
 
 ### Process Management ###
-
 ps  display your currently active processes
 ps auwx  
 ps axf  lists processes in a tree view
@@ -192,17 +157,14 @@ sudo
 
 
 ### Permissions ###
-
 chmod octal file  change the permissions of file to octal, which can be found separately for user, group, and world.
 	chmod 777 file read, write, execute for all
 	chmod 755 file rwx for owner, rx for group and world
-
 stat -c %U /media/sf_Shared/
 stat -c %G /media/sf_Shared/
 stat -c %A /media/sf_Shared/
 find / -group [group]
 find / -user [user]
-
 chown --preserve-root
 	chown --preserve-root user:group -R /home/user/* chowns all files except hidden files
 	<strike>chown --preserve-root user:group -R /home/user/.*</strike> DO NOT DO THIS (This command will start chowning .. directories)
@@ -212,7 +174,6 @@ chown --preserve-root
 
 
 ### SSH ### 
-
 ssh user@host  connect to host as user
 ssh -p port user@host  connect to host on port
 ssh-copy-id user@host  add your key to host for user to enable a keyed or passwordless login
@@ -220,7 +181,6 @@ ssh-copy-id user@host  add your key to host for user to enable a keyed or passwo
 
 
 ### Searching ###
-
 grep pattern files  search for pattern in files
 grep -r pattern dir  search recursively for pattern in dir
 grep -B 1 pattern dir search for pattern and print line as well as one line before 
@@ -234,23 +194,19 @@ find -maxdepth 1 -type f -mtime +60 -exec ls -l {} \;
 
 
 ### Shells ###
-
+sh
 bash
 dash
-sh
 csh
 tcsh
 
 
 
 ### Disk Usage ###
-
 df  show disk usage
 	df -ih
 	df -h
-
 find / -xdev -printf '%h\n' | sort | uniq -c | sort -k 1 -n
-
 du  show directory space usage
 	du -sch *
 	du -sch .[!.]* * |sort -h
@@ -258,13 +214,11 @@ du  show directory space usage
 
 
 ### File Comparison ###
-
 diff -u file1 file2 > file3
 
 
 
 ### IP Addresses ###
-
 ifconfig
 ip addr show | perl -ne '/inet\s*([\d\.]+).*global/ &amp;&amp; do {print "$1\n"}'
 	ip addr | grep inet
@@ -277,7 +231,6 @@ http://www.subnet-calculator.com/cidr.php CIDR Calculator
 
 
 ### System Info ###
-
 date  show the current date and time
 cal  show this month's calendar
 uptime  show current uptime
@@ -300,7 +253,6 @@ ls -l /usr/share/xsessions  show desktop environments
 
 
 ### Compression ###
-
 tar cf file.tar files  create a tar named file.tar containing files
 tar xf file.tar  extract the files from file.tar
 tar czf file.tar.gz files  create a tar with Gzip compression
@@ -314,7 +266,6 @@ bunzip2
 
 
 ### Network ###
-
 ping host  ping host and output results
 fping
 whois domain  get whois information for domain
@@ -331,7 +282,6 @@ netstat -nat | grep LISTEN
 
 
 ### Packaging Commands ###
-
 rpm -qa --last | less
 sudo apt-get update
 sudo apt-get upgrade
@@ -358,7 +308,6 @@ modprobe
 
 
 ### gpg ###
-
 gpg --gen-key
 gpg --list-keys
 gpg --list-secret-keys
@@ -373,7 +322,6 @@ http://www.thegeekstuff.com/2012/10/gnupg-basics/
 
 
 ### Logs ###
-
 /var/log/
 /etc/cron.daily/logrotate
 /etc/logrotate.conf
@@ -384,7 +332,6 @@ logrotate -f /etc/logrotate.conf
 
 
 ### Cron ### 
-
 /etc/crontab
 /etc/cron.hourly/, /etc/cron.daily/, /etc/cron.weekly/, /etc/cron.monthly/
 /etc/cron.d/
@@ -393,7 +340,6 @@ logrotate -f /etc/logrotate.conf
 
 
 ### Backups ### 
-
 rsync -havPn $FILE root@$HOSTNAME:/$RESTORE-DIR
 	ZFS - http://en.wikipedia.org/wiki/ZFS
 		zfs create pool/dataset
@@ -411,7 +357,6 @@ rsync -havPn $FILE root@$HOSTNAME:/$RESTORE-DIR
 
 
 ### psql ###
-	
 psql -d DATABASE
 \l
 \dt
@@ -421,7 +366,6 @@ psql -d DATABASE
 
 
 ### iptables / Rate Limiting ###
-
 iptables -L -v
 iptables -L -vt nat
 iptables-save | less
@@ -434,7 +378,6 @@ denyhosts
 
 
 ### Mail Servers ###
-
 http://en.wikipedia.org/wiki/Comparison_of_mail_servers >Comparison Of Mail Servers
 Postfix Commands
 	postqueue -p
@@ -446,7 +389,6 @@ Postfix Commands
 
 
 ### Editors ###
-
 vi,vim
 vi -r .file.swp
 nano
@@ -468,12 +410,10 @@ mdadm - assemble, build, create, monitor, grow, manage, and misc
 
 
 ### SSL ###
-
 /etc/ssl/
 /etc/httpd/conf.d/
 https://www.sslshopper.com/ssl-checker.html >SSL Checker
 SSL Generation
-
 	openssl req -out CSR.csr -sha256 -new -newkey rsa:2048 -nodes -keyout privateKey.key  Generate a new private key and Certificate Signing Request
 	openssl req -x509 -nodes -sha256 -days 365 -newkey rsa:2048 -keyout privateKey.key -out certificate.crt  Generate a self-signed
 certificate
@@ -482,21 +422,17 @@ key
 	penssl x509 -x509toreq -sha256 -in certificate.crt -out CSR.csr -signkey privateKey.key  Generate a certificate signing request based on an
 existing certificate
 	penssl rsa -in privateKey.pem -out new  PrivateKey.pem Remove a passphrase from a private key
-
 <strong>SSL Checking</strong>
-
 	openssl req -text -noout -verify -in CSR.csr  Check a Certificate Signing Request (CSR)
 	openssl rsa -in privateKey.key -check  Check a private key
 	openssl x509 -in certificate.crt -text -noout  Check a certificate
 	openssl pkcs12 -info -in keyStore.p12  Check a PKCS#12 file (.pfx or .p12)
-
 Wildcard vs. SAN Certificate
 Domain Validated vs. Business Validated
 
 
 
 ### System Discovery ###
-
 xinput, xinput disable
 lsmod
 lspci
@@ -505,13 +441,11 @@ netstat -pnatu
 
 
 ### System Migration/Comparison ###
-
 rpm -qa | sort &gt; packages
 
 
 
 ### SVN ###
-
 svn log | head -n 30
 svn diff -r r12345:r12346
 http://svnbook.red-bean.com/en/1.7/svn.ref.svn.c.status.html
@@ -519,14 +453,12 @@ http://svnbook.red-bean.com/en/1.7/svn.ref.svn.c.status.html
 
 
 ### http://en.wikipedia.org/wiki/Lists_of_network_protocols Protocols ###
-
 http://en.wikipedia.org/wiki/Simple_Network_Management_Protocol >SNMP
 http://en.wikipedia.org/wiki/List_of_HTTP_status_codes >HTTP Error Codes
 
 
 
 ### File Systems ###
-
 http://en.wikipedia.org/wiki/Comparison_of_file_systems >Comparison
 http://en.wikipedia.org/wiki/List_of_file_systems >List of File Systems
 df -T
@@ -540,53 +472,28 @@ http://en.wikipedia.org/wiki/ZFS >ZFS
 
 
 ### Math ###
-
 echo $(( ... ))
 
 
 
 ### Programming ###
-
 bash
 python
 perl
 C,C++
 Java
 php
-			
-		
-		xinput, xinput disable NUMBER
-		lsblk
-		fdisk -l
-		drbd
-		heartbeat
-		dd
-		df, df -a, df -h
-		uname, uname -a
-		history
-		cut
-		sudo
-		apt, apt-get, apt-cache
-		touch
-		md5sum
-		tar
-		screen
-		cal, cal 09 1987
-		date, date --set='19 september 2015 12:00
-		cat, cat a b ab
-		wc, wc -l
-		Processes
 
 
 
-Processes
+
+### Processes ###
 postfix, /usr/libexec/postfix/master, /etc/postfix/main.cf, /etc/postfix/virtual
 cyrus, /etc/sasl2/smtpd.conf, /etc/imapd.conf
 
 
 
 ### Shell Variables ###
-			
 $0, $1, $2, $3... - positional parameters
 ${10} ... ${N} - positional parameters beyond 9
 $* - $1 $2 $3 ... ${N}
@@ -598,7 +505,6 @@ $# - total number of parameters
 
 
 ### Languages ###
-
 Perl
 CPAN
 
@@ -627,3 +533,25 @@ mkfs
 sudo !! 
 sudo command 
 openssl rsa -in users.tummy.com.key -pubout 
+xinput, xinput disable NUMBER
+lsblk
+fdisk -l
+drbd
+heartbeat
+dd
+df, df -a, df -h
+uname, uname -a
+history
+cut
+sudo
+apt, apt-get, apt-cache
+touch
+md5sum
+tar
+screen
+cal, cal 09 1987
+date, date --set='19 september 2015 12:00
+cat, cat a b ab
+wc, wc -l
+
+
