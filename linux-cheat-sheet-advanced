@@ -42,7 +42,7 @@ mv file1 file2  			# rename or move file1 to file2
 ln -s TARGET LINK_NAME			# create symbolic link link to TARGET
 	ln TARGET LINK_NAME		# hard link, points to inode instead of filename
 
-touch file				# create or update file
+touch file# create or update file
 	touch -d "two hours ago" filename	# change the modified time of file
 
 stat -c %Y test | gawk '{print strftime("%c", $0)}'	# output of this and below command will be the same if file's mod time wasn't touched
@@ -87,16 +87,14 @@ info
 ls | tee file 				# read from standard input and write to standard output and files
 	ls | tee -a file		# read from standard input and write to standard output and append to files
 
-file FILE				# displays the file type
+file FILE# displays the file type
 
 
 
 ### Miscellaneous Commands ###
 
 clear					# clears output of the terminal
-
 vimtutor				# 
-
 apropos					# 
 
 
@@ -104,16 +102,14 @@ apropos					#
 ### Administrative Commands ###
 
 sudo command				# run a command as root 
-
 sudo -s					# run the shell specified by the SHELL environment variable
-
 sudo -i					# 
-
 visudo					# 
 
 exit					# 
 
-<a href="https://prasadlinuxblog.wordpress.com/2012/09/04/392/" target="_blank">su vs sudo vs runuser</a>
+su vs sudo vs runuser
+https://prasadlinuxblog.wordpress.com/2012/09/04/392/
 
 
 
@@ -227,349 +223,336 @@ ssh-copy-id user@host  add your key to host for user to enable a keyed or passwo
 
 grep pattern files  search for pattern in files
 grep -r pattern dir  search recursively for pattern in dir
+grep -B 1 pattern dir search for pattern and print line as well as one line before 
+grep -A 1 pattern dir search for pattern and print line as well as one line after
 command | grep pattern  search for pattern in the output of command
 locate file  find all instances of file
 sudo updatedb  updates the database that locate uses to search for files.
-find  
-			
-		
-		
-			<strong>Shells</strong>
-			
-				bash
-				dash
-				sh
-				csh
-				tcsh
-			
-		
-		
-			<strong>Disk Usage</strong>
-			
-				df  show disk usage
-				df -ih
-				df -h
-				find / -xdev -printf '%h\n' | sort | uniq -c | sort -k 1 -n
-				du  show directory space usage
-				du -sch *
-				du -sch .[!.]* * |sort -h
-			
-		
-		
-			<strong>File Comparison</strong>
-			
-				diff -u file1 file2 > file3
-			
-		
-		
-			<strong>IP Addresses</strong>
-			
-				ifconfig
-				ip addr show | perl -ne '/inet\s*([\d\.]+).*global/ &amp;&amp; do {print "$1\n"}'
-				ip addr | grep inet
-				curl ifconfig.me
-				<a href="http://vlsm-calc.net/ipclasses.php" target="_blank">IP Address Classes</a> (Replaced by <a href="http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing" target="_blank">CIDR</a>)
-				<a href="http://en.wikipedia.org/wiki/Reserved_IP_addresses" target="_blank">Reserved IP Addresses</a>
-				<a href="http://www.subnet-calculator.com/subnet.php" target="_blank">IP Subnet Calculator</a>
-				<a href="http://www.subnet-calculator.com/cidr.php" target="_blank">CIDR Calculator</a>
-			
-		
-		
-			<strong>System Info</strong>
-			
-				date  show the current date and time
-				cal  show this month's calendar
-				uptime  show current uptime
-				w  display who is online
-				whoami  who you are logged in as
-				finger user  display information about user
-				uname -a  show kernel information
-				cat /proc/cpuinfo  cpu information
-				cat /proc/meminfo  memory information
-				cat /proc/version  version information
-				cat /etc/*-release  distribution and version (no such file in Debian)
-				lsb_release -a  distribution and version
-				cat /etc/issue  distribution and version
-				man command  show the manual for command
-				free  show memory and swap usage
-				whereis app  show possible locations of app
-				which app  show which app will be run by default
-				ls -l /usr/share/xsessions  show desktop environments
-			
-		
-		
-			<strong>Compression</strong>
-			
-				tar cf file.tar files  create a tar named file.tar containing files
-				tar xf file.tar  extract the files from file.tar
-				tar czf file.tar.gz files  create a tar with Gzip compression
-				tar xzf file.tar.gz  extract a tar using Gzip
-				tar cjf file.tar.bz2  create a tar with Bzip2 compression
-				tar xjf file.tar.bz2  extract a tar using Bzip2
-				gzip file  compresses file and renames it to file.gz
-				gzip -d file.gz  decompresses file.gz back to file
-				bunzip2
-			
-		
-		
-			<strong>Network</strong>
-			
-				ping host  ping host and output results
-				fping
-				whois domain  get whois information for domain
-				dig domain dig mx domain get DNS information for domain
-				dig -x host  reverse lookup host
-				wget file  download file
-				wget -c file  continue a stopped download
-				host
-				nslookup
-				nmap
-				traceroute
-				netstat -nat | grep LISTEN
-				
-			
-		
-		
-			<strong>Packaging Commands</strong>
-			
-				rpm -qa --last | less
-                sudo apt-get update
-				sudo apt-get upgrade
-				sudo apt-get autoremove
-				sudo apt-get autoclean
-				Install form source: ./configure -&gt; make -&gt; make install
-				dpkg -i pkg.deb  install a package (Debian)
-				dpkg -l | grep PACKAGE  see if a package is installed (Debian)
-				dpkg -s PACKAGE  see if package is installed and get info (Debian)
-				dpkg-query -L PACKAGE  view the files that are associated in the bash package
-				rpm -Uvh pkg.rpm  install a package (RPM)
-				rpm -qa | grep PACKAGE  see if a package is installed (RPM)
-				rpm -ql PACKAGE  view the files that are associated in the bash package (RPM)
-					<strong>Remove Kernels In /boot (Debian)</strong>
-					
-						df -h
-						uname -r
-						dpkg -l | grep linux-image
-						dpkg -r linux-image-3.2.0-65-generic
-						dpkg --purge linux-image-3.2.0-65-generic
-						df -h
-					
-				
-				lsmod
-				modprobe
-			
-		
-		
-			<strong>gpg</strong>
-			
-				gpg --gen-key
-				gpg --list-keys
-				gpg --list-secret-keys
-				gpg --keyserver pgp.mit.edu --search-keys user@example.com
-				<a href="https://kb.iu.edu/d/awiu">https://kb.iu.edu/d/awiu</a>
-				<a href="https://pgp.mit.edu/">https://pgp.mit.edu/</a>
-				<a href="https://futureboy.us/pgp.html">https://futureboy.us/pgp.html</a>
-				<a href="https://www.gnupg.org/index.html">https://www.gnupg.org/index.html</a>
-				<a href="https://www.digitalocean.com/community/tutorials/how-to-use-gpg-to-encrypt-and-sign-messages-on-an-ubuntu-12-04-vps">https://www.digitalocean.com/community/tutorials/how-to-use-gpg</a>
-				<a href="http://www.thegeekstuff.com/2012/10/gnupg-basics/">thegeekstuff.com/2012/10/gnupg-basics/</a>
-			
-		
-		
-			<strong>Logs</strong>
-			
-				/var/log/
-				/etc/cron.daily/logrotate
-				/etc/logrotate.conf
-				/etc/logrotate.d/
-				logrotate -d /etc/logrotate.conf
-				logrotate -f /etc/logrotate.conf
-			
-		
-		
-			<strong>Cron</strong>
-			
-				/etc/crontab
-				/etc/cron.hourly/, /etc/cron.daily/, /etc/cron.weekly/, /etc/cron.monthly/
-				/etc/cron.d/
-				/var/spool/cron/crontabs/
-			
-		
-		
-			<strong>Backups</strong>
-			
-				rsync -havPn $FILE root@$HOSTNAME:/$RESTORE-DIR
-			
-		
-		
-			<strong><a href="http://en.wikipedia.org/wiki/ZFS" target="_blank">ZFS</a></strong>
-			
-				zfs create pool/dataset
-				zfs create -o OPTION=OPTIONVALUE pool/dataset
-				zfs list
-				zfs destroy
-				zfs umount
-				zfs rename
-				zfs mount
-				zpool status
-				zpool history
-				zfs get all pool/dataset
-				<a href="http://docs.oracle.com/cd/E18752_01/html/819-5461/zfsover-1.html" target="_blank">Oracle ZFS Docs</a>
-			
-		
-		
-			<strong>psql</strong>
-			
-				psql -d DATABASE
-				\l
-				\dt
-				\q
-				\d+ backups
-			
-		
-		
-			<strong>iptables</strong>
-			
-				iptables -L -v
-				iptables -L -vt nat
-				iptables-save | less
-				iptables -L --line-numbers
-				
-					<strong><a href="http://www.fail2ban.org/" target="_blank">fail2ban</a></strong>
-					
-						/var/log/secure fail2ban scans this file for multiple login attempts
-						/etc/fail2ban/
-					
-				
-				denyhosts
-			
-		
-		
-			<strong>Mail Servers</strong>
-			
-				<a href="http://en.wikipedia.org/wiki/Comparison_of_mail_servers" target="_blank">Comparison Of Mail Servers</a>
-				
-					<strong>Postfix Commands</strong>
-					
-						postqueue -p
-						postcat -q MSGID | cat
-						postcat MSGID
-						<a href="http://www.greylisting.org/" target="_blank">greylisting.org</a>
-						<a href="http://forum.centos-webpanel.com/e-mail/postfix-mail-server-commands/" target="_blank">http://forum.centos-webpanel.com/e-mail/postfix-mail-server-commands/</a>
-					
-				
-			
-		
-		
-			<strong>Editors</strong>
-			
-				vi,vim
-				vi -r .file.swp
-				nano
-				emacs
-				pico
-				gvim
-				gedit
-				geany
-			
-		
-		
-			<strong>RAID</strong>
-			
-				<a href="http://en.wikipedia.org/wiki/Standard_RAID_levels" target="_blank">Standard RAID Levels</a>
-				<a href="http://en.wikipedia.org/wiki/Nested_RAID_levels" target="_blank">Nested RAID Levels
-				/proc/mdstat
-				mdadm - assemble, build, create, monitor, grow, manage, and misc
-			
-		
-		
-			<strong>SSL</strong>
-			
-				/etc/ssl/
-				/etc/httpd/conf.d/
-				<a href="https://www.sslshopper.com/ssl-checker.html" target="_blank">SSL Checker</a>
-				<strong>SSL Generation</strong>
-				
-					openssl req -out CSR.csr -sha256 -new -newkey rsa:2048 -nodes -keyout privateKey.key  Generate a new private key and Certificate Signing Request
-					openssl req -x509 -nodes -sha256 -days 365 -newkey rsa:2048 -keyout privateKey.key -out certificate.crt  Generate a self-signed
+find
+find -maxdepth 1 -type f -mtime +60 -exec ls -l {} \;
+
+
+
+### Shells ###
+
+bash
+dash
+sh
+csh
+tcsh
+
+
+
+### Disk Usage ###
+
+df  show disk usage
+	df -ih
+	df -h
+
+find / -xdev -printf '%h\n' | sort | uniq -c | sort -k 1 -n
+
+du  show directory space usage
+	du -sch *
+	du -sch .[!.]* * |sort -h
+
+
+
+### File Comparison ###
+
+diff -u file1 file2 > file3
+
+
+
+### IP Addresses ###
+
+ifconfig
+ip addr show | perl -ne '/inet\s*([\d\.]+).*global/ &amp;&amp; do {print "$1\n"}'
+	ip addr | grep inet
+curl ifconfig.me
+http://vlsm-calc.net/ipclasses.php IP Address Classes (Replaced by http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing >CIDR)
+http://en.wikipedia.org/wiki/Reserved_IP_addresses Reserved IP Addresses
+http://www.subnet-calculator.com/subnet.php IP Subnet Calculator
+http://www.subnet-calculator.com/cidr.php CIDR Calculator
+
+
+
+### System Info ###
+
+date  show the current date and time
+cal  show this month's calendar
+uptime  show current uptime
+w  display who is online
+whoami  who you are logged in as
+finger user  display information about user
+uname -a  show kernel information
+cat /proc/cpuinfo  cpu information
+	cat /proc/meminfo  memory information
+	cat /proc/version  version information
+cat /etc/*-release  distribution and version (no such file in Debian)
+lsb_release -a  distribution and version
+cat /etc/issue  distribution and version
+man command  show the manual for command
+free  show memory and swap usage
+whereis app  show possible locations of app
+which app  show which app will be run by default
+ls -l /usr/share/xsessions  show desktop environments
+
+
+
+### Compression ###
+
+tar cf file.tar files  create a tar named file.tar containing files
+tar xf file.tar  extract the files from file.tar
+tar czf file.tar.gz files  create a tar with Gzip compression
+tar xzf file.tar.gz  extract a tar using Gzip
+tar cjf file.tar.bz2  create a tar with Bzip2 compression
+tar xjf file.tar.bz2  extract a tar using Bzip2
+gzip file  compresses file and renames it to file.gz
+gzip -d file.gz  decompresses file.gz back to file
+bunzip2
+
+
+
+### Network ###
+
+ping host  ping host and output results
+fping
+whois domain  get whois information for domain
+dig domain dig mx domain get DNS information for domain
+dig -x host  reverse lookup host
+wget file  download file
+wget -c file  continue a stopped download
+host
+nslookup
+nmap
+traceroute
+netstat -nat | grep LISTEN
+
+
+
+### Packaging Commands ###
+
+rpm -qa --last | less
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get autoremove
+sudo apt-get autoclean
+Install form source: ./configure -&gt; make -&gt; make install
+dpkg -i pkg.deb  install a package (Debian)
+dpkg -l | grep PACKAGE  see if a package is installed (Debian)
+dpkg -s PACKAGE  see if package is installed and get info (Debian)
+dpkg-query -L PACKAGE  view the files that are associated in the bash package
+rpm -Uvh pkg.rpm  install a package (RPM)
+rpm -qa | grep PACKAGE  see if a package is installed (RPM)
+rpm -ql PACKAGE  view the files that are associated in the bash package (RPM)
+	Remove Kernels In /boot (Debian)
+		df -h
+		uname -r
+		dpkg -l | grep linux-image
+		dpkg -r linux-image-3.2.0-65-generic
+		dpkg --purge linux-image-3.2.0-65-generic
+		df -h
+lsmod
+modprobe
+
+
+
+### gpg ###
+
+gpg --gen-key
+gpg --list-keys
+gpg --list-secret-keys
+gpg --keyserver pgp.mit.edu --search-keys user@example.com
+https://kb.iu.edu/d/awiu
+https://pgp.mit.edu/
+https://futureboy.us/pgp.html
+https://www.gnupg.org/index.html
+https://www.digitalocean.com/community/tutorials/how-to-use-gpg-to-encrypt-and-sign-messages-on-an-ubuntu-12-04-vps
+http://www.thegeekstuff.com/2012/10/gnupg-basics/
+
+
+
+### Logs ###
+
+/var/log/
+/etc/cron.daily/logrotate
+/etc/logrotate.conf
+/etc/logrotate.d/
+logrotate -d /etc/logrotate.conf
+logrotate -f /etc/logrotate.conf
+
+
+
+### Cron ### 
+
+/etc/crontab
+/etc/cron.hourly/, /etc/cron.daily/, /etc/cron.weekly/, /etc/cron.monthly/
+/etc/cron.d/
+/var/spool/cron/crontabs/
+
+
+
+### Backups ### 
+
+rsync -havPn $FILE root@$HOSTNAME:/$RESTORE-DIR
+	ZFS - http://en.wikipedia.org/wiki/ZFS
+		zfs create pool/dataset
+		zfs create -o OPTION=OPTIONVALUE pool/dataset
+		zfs list
+		zfs destroy
+		zfs umount
+		zfs rename
+		zfs mount
+		zpool status
+		zpool history
+		zfs get all pool/dataset
+		Oracle ZFS Docs - http://docs.oracle.com/cd/E18752_01/html/819-5461/zfsover-1.html
+
+
+
+### psql ###
+	
+psql -d DATABASE
+\l
+\dt
+\q
+\d+ backups
+
+
+
+### iptables / Rate Limiting ###
+
+iptables -L -v
+iptables -L -vt nat
+iptables-save | less
+iptables -L --line-numbers
+fail2ban - http://www.fail2ban.org/
+/var/log/secure fail2ban scans this file for multiple login attempts
+/etc/fail2ban/
+denyhosts
+
+
+
+### Mail Servers ###
+
+http://en.wikipedia.org/wiki/Comparison_of_mail_servers >Comparison Of Mail Servers
+Postfix Commands
+	postqueue -p
+	postcat -q MSGID | cat
+	postcat MSGID
+	http://www.greylisting.org/ >greylisting.org
+	http://forum.centos-webpanel.com/e-mail/postfix-mail-server-commands/ >http://forum.centos-webpanel.com/e-mail/postfix-mail-server-commands/
+
+
+
+### Editors ###
+
+vi,vim
+vi -r .file.swp
+nano
+emacs
+pico
+gvim
+gedit
+geany
+
+
+
+### RAID ###
+
+http://en.wikipedia.org/wiki/Standard_RAID_levels Standard RAID Levels
+http://en.wikipedia.org/wiki/Nested_RAID_levels Nested RAID Levels
+/proc/mdstat
+mdadm - assemble, build, create, monitor, grow, manage, and misc
+
+
+
+### SSL ###
+
+/etc/ssl/
+/etc/httpd/conf.d/
+https://www.sslshopper.com/ssl-checker.html >SSL Checker
+SSL Generation
+
+	openssl req -out CSR.csr -sha256 -new -newkey rsa:2048 -nodes -keyout privateKey.key  Generate a new private key and Certificate Signing Request
+	openssl req -x509 -nodes -sha256 -days 365 -newkey rsa:2048 -keyout privateKey.key -out certificate.crt  Generate a self-signed
 certificate
-					openssl req -out CSR.csr -sha256 -key privateKey.key -new  Generate a certificate signing request (CSR) for an existing private
+	openssl req -out CSR.csr -sha256 -key privateKey.key -new  Generate a certificate signing request (CSR) for an existing private
 key
-					penssl x509 -x509toreq -sha256 -in certificate.crt -out CSR.csr -signkey privateKey.key  Generate a certificate signing request based on an
+	penssl x509 -x509toreq -sha256 -in certificate.crt -out CSR.csr -signkey privateKey.key  Generate a certificate signing request based on an
 existing certificate
-					penssl rsa -in privateKey.pem -out new  PrivateKey.pem Remove a passphrase from a private key
-				
-				<strong>SSL Checking</strong>
-				
-					openssl req -text -noout -verify -in CSR.csr  Check a Certificate Signing Request (CSR)
-					openssl rsa -in privateKey.key -check  Check a private key
-					openssl x509 -in certificate.crt -text -noout  Check a certificate
-					openssl pkcs12 -info -in keyStore.p12  Check a PKCS#12 file (.pfx or .p12)
-				
-				Wildcard vs. SAN Certificate
-				Domain Validated vs. Business Validated
-			
-		
-		
-			<strong>System Discovery</strong>
-			
-				xinput, xinput disable
-				lsmod
-				lspci
-				netstat -pnatu
-			
-		
-		
-			<strong>System Migration/Comparison</strong>
-			
-				rpm -qa | sort &gt; packages
-			
-		
-		
-			<strong>SVN</strong>
-			
-				svn log | head -n 30
-				svn diff -r r12345:r12346
-				http://svnbook.red-bean.com/en/1.7/svn.ref.svn.c.status.html
-			
-		
-		
-			<strong><a href="http://en.wikipedia.org/wiki/Lists_of_network_protocols" target="_blank">Protocols</a></strong>
-			
-				<a href="http://en.wikipedia.org/wiki/Simple_Network_Management_Protocol" target="_blank">SNMP</a>
-				<a href="http://en.wikipedia.org/wiki/List_of_HTTP_status_codes" target="_blank">HTTP Error Codes</a>
-			
-		
-		
-			<strong>File Systems</strong>
-			
-				<a href="http://en.wikipedia.org/wiki/Comparison_of_file_systems" target="_blank">Comparison</a>
-				<a href="http://en.wikipedia.org/wiki/List_of_file_systems" target="_blank">List of File Systems</a>
-				df -T
-				<a href="http://en.wikipedia.org/wiki/Network_File_System" target="_blank">NFS</a>
-				<a href="http://en.wikipedia.org/wiki/ZFS" target="_blank">ZFS</a>
-			
-		
-		
-			<strong>FTP</strong>
-			
-				
-			
-		
-		
-			<strong>Math</strong>
-			
-				echo $(( ... ))
-			
-		
-		
-			<strong>Programming</strong>
-			
-				bash
-				python
-				perl
-				C,C++
-				Java
-				php
+	penssl rsa -in privateKey.pem -out new  PrivateKey.pem Remove a passphrase from a private key
+
+<strong>SSL Checking</strong>
+
+	openssl req -text -noout -verify -in CSR.csr  Check a Certificate Signing Request (CSR)
+	openssl rsa -in privateKey.key -check  Check a private key
+	openssl x509 -in certificate.crt -text -noout  Check a certificate
+	openssl pkcs12 -info -in keyStore.p12  Check a PKCS#12 file (.pfx or .p12)
+
+Wildcard vs. SAN Certificate
+Domain Validated vs. Business Validated
+
+
+
+### System Discovery ###
+
+xinput, xinput disable
+lsmod
+lspci
+netstat -pnatu
+
+
+
+### System Migration/Comparison ###
+
+rpm -qa | sort &gt; packages
+
+
+
+### SVN ###
+
+svn log | head -n 30
+svn diff -r r12345:r12346
+http://svnbook.red-bean.com/en/1.7/svn.ref.svn.c.status.html
+
+
+
+### http://en.wikipedia.org/wiki/Lists_of_network_protocols Protocols ###
+
+http://en.wikipedia.org/wiki/Simple_Network_Management_Protocol >SNMP
+http://en.wikipedia.org/wiki/List_of_HTTP_status_codes >HTTP Error Codes
+
+
+
+### File Systems ###
+
+http://en.wikipedia.org/wiki/Comparison_of_file_systems >Comparison
+http://en.wikipedia.org/wiki/List_of_file_systems >List of File Systems
+df -T
+http://en.wikipedia.org/wiki/Network_File_System >NFS
+http://en.wikipedia.org/wiki/ZFS >ZFS
+
+
+
+### FTP ###
+
+
+
+### Math ###
+
+echo $(( ... ))
+
+
+
+### Programming ###
+
+bash
+python
+perl
+C,C++
+Java
+php
 			
 		
 		xinput, xinput disable NUMBER
@@ -593,78 +576,50 @@ existing certificate
 		cat, cat a b ab
 		wc, wc -l
 		Processes
-			
-				<strong>Processes</strong>
-				postfix, /usr/libexec/postfix/master, /etc/postfix/main.cf, /etc/postfix/virtual
-				cyrus, /etc/sasl2/smtpd.conf, /etc/imapd.conf
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-			
-		
-			<strong>Shell Variables</strong>
-			
-				$0, $1, $2, $3... - positional parameters
-				${10} ... ${N} - positional parameters beyond 9
-				$* - $1 $2 $3 ... ${N}
-				$@ - $1 $2 $3 ... ${N}
-				"$*" - "$1c$2c$3c...c${N}"
-				"$@" - "$1" "$2" "$3" ... "${N}"
-				$# - total number of parameters
-				
-				gedit
-				geany
-			
-		
-		
-			<strong>Languages</strong>
-			
-				Perl
-					
-						CPAN
-					
-				
-			
-		
-			<strong>VPN</strong>
-			
-				
-			
-		
-		
-			<strong>Proxy</strong>
-			
-				
-			
-		
-	
-</div>
-<div>
-End Of Life
-</div>
-<div>
-<a href="http://wiki.centos.org/FAQ/General#head-fe8a0be91ee3e7dea812e8694491e1dde5b75e6d">Centos</a>
-<a href="http://en.wikipedia.org/wiki/Fedora_(operating_system)#Releases">Fedora</a>
-<a href="http://en.wikipedia.org/wiki/Red_Hat_Enterprise_Linux#Product_life_cycle" >Red Hat</a>
-</div>
-</body>
-</html>
 
 
 
-TODO: 
+Processes
+postfix, /usr/libexec/postfix/master, /etc/postfix/main.cf, /etc/postfix/virtual
+cyrus, /etc/sasl2/smtpd.conf, /etc/imapd.conf
+
+
+
+### Shell Variables ###
+			
+$0, $1, $2, $3... - positional parameters
+${10} ... ${N} - positional parameters beyond 9
+$* - $1 $2 $3 ... ${N}
+$@ - $1 $2 $3 ... ${N}
+"$*" - "$1c$2c$3c...c${N}"
+"$@" - "$1" "$2" "$3" ... "${N}"
+$# - total number of parameters
+
+
+
+### Languages ###
+
+Perl
+CPAN
+
+
+
+### VPN ###
+
+
+
+### Proxy ###
+
+
+
+### End Of Life ###
+http://wiki.centos.org/FAQ/General#head-fe8a0be91ee3e7dea812e8694491e1dde5b75e6d Centos
+http://en.wikipedia.org/wiki/Fedora_(operating_system)#Releases Fedora
+http://en.wikipedia.org/wiki/Red_Hat_Enterprise_Linux#Product_life_cycle Red Hat
+
+
+
+### TODO ###
 mount, umount 
 dd
 parted 
