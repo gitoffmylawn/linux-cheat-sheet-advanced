@@ -519,11 +519,16 @@ CPAN
 
 
 ### End Of Life ###
-http://wiki.centos.org/FAQ/General#head-fe8a0be91ee3e7dea812e8694491e1dde5b75e6d Centos
+http://en.wikipedia.org/wiki/CentOS#End-of-support_schedule
 http://en.wikipedia.org/wiki/Fedora_(operating_system)#Releases Fedora
 http://en.wikipedia.org/wiki/Red_Hat_Enterprise_Linux#Product_life_cycle Red Hat
-
-
+http://en.wikipedia.org/wiki/Ubuntu_%28operating_system%29#Releases
+http://en.wikipedia.org/wiki/Debian#Release_timeline
+http://en.wikipedia.org/wiki/Slackware#Releases
+http://en.wikipedia.org/wiki/OpenSUSE#mw-content-text
+http://en.wikipedia.org/wiki/Oracle_Linux#Software_updates_and_version_history
+http://en.wikipedia.org/wiki/Scientific_Linux#Release_history
+http://www.crucialp.com/resources/tutorials/dedicated-server/unix-flavors-flavours-distributions/
 
 ### TODO ###
 mount, umount 
@@ -532,7 +537,6 @@ parted
 mkfs 
 sudo !! 
 sudo command 
-openssl rsa -in users.tummy.com.key -pubout 
 xinput, xinput disable NUMBER
 lsblk
 fdisk -l
@@ -554,4 +558,265 @@ date, date --set='19 september 2015 12:00
 cat, cat a b ab
 wc, wc -l
 
+http://www.server-world.info/en/note?os=CentOS_6&p=initial_conf&f=4
+
+pandoc --template=/Documentation/default.latex foo.md -o
+foo.pdf
+
+rpm -qi httpd --changelog | less
+
+tcpdump -lni any port 25
+
+http://www.iplocation.net/
+
+apf
+
+iptables 
+
+netstat -pnat |grep :80 | awk '{print $5}' |sort
+
+netstat -plan|grep :80|awk {'print $5'}|cut -d: -f 1|sort|uniq -c|sort -nk
+1
+
+id -u 
+
+Security
+  lock down ssh
+    restrict ips in iptables
+    change ssh port to a nonstandard port
+    disable password authenticaton
+    fail2ban or denyhosts
+
+updates
+
+backups
+
+monitoring 
+
+fwrestart 
+
+central logging 
+
+rpm -Va --dbpath /var/lib/dbbackup/path/to/backed/up/database/
+rpm --rebuilddb --dbpath /path/to/backed/up/database/
+
+http://dkimvalidator.com/
+
+sync 
+
+nice
+
+pkg info (freeBSD)
+
+openssl s_client -connect google.com:443 < /dev/null 2>/dev/null |
+openssl x509 -text -in
+/dev/stdin
+
+ssl-cert-check -s -p
+
+openssl x509 -enddate -noout -in file.pem
+
+http://www.server-world.info/en/note?os=CentOS_6&p=initial_conf&f=4
+
+Remove kernels CentOS 
+PAE
+
+https://confluence.atlassian.com/display/STASH/Basic+Git+commands
+
+http://irc.dttinc.com/
+
+cat /proc/cpuinfo
+free -m
+fdisk -l
+
+http://howdoesinternetwork.com/2013/radius-infrastructure
+http://www.watchguard.com/help/docs/wsm/xtm_11/en-US/index.html#cshid=en-US/authentication/radius_how_works_c.html
+http://www.cisco.com/c/en/us/support/docs/security-vpn/remote-authentication-dial-user-service-radius/12433-32.html
+
+svn info 
+svn diff -r r12345
+
+https://openhatch.org/search/?project=gedit&q=&toughness=
+
+sudo nmap -T Aggressive -A -v 127.0.0.1 -p 1-65000
+
+https://confluence.atlassian.com/display/STASH/Basic+Git+commands
+
+http://kernelnewbies.org/KernelBuild
+
+http://www.opsschool.org/en/latest/
+
+Blocking ip: arp -s ip_of_host 0, Unblocking ip: arp -d ip_blocked
+
+for i in `postqueue -p | awk '/^[0-9,A-F]/ {print $1}'`; do sudo postcat -q
+$i | grep
+Final-Recipient: | awk '{print $3}'; done > bounces
+cat bounces | sort | uniq -c
+
+http://www.tecmint.com/rsync-local-remote-file-synchronization-commands/
+
+http://www.root-servers.org/
+
+fail2ban-client status apache
+
+ab -n 1000 -c 100 http://1.2.3.4/
+siege -g 1.2.3.4
+siege -d10 -c50 http://1.2.3.4/
+
+yum check-update 
+
+comm 
+
+multitail *.log
+
+https://help.ubuntu.com/community/LinuxLogFiles
+http://www.thegeekstuff.com/2011/08/linux-var-log-files/
+
+chkconfig
+ubuntu version of chkconfig
+
+last
+lastb
+shutdown
+login
+init
+
+dmesg 
+
+http://en.wikipedia.org/wiki/Comparison_of_web_server_software
+
+smem
+for file in /proc/*/status ; do awk '/VmSwap|Name/{printf $2 " " $3}END{
+print ""}' $file; done | sort -k 2 -n -r | less
+
+at, at -l, at -r 
+atq
+atrm
+batch
+atd 
+
+umask
+
+lsof 
+vmstat
+tcpdump
+iotop
+iostat
+iptraf
+ifhogs
+iftop
+nproc 
+tcptrack 
+
+maillog
+
+VMware, proxmox
+
+Nagios, Opsview, external via
+   Wormly, Pingdom
+
+pgrep bash
+
+pstree 
+
+bzip2
+zless
+zmore
+pbzip
+
+iostat
+vmstat
+
+postcat 
+
+cssh 
+mush 
+
+route 
+
+su - ryan
+su ryan
+
+fallocate, mkswap, swapon
+
+netstat -ntu | awk "{print $5}" | cut -d: -f1 | sort | uniq -c | sort -n
+iostat -x 1
+killall -9 httpd
+
+lshw
+
+clear
+tee
+nc
+
+vi /etc/selinux/config
+Change the SELINUX line to: SELINUX=disable
+
+rpm -qa | sort > installedpackages-20150128
+
+tgpw
+
+rysnc -havP /usr/local/ 1.2.3.4:/usr/local/
+rsync -havP -e "ssh -p6127" /usr/local/ 1.2.3.4:/usr/local/
+ssh-keygen -f "/root/.ssh/known_hosts" -R [1.2.3.4]:6127
+rsync -havP -e "ssh -p6127" /usr/local/ 1.2.3.4:/usr/local/
+
+fsck
+
+You can disconnect from the screen with Ctrl-A and 'd'
+And then reconnect to the screen with 'screen -x'
+
+EPEL, rpm forge
+
+host google.com 127.0.0.1
+
+Ctrl+W ? erases one word in the current line
+Ctrl+U ? erases the whole line
+Ctrl+R ? type to bring up a recent command
+!! - repeats the last command
+exit ? log out of current session
+* use with caution.
+awk
+sed
+perl
+netcat
+dd
+tcpdump
+rsync
+fuser -vn tcp 443
+fuser -n tcp 22
+lsof
+ufw
+cat /etc/*-release | head - find what version of linux you are using.
+jwhois
+logfile | awk '{print $1}' | sort | uniq -c | sort -n
+zcat, zless, zmore
+htop, top
+/usr/local/nagios/libexec/check_procs --help
+echo | openssl s_client -connect google.com:443 2>/dev/null |
+openssl x509 -noout -dates
+openssl s_client -connect redhat.com:443 | less
+https://www.geocerts.com/ssl_checker
+mtr
+openssl req -out host.csr -sha256 -new -newkey rsa:4096 -nodes -keyout host.key
+openssl req -text -noout -verify -in CSR.csr
+zfs list backups
+gnome-open test.pdf / open pdf in Ubuntu
+
+logstalgia - graphical log tool.
+nmap/zenmap - network trouble shooting tool.
+wireshark
+vnc
+openVPN
+chrome Remote Desktop
+KVM
+SELinux/AppArmor
+Samba
+Nagios/Opsview
+Clonezilla
+Blender
+vmstat
+ps awwlx --sort=vsz" will show the largest processes
+log file location differences 
+ddos mitigation 
 
