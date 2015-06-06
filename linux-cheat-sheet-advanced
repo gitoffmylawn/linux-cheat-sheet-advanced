@@ -90,6 +90,9 @@ STDERR (2) - Standard error (for error messages, also defaults to the terminal)
 >>
 <
 2>
+command > /dev/null 2>&1 # Sends all output to /dev/null
+command &>/dev/null   # Sends all output to /dev/null
+command 1>&- 2>&-   # Closes stdout and stderror
 |
 &amp;
 ~
