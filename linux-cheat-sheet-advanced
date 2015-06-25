@@ -69,15 +69,19 @@ file FILE				# displays the file type
 clear					# clears output of the terminal
 vimtutor				# 
 apropos					# 
+pip install speedtest-cli		#
 
 
 
 ### Administrative Commands ###
 sudo command				# run a command as root 
 sudo -s					# run the shell specified by the SHELL environment variable
-sudo -i					# 
-visudo					# 
-exit					# 
+sudo -i					# login specific resource files will be loaded (e.g. .profile, .login) 
+sudo !!					# run the previous command as sudo if you forgot to the first time 
+su - ryan				# change the user to ryan and navigate ryan's home directory 
+su ryan					# change the user to ryan and stay in the current directory 
+visudo					# edits the sudoers file in a safe fashion 
+exit					# exits a shell 
 <a href="https://prasadlinuxblog.wordpress.com/2012/09/04/392/" target="_blank">su vs sudo vs runuser</a>	# su vs sudo vs runuser
 
 
@@ -109,7 +113,18 @@ for in do
 	
 	
 	
-### User Management ###
+### Shell Variables ###
+$0, $1, $2, $3... - positional parameters
+${10} ... ${N} - positional parameters beyond 9
+$* - $1 $2 $3 ... ${N}
+$@ - $1 $2 $3 ... ${N}
+"$*" - "$1c$2c$3c...c${N}"
+"$@" - "$1" "$2" "$3" ... "${N}"
+$# - total number of parameters
+http://stackoverflow.com/questions/5163144/what-are-the-special-dollar-sign-shell-variables
+
+
+### User and Group Management ###
 sudo useradd USERNAME
 /etc/passwd
 account:password:UID:GID:GECOS:directory:shell
@@ -129,7 +144,12 @@ groupadd GROUP
 gpasswd -a USER GROUP
 groupdel GROUP
 groupmod -n NEWGROUP OLDGROUP
-gpasswd -d USER GROUP
+gpasswd -d USER GROUP 
+SUID
+SGIG
+Sticky Bits
+UMASK
+http://www.tldp.org/LDP/lame/LAME/linux-admin-made-easy/shadow-file-formats.html
 
 
 
@@ -139,6 +159,7 @@ ps auwx
 ps axf  lists processes in a tree view
 ps axf | grep raid 
 top  display all running processes
+htop 
 kill pid  kill process id pid
 killall proc  kill all processes named proc *
 Control + c  halts the current command
@@ -155,7 +176,6 @@ sudo update-rc.d -f process remove
 sudo chkconfig apache2 off
 pgrep
 pstree
-sudo
 
 
 
@@ -176,13 +196,6 @@ chown --preserve-root
 
 
 
-### SSH ### 
-ssh user@host  connect to host as user
-ssh -p port user@host  connect to host on port
-ssh-copy-id user@host  add your key to host for user to enable a keyed or passwordless login
-
-
-
 ### Searching ###
 grep pattern files  search for pattern in files
 grep -r pattern dir  search recursively for pattern in dir
@@ -196,6 +209,17 @@ find -maxdepth 1 -type f -mtime +60 -exec ls -l {} \;
 
 
 
+### Disk Usage ###
+df					# show disk usage
+	df -ih
+	df -h
+find / -xdev -printf '%h\n' | sort | uniq -c | sort -k 1 -n
+du					# show directory space usage
+	du -sch *
+	du -sch .[!.]* * |sort -h
+
+
+
 ### Shells ###
 sh
 bash
@@ -205,19 +229,10 @@ tcsh
 
 
 
-### Disk Usage ###
-df  show disk usage
-	df -ih
-	df -h
-find / -xdev -printf '%h\n' | sort | uniq -c | sort -k 1 -n
-du  show directory space usage
-	du -sch *
-	du -sch .[!.]* * |sort -h
-
-
-
 ### File Comparison ###
 diff -u file1 file2 > file3
+md5sum file				# useful for comparing two files, not secure, use sha for more security  
+comm
 
 
 
@@ -272,6 +287,7 @@ bunzip2
 ping host  ping host and output results
 fping
 whois domain  get whois information for domain
+jwhois
 dig domain dig mx domain get DNS information for domain
 dig -x host  reverse lookup host
 wget file  download file
@@ -285,28 +301,35 @@ netstat -nat | grep LISTEN
 
 
 ### Packaging Commands ###
-rpm -qa --last | less
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get autoremove
-sudo apt-get autoclean
-Install form source: ./configure -&gt; make -&gt; make install
-dpkg -i pkg.deb  install a package (Debian)
-dpkg -l | grep PACKAGE  see if a package is installed (Debian)
-dpkg -s PACKAGE  see if package is installed and get info (Debian)
-dpkg-query -L PACKAGE  view the files that are associated in the bash package
-rpm -Uvh pkg.rpm  install a package (RPM)
-rpm -qa | grep PACKAGE  see if a package is installed (RPM)
-rpm -ql PACKAGE  view the files that are associated in the bash package (RPM)
-	Remove Kernels In /boot (Debian)
+Install from source: ./configure -&gt; make -&gt; make install
+apt-get -s upgrade			# lists the packages to be upgraded 
+apt-get update				# updates the repos 
+apt-get upgrade				# updates the packages
+apt-get autoremove			# 
+apt-get autoclean			#
+dpkg -i pkg.deb				# install a package 
+dpkg -l | grep PACKAGE			# see if a package is installed 
+dpkg -s PACKAGE				# see if package is installed and get info 
+dpkg-query -L PACKAGE			# view the files that are associated in the bash package
+dpkg -S file				# view the package that is associated with the file 
+yum check-update			# lists the packages to be upgraded 
+yum update				# updates the system 
+yum history list PACKAGE		# 
+yum history undo ID			# 
+rpm -Uvh pkg.rpm			# install a package 
+rpm -qa | grep PACKAGE			# see if a package is installed 
+rpm -ql PACKAGE				# view the files that are associated in the bash package 
+rpm -qf PACKAGE				# view the package that is associated with the file
+rpm -qa --last | less			#
+	Remove Kernels In /boot 
 		df -h
 		uname -r
 		dpkg -l | grep linux-image
 		dpkg -r linux-image-3.2.0-65-generic
 		dpkg --purge linux-image-3.2.0-65-generic
 		df -h
-lsmod
-modprobe
+lsmod					#
+modprobe				#
 
 
 
@@ -331,6 +354,11 @@ http://www.thegeekstuff.com/2012/10/gnupg-basics/
 /etc/logrotate.d/
 logrotate -d /etc/logrotate.conf
 logrotate -f /etc/logrotate.conf
+zcat
+zless
+zmore
+multitail *.log
+logstalgia - graphical log tool.
 
 
 
@@ -339,6 +367,44 @@ logrotate -f /etc/logrotate.conf
 /etc/cron.hourly/, /etc/cron.daily/, /etc/cron.weekly/, /etc/cron.monthly/
 /etc/cron.d/
 /var/spool/cron/crontabs/
+
+
+
+### iptables / Rate Limiting ###
+iptables -L -v
+iptables -L -vt nat
+iptables-save | less
+iptables -L --line-numbers
+fail2ban - http://www.fail2ban.org/
+/var/log/secure fail2ban scans this file for multiple login attempts
+/etc/fail2ban/
+denyhosts
+https://en.wikipedia.org/wiki/Iptables
+
+
+
+### SSH ### 
+ssh user@host  connect to host as user
+ssh -p port user@host  connect to host on port
+ssh-copy-id user@host  add your key to host for user to enable a keyed or passwordless login
+http://blog.trackets.com/2014/05/17/ssh-tunnel-local-and-remote-port-forwarding-explained-with-examples.html
+
+
+
+### Web Servers ###
+https://en.wikipedia.org/wiki/Comparison_of_web_server_software
+
+
+
+### Web Browsers ###
+https://en.wikipedia.org/wiki/Comparison_of_web_browsers
+http://html5test.com
+
+
+
+### Printing ###
+http://serverfault.com/questions/301783/how-can-i-delete-a-printer-from-cups
+http://www.togaware.com/linux/survivor/CUPS_Command.html
 
 
 
@@ -359,25 +425,16 @@ rsync -havPn $FILE root@$HOSTNAME:/$RESTORE-DIR
 
 
 
-### psql ###
+### Databases ###
 psql -d DATABASE
 \l
 \dt
 \q
-\d+ backups
-
-
-
-### iptables / Rate Limiting ###
-iptables -L -v
-iptables -L -vt nat
-iptables-save | less
-iptables -L --line-numbers
-fail2ban - http://www.fail2ban.org/
-/var/log/secure fail2ban scans this file for multiple login attempts
-/etc/fail2ban/
-denyhosts
-
+\d+ backups 
+https://en.wikipedia.org/wiki/Comparison_of_relational_database_management_systems
+https://en.wikipedia.org/wiki/Comparison_of_object-relational_database_management_systems
+https://en.wikipedia.org/wiki/Comparison_of_database_tools
+http://www.tsheets.com/downloads/oss/extract_sql.pl
 
 
 ### Mail Servers ###
@@ -388,6 +445,12 @@ Postfix Commands
 	postcat MSGID
 	http://www.greylisting.org/ >greylisting.org
 	http://forum.centos-webpanel.com/e-mail/postfix-mail-server-commands/ >http://forum.centos-webpanel.com/e-mail/postfix-mail-server-commands/
+https://en.wikipedia.org/wiki/Comparison_of_mail_servers
+https://en.wikipedia.org/wiki/Comparison_of_email_clients
+https://en.wikipedia.org/wiki/List_of_email_archive_software
+https://en.wikipedia.org/wiki/Sender_Policy_Framework
+https://en.wikipedia.org/wiki/DomainKeys_Identified_Mail
+https://www.mail-tester.com/spf-dkim-check
 
 
 
@@ -404,11 +467,17 @@ geany
 
 
 ### RAID ###
-
 http://en.wikipedia.org/wiki/Standard_RAID_levels Standard RAID Levels
 http://en.wikipedia.org/wiki/Nested_RAID_levels Nested RAID Levels
 /proc/mdstat
 mdadm - assemble, build, create, monitor, grow, manage, and misc
+
+
+
+### Hardware ###
+dmesg 
+dmesg | grep -i usb 
+lsusb
 
 
 
@@ -432,6 +501,17 @@ existing certificate
 	openssl pkcs12 -info -in keyStore.p12  Check a PKCS#12 file (.pfx or .p12)
 Wildcard vs. SAN Certificate
 Domain Validated vs. Business Validated
+openssl s_client -connect google.com:443 < /dev/null 2>/dev/null |
+openssl x509 -text -in
+/dev/stdin
+ssl-cert-check -s -p
+openssl x509 -enddate -noout -in file.pem
+openssl req -out host.csr -sha256 -new -newkey rsa:4096 -nodes -keyout host.key
+openssl req -text -noout -verify -in CSR.csr
+echo | openssl s_client -connect google.com:443 2>/dev/null |
+openssl x509 -noout -dates
+openssl s_client -connect redhat.com:443 | less
+https://www.geocerts.com/ssl_checker
 
 
 
@@ -452,6 +532,16 @@ rpm -qa | sort &gt; packages
 svn log | head -n 30
 svn diff -r r12345:r12346
 http://svnbook.red-bean.com/en/1.7/svn.ref.svn.c.status.html
+svn info 
+svn diff -r r12345
+
+
+
+### DDoS ###
+https://en.wikipedia.org/wiki/Null_route
+http://www.cyberciti.biz/tips/how-do-i-drop-or-block-attackers-ip-with-null-routes.html
+http://www.tummy.com/blogs/2006/07/27/the-difference-between-iptables-drop-and-null-routing/
+http://bencane.com/2013/01/14/mitigating-dos-attacks-with-a-null-or-blackhole-route-on-linux/
 
 
 
@@ -471,6 +561,14 @@ http://en.wikipedia.org/wiki/ZFS >ZFS
 
 
 ### FTP ###
+https://en.wikipedia.org/wiki/List_of_FTP_server_software
+https://en.wikipedia.org/wiki/Comparison_of_FTP_client_software
+https://en.wikipedia.org/wiki/List_of_file_transfer_protocols
+
+
+
+### Antivirus ###
+https://en.wikipedia.org/wiki/Comparison_of_antivirus_software
 
 
 
@@ -489,21 +587,9 @@ php
 
 
 
-
 ### Processes ###
 postfix, /usr/libexec/postfix/master, /etc/postfix/main.cf, /etc/postfix/virtual
 cyrus, /etc/sasl2/smtpd.conf, /etc/imapd.conf
-
-
-
-### Shell Variables ###
-$0, $1, $2, $3... - positional parameters
-${10} ... ${N} - positional parameters beyond 9
-$* - $1 $2 $3 ... ${N}
-$@ - $1 $2 $3 ... ${N}
-"$*" - "$1c$2c$3c...c${N}"
-"$@" - "$1" "$2" "$3" ... "${N}"
-$# - total number of parameters
 
 
 
@@ -521,6 +607,12 @@ CPAN
 
 
 
+### Screen ###
+You can disconnect from the screen with Ctrl-A and 'd'
+And then reconnect to the screen with 'screen -x'
+
+
+
 ### End Of Life ###
 http://en.wikipedia.org/wiki/CentOS#End-of-support_schedule
 http://en.wikipedia.org/wiki/Fedora_(operating_system)#Releases Fedora
@@ -533,13 +625,19 @@ http://en.wikipedia.org/wiki/Oracle_Linux#Software_updates_and_version_history
 http://en.wikipedia.org/wiki/Scientific_Linux#Release_history
 http://www.crucialp.com/resources/tutorials/dedicated-server/unix-flavors-flavours-distributions/
 
+
+
+### Linux ###
+https://en.wikipedia.org/wiki/Comparison_of_operating_systems 
+https://en.wikipedia.org/wiki/Comparison_of_operating_system_kernels
+https://en.wikipedia.org/wiki/List_of_Linux_distributions
+
+
 ### TODO ###
 mount, umount 
 dd
 parted 
-mkfs 
-sudo !! 
-sudo command 
+mkfs  
 xinput, xinput disable NUMBER
 lsblk
 fdisk -l
@@ -550,156 +648,86 @@ df, df -a, df -h
 uname, uname -a
 history
 cut
-sudo
 apt, apt-get, apt-cache
-touch
-md5sum
 tar
 screen
 cal, cal 09 1987
 date, date --set='19 september 2015 12:00
 cat, cat a b ab
 wc, wc -l
-
 http://www.server-world.info/en/note?os=CentOS_6&p=initial_conf&f=4
-
 pandoc --template=/Documentation/default.latex foo.md -o
 foo.pdf
-
 rpm -qi httpd --changelog | less
-
 tcpdump -lni any port 25
-
 http://www.iplocation.net/
-
 apf
-
-iptables 
-
 netstat -pnat |grep :80 | awk '{print $5}' |sort
-
 netstat -plan|grep :80|awk {'print $5'}|cut -d: -f 1|sort|uniq -c|sort -nk
 1
-
 id -u 
-
 Security
   lock down ssh
     restrict ips in iptables
     change ssh port to a nonstandard port
     disable password authenticaton
     fail2ban or denyhosts
-
 updates
-
 backups
-
 monitoring 
-
-fwrestart 
-
 central logging 
-
 rpm -Va --dbpath /var/lib/dbbackup/path/to/backed/up/database/
 rpm --rebuilddb --dbpath /path/to/backed/up/database/
-
 http://dkimvalidator.com/
-
 sync 
-
 nice
-
 pkg info (freeBSD)
-
-openssl s_client -connect google.com:443 < /dev/null 2>/dev/null |
-openssl x509 -text -in
-/dev/stdin
-
-ssl-cert-check -s -p
-
-openssl x509 -enddate -noout -in file.pem
-
 http://www.server-world.info/en/note?os=CentOS_6&p=initial_conf&f=4
-
 Remove kernels CentOS 
 PAE
-
 https://confluence.atlassian.com/display/STASH/Basic+Git+commands
-
 http://irc.dttinc.com/
-
 cat /proc/cpuinfo
 free -m
 fdisk -l
-
 http://howdoesinternetwork.com/2013/radius-infrastructure
 http://www.watchguard.com/help/docs/wsm/xtm_11/en-US/index.html#cshid=en-US/authentication/radius_how_works_c.html
 http://www.cisco.com/c/en/us/support/docs/security-vpn/remote-authentication-dial-user-service-radius/12433-32.html
-
-svn info 
-svn diff -r r12345
-
 https://openhatch.org/search/?project=gedit&q=&toughness=
-
 sudo nmap -T Aggressive -A -v 127.0.0.1 -p 1-65000
-
 https://confluence.atlassian.com/display/STASH/Basic+Git+commands
-
 http://kernelnewbies.org/KernelBuild
-
 http://www.opsschool.org/en/latest/
-
 Blocking ip: arp -s ip_of_host 0, Unblocking ip: arp -d ip_blocked
-
 for i in `postqueue -p | awk '/^[0-9,A-F]/ {print $1}'`; do sudo postcat -q
 $i | grep
 Final-Recipient: | awk '{print $3}'; done > bounces
 cat bounces | sort | uniq -c
-
 http://www.tecmint.com/rsync-local-remote-file-synchronization-commands/
-
 http://www.root-servers.org/
-
 fail2ban-client status apache
-
 ab -n 1000 -c 100 http://1.2.3.4/
 siege -g 1.2.3.4
-siege -d10 -c50 http://1.2.3.4/
-
-yum check-update 
-
-comm 
-
-multitail *.log
-
+siege -d10 -c50 http://1.2.3.4/  
 https://help.ubuntu.com/community/LinuxLogFiles
 http://www.thegeekstuff.com/2011/08/linux-var-log-files/
-
 chkconfig
 ubuntu version of chkconfig
-
 last
 lastb
 shutdown
 login
 init
-
-dmesg 
-
 http://en.wikipedia.org/wiki/Comparison_of_web_server_software
-
 smem
 for file in /proc/*/status ; do awk '/VmSwap|Name/{printf $2 " " $3}END{
 print ""}' $file; done | sort -k 2 -n -r | less
-
 at, at -l, at -r 
 atq
 atrm
 batch
 atd 
-
 umask
-
 lsof 
 vmstat
 tcpdump
@@ -710,75 +738,41 @@ ifhogs
 iftop
 nproc 
 tcptrack 
-
 maillog
-
 VMware, proxmox
-
 Nagios, Opsview, external via
    Wormly, Pingdom
-
 pgrep bash
-
 pstree 
-
 bzip2
-zless
-zmore
 pbzip
-
 iostat
 vmstat
-
 postcat 
-
 cssh 
-mush 
-
+mussh 
 route 
-
-su - ryan
-su ryan
-
 fallocate, mkswap, swapon
-
 netstat -ntu | awk "{print $5}" | cut -d: -f1 | sort | uniq -c | sort -n
 iostat -x 1
 killall -9 httpd
-
 lshw
-
-clear
-tee
 nc
-
 vi /etc/selinux/config
 Change the SELINUX line to: SELINUX=disable
-
 rpm -qa | sort > installedpackages-20150128
-
 tgpw
-
 rysnc -havP /usr/local/ 1.2.3.4:/usr/local/
 rsync -havP -e "ssh -p6127" /usr/local/ 1.2.3.4:/usr/local/
 ssh-keygen -f "/root/.ssh/known_hosts" -R [1.2.3.4]:6127
 rsync -havP -e "ssh -p6127" /usr/local/ 1.2.3.4:/usr/local/
-
 fsck
-
-You can disconnect from the screen with Ctrl-A and 'd'
-And then reconnect to the screen with 'screen -x'
-
 EPEL, rpm forge
-
 host google.com 127.0.0.1
-
 Ctrl+W ? erases one word in the current line
 Ctrl+U ? erases the whole line
 Ctrl+R ? type to bring up a recent command
-!! - repeats the last command
 exit ? log out of current session
-* use with caution.
 awk
 sed
 perl
@@ -790,23 +784,11 @@ fuser -vn tcp 443
 fuser -n tcp 22
 lsof
 ufw
-cat /etc/*-release | head - find what version of linux you are using.
-jwhois
 logfile | awk '{print $1}' | sort | uniq -c | sort -n
-zcat, zless, zmore
-htop, top
 /usr/local/nagios/libexec/check_procs --help
-echo | openssl s_client -connect google.com:443 2>/dev/null |
-openssl x509 -noout -dates
-openssl s_client -connect redhat.com:443 | less
-https://www.geocerts.com/ssl_checker
 mtr
-openssl req -out host.csr -sha256 -new -newkey rsa:4096 -nodes -keyout host.key
-openssl req -text -noout -verify -in CSR.csr
 zfs list backups
 gnome-open test.pdf / open pdf in Ubuntu
-
-logstalgia - graphical log tool.
 nmap/zenmap - network trouble shooting tool.
 wireshark
 vnc
@@ -821,5 +803,13 @@ Blender
 vmstat
 ps awwlx --sort=vsz" will show the largest processes
 log file location differences 
-ddos mitigation 
+https://www.digitalocean.com/community/tutorials/how-to-use-arch-linux-package-management
+When package was installed 
+/var/lib/dpkg/info timestamp 
+elastic search
+logstash 
+kabana
+reddis
+https://en.wikipedia.org/wiki/PHP
+http://oss.oetiker.ch/rrdtool/
 
