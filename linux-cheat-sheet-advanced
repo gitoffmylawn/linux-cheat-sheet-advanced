@@ -425,6 +425,11 @@ rsync -havPn $FILE root@$HOSTNAME:/$RESTORE-DIR
 
 
 
+### Monitoring ###
+https://en.wikipedia.org/wiki/Comparison_of_network_monitoring_systems
+
+
+
 ### Databases ###
 psql -d DATABASE
 \l
@@ -534,6 +539,10 @@ svn diff -r r12345:r12346
 http://svnbook.red-bean.com/en/1.7/svn.ref.svn.c.status.html
 svn info 
 svn diff -r r12345
+
+
+
+### Git ###
 
 
 
