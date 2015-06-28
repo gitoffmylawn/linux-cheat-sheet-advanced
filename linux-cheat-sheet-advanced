@@ -56,7 +56,7 @@ more file				# primitive version of less, use less
 less file				# scrolls through a file
 man command				# view the linux manual for the specified command 
 	man man				# useful for looking at manual sections ( e.g. ls(1) )
-	man -S 1 ls			# view the man page, section 1, of ls
+	man -S 1 ls			# view the man page, section 1, of ls, also, man 1 ls works 
 info					#
 	info ls				# some mor info on the ls command 
 ls | tee file 				# read from standard input and write to standard output and files
@@ -66,15 +66,20 @@ file FILE				# displays the file type
 
 
 ### Miscellaneous Commands ###
-clear					# clears output of the terminal
-vimtutor				# 
-apropos					# 
-pip install speedtest-cli		#
+clear					# clears output of the terminal 
+apropos					# search the manual page names and descriptions
+
+
+
+### Miscellaneous Programs ### 
+pip install speedtest-cli		# a program to test the download and upload speed of your network 
+vimtutor				# a Vim tutor 
 
 
 
 ### Administrative Commands ###
-sudo command				# run a command as root 
+sudo COMMAND				# run a COMMAND as root 
+sudo -u USER COMMAND			# run a COMMAND as USER 
 sudo -s					# run the shell specified by the SHELL environment variable
 sudo -i					# login specific resource files will be loaded (e.g. .profile, .login) 
 sudo !!					# run the previous command as sudo if you forgot to the first time 
@@ -82,165 +87,167 @@ su - ryan				# change the user to ryan and navigate ryan's home directory
 su ryan					# change the user to ryan and stay in the current directory 
 visudo					# edits the sudoers file in a safe fashion 
 exit					# exits a shell 
-<a href="https://prasadlinuxblog.wordpress.com/2012/09/04/392/" target="_blank">su vs sudo vs runuser</a>	# su vs sudo vs runuser
+https://prasadlinuxblog.wordpress.com/2012/09/04/392/ # su vs sudo vs runuser
 
 
 
 ### Command Line Operators ### 
-STDIN (0) - Standard input (data fed into the program)
-STDOUT (1) - Standard output (data printed by the program, defaults to the terminal)
-STDERR (2) - Standard error (for error messages, also defaults to the terminal)
->
->>
-<
-2>
-command > /dev/null 2>&1 # Sends all output to /dev/null
-command &>/dev/null   # Sends all output to /dev/null
-command 1>&- 2>&-   # Closes stdout and stderror for command 
-|
-&amp;
-~
-*
-;
-/
-&amp;&amp;
-||
-&amp;&amp; and ||
-!
-!!
-`` (backticks)
-for in do
+STDIN (0)				# Standard input (data fed into the program)
+STDOUT (1)				# Standard output (data printed by the program, defaults to the terminal)
+STDERR (2)				# Standard error (for error messages, also defaults to the terminal)
+>					# 
+>>					# 
+<					# 
+2>					# 
+command > /dev/null 2>&1		# Sends all output to /dev/null
+command &>/dev/null			# Sends all output to /dev/null
+command 1>&- 2>&-			# Closes stdout and stderror for command 
+|					# 
+&					#
+~					#
+*					#
+;					#
+/					#
+&&					#
+||					#
+&& and ||				# 
+!					#
+!!					#
+``					# (backticks)
+for in do				# 
 	
 	
 	
 ### Shell Variables ###
-$0, $1, $2, $3... - positional parameters
-${10} ... ${N} - positional parameters beyond 9
-$* - $1 $2 $3 ... ${N}
-$@ - $1 $2 $3 ... ${N}
-"$*" - "$1c$2c$3c...c${N}"
-"$@" - "$1" "$2" "$3" ... "${N}"
-$# - total number of parameters
+$0, $1, $2, $3...			# positional parameters
+${10} ... ${N}				# positional parameters beyond 9
+$* - $1 $2 $3 ... ${N}			# 
+$@ - $1 $2 $3 ... ${N}			# 
+"$*" - "$1c$2c$3c...c${N}"		# 
+"$@" - "$1" "$2" "$3" ... "${N}"	# 
+$#					# total number of parameters
 http://stackoverflow.com/questions/5163144/what-are-the-special-dollar-sign-shell-variables
 
 
+
 ### User and Group Management ###
-sudo useradd USERNAME
-/etc/passwd
-account:password:UID:GID:GECOS:directory:shell
-/etc/shadow
-/etc/group
-/etc/gshadow
-/etc/sudoers
-useradd -G GROUPNAME USERNAME
-useradd -m -g INITIALGROUP -G ADDITIONALGROUPS -s LOGINSHELL USERNAME
-passwd, passwd USER
-chfn
-chage
-userdel -r
-groups USERNAME
-id USERNAME
-groupadd GROUP
-gpasswd -a USER GROUP
-groupdel GROUP
-groupmod -n NEWGROUP OLDGROUP
-gpasswd -d USER GROUP 
-SUID
-SGIG
-Sticky Bits
-UMASK
+sudo useradd USERNAME			# 
+/etc/passwd				# 
+account:password:UID:GID:GECOS:directory:shell	#
+/etc/shadow				# 
+/etc/group				#
+/etc/gshadow				# 
+/etc/sudoers				# 
+useradd -G GROUPNAME USERNAME		# 
+useradd -m -g INITIALGROUP -G ADDITIONALGROUPS -s LOGINSHELL USERNAME	# 
+passwd, passwd USER			# 
+chfn					# 
+chage					# 
+userdel -r				# 
+groups USERNAME				# 
+id USERNAME				# 
+groupadd GROUP				# 
+gpasswd -a USER GROUP			# 
+groupdel GROUP				# 
+groupmod -n NEWGROUP OLDGROUP		# 
+gpasswd -d USER GROUP			# 
+SUID					# 
+SGIG					# 
+Sticky Bits				# 
+UMASK					# 
 http://www.tldp.org/LDP/lame/LAME/linux-admin-made-easy/shadow-file-formats.html
 
 
 
 ### Process Management ###
-ps  display your currently active processes
-ps auwx  
-ps axf  lists processes in a tree view
-ps axf | grep raid 
-top  display all running processes
-htop 
-kill pid  kill process id pid
-killall proc  kill all processes named proc *
-Control + c  halts the current command
-Control + d  log out of current session, similar to exit
-Control + s, Control + q  stops output, resumes output
-Control + z  stops the current command, resume with fg in the foreground or bg in the background
-bg  lists stopped or background jobs; resume a stopped job in the background
-fg  brings the most recent job to foreground
-COMMAND &amp; runs command in the background
-fg n%  brings job n to the foreground
-kill n%  kills job n
-jobs  lists jobs
-sudo update-rc.d -f process remove
-sudo chkconfig apache2 off
-pgrep
-pstree
+ps					# display your currently active processes
+ps auwx					# 
+ps axf					# lists processes in a tree view
+ps axf | grep raid			# 
+top					# display all running processes
+htop					# 
+kill pid				# kill process id pid
+killall proc				# kill all processes named proc *
+Control + c				# halts the current command
+Control + d				# log out of current session, similar to exit
+Control + s, Control + q		# stops output, resumes output
+Control + z				# stops the current command, resume with fg in the foreground or bg in the background
+bg					# lists stopped or background jobs; resume a stopped job in the background
+fg					# brings the most recent job to foreground
+COMMAND &				# runs command in the background
+fg n%					# brings job n to the foreground
+kill n%					# kills job n
+jobs					# lists jobs
+sudo update-rc.d -f process remove	# 
+sudo chkconfig apache2 off		# 
+pgrep					# 
+pstree					# 
 
 
 
 ### Permissions ###
-chmod octal file  change the permissions of file to octal, which can be found separately for user, group, and world.
-	chmod 777 file read, write, execute for all
-	chmod 755 file rwx for owner, rx for group and world
-stat -c %U /media/sf_Shared/
-stat -c %G /media/sf_Shared/
-stat -c %A /media/sf_Shared/
-find / -group [group]
-find / -user [user]
-chown --preserve-root
-	chown --preserve-root user:group -R /home/user/* chowns all files except hidden files
-	<strike>chown --preserve-root user:group -R /home/user/.*</strike> DO NOT DO THIS (This command will start chowning .. directories)
-	chown --preserve-root user:group -R /home/user/.[^.]* chowns all hidden files
-	chown --preserve-root user:group -R /home/user chowns all files in user but also chows the directory user
+chmod octal FILE			# change the permissions of FILE to octal, which can be found separately for user, group, and world.
+	chmod 777 FILE			# read, write, execute for all
+	chmod 755 FILE			# rwx for owner, rx for group and world
+stat -c %U /media/sf_Shared/		# 
+stat -c %G /media/sf_Shared/		# 
+stat -c %A /media/sf_Shared/		# 
+find / -group [group]			# 
+find / -user [user]			# 
+chown --preserve-root			# 
+	chown --preserve-root user:group -R /home/user/*	# chowns all files except hidden files
+	chown --preserve-root user:group -R /home/user/.*	# DO NOT DO THIS (This command will start chowning .. directories)
+	chown --preserve-root user:group -R /home/user/.[^.]* 	# chowns all hidden files
+	chown --preserve-root user:group -R /home/user		# chowns all files in user but also chows the directory user
 
 
 
 ### Searching ###
-grep pattern files  search for pattern in files
-grep -r pattern dir  search recursively for pattern in dir
-grep -B 1 pattern dir search for pattern and print line as well as one line before 
-grep -A 1 pattern dir search for pattern and print line as well as one line after
-command | grep pattern  search for pattern in the output of command
-locate file  find all instances of file
-sudo updatedb  updates the database that locate uses to search for files.
-find
-find -maxdepth 1 -type f -mtime +60 -exec ls -l {} \;
+grep pattern files			# search for pattern in files
+grep -r pattern dir			# search recursively for pattern in dir
+grep -B 1 pattern dir			# search for pattern and print line as well as one line before 
+grep -A 1 pattern dir			# search for pattern and print line as well as one line after
+command | grep pattern			# search for pattern in the output of command
+locate file				# find all instances of file
+sudo updatedb				# updates the database that locate uses to search for files.
+find					# 
+find -maxdepth 1 -type f -mtime +60 -exec ls -l {} \;	# 
 
 
 
 ### Disk Usage ###
 df					# show disk usage
-	df -ih
-	df -h
-find / -xdev -printf '%h\n' | sort | uniq -c | sort -k 1 -n
+	df -ih				# 
+	df -h				# 
+find / -xdev -printf '%h\n' | sort | uniq -c | sort -k 1 -n	# 
 du					# show directory space usage
-	du -sch *
-	du -sch .[!.]* * |sort -h
+	du -sch *			# 
+	du -sch .[!.]* * |sort -h	# 
+fdisk					# 
 
 
 
 ### Shells ###
-sh
-bash
-dash
-csh
-tcsh
+sh					# 
+bash					# 
+dash					# 
+csh					# 
+tcsh					# 
 
 
 
 ### File Comparison ###
-diff -u file1 file2 > file3
+diff -u file1 file2 > file3		# 
 md5sum file				# useful for comparing two files, not secure, use sha for more security  
-comm
+comm					# 
 
 
 
 ### IP Addresses ###
-ifconfig
-ip addr show | perl -ne '/inet\s*([\d\.]+).*global/ &amp;&amp; do {print "$1\n"}'
-	ip addr | grep inet
-curl ifconfig.me
+ifconfig				# 
+ip addr show | perl -ne '/inet\s*([\d\.]+).*global/ &amp;&amp; do {print "$1\n"}'	# 
+	ip addr | grep inet		# 
+curl ifconfig.me			# 
 http://vlsm-calc.net/ipclasses.php IP Address Classes (Replaced by http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing >CIDR)
 http://en.wikipedia.org/wiki/Reserved_IP_addresses Reserved IP Addresses
 http://www.subnet-calculator.com/subnet.php IP Subnet Calculator
@@ -249,54 +256,55 @@ http://www.subnet-calculator.com/cidr.php CIDR Calculator
 
 
 ### System Info ###
-date  show the current date and time
-cal  show this month's calendar
-uptime  show current uptime
-w  display who is online
-whoami  who you are logged in as
-finger user  display information about user
-uname -a  show kernel information
-cat /proc/cpuinfo  cpu information
-	cat /proc/meminfo  memory information
-	cat /proc/version  version information
-cat /etc/*-release  distribution and version (no such file in Debian)
-lsb_release -a  distribution and version
-cat /etc/issue  distribution and version
-man command  show the manual for command
-free  show memory and swap usage
-whereis app  show possible locations of app
-which app  show which app will be run by default
-ls -l /usr/share/xsessions  show desktop environments
+date					# show the current date and time
+cal					# show this month's calendar
+uptime					# show current uptime
+w					# display who is online
+whoami					# who you are logged in as
+finger user				# display information about user
+uname -a  show kernel information	# 
+cat /proc/cpuinfo  cpu information	# 
+	cat /proc/meminfo  memory information	# 
+	cat /proc/version  version information	# 
+cat /etc/*-release  			# distribution and version	
+lsb_release -a				# distribution and version
+cat /etc/issue				# distribution and version
+man command				# show the manual for command
+free					# show memory and swap usage
+whereis app				# show possible locations of app
+which app				# show which app will be run by default
+ls -l /usr/share/xsessions		# show desktop environments
 
 
 
 ### Compression ###
-tar cf file.tar files  create a tar named file.tar containing files
-tar xf file.tar  extract the files from file.tar
-tar czf file.tar.gz files  create a tar with Gzip compression
-tar xzf file.tar.gz  extract a tar using Gzip
-tar cjf file.tar.bz2  create a tar with Bzip2 compression
-tar xjf file.tar.bz2  extract a tar using Bzip2
-gzip file  compresses file and renames it to file.gz
-gzip -d file.gz  decompresses file.gz back to file
-bunzip2
+tar cf file.tar files			# create a tar named file.tar containing files
+tar xf file.tar				# extract the files from file.tar
+tar czf file.tar.gz files		# create a tar with Gzip compression
+tar xzf file.tar.gz			# extract a tar using Gzip
+tar cjf file.tar.bz2			# create a tar with Bzip2 compression
+tar xjf file.tar.bz2			# extract a tar using Bzip2
+gzip file				# compresses file and renames it to file.gz
+gzip -d file.gz				# decompresses file.gz back to file
+bunzip2					# 
 
 
 
 ### Network ###
-ping host  ping host and output results
-fping
-whois domain  get whois information for domain
-jwhois
-dig domain dig mx domain get DNS information for domain
-dig -x host  reverse lookup host
-wget file  download file
-wget -c file  continue a stopped download
-host
-nslookup
-nmap
-traceroute
-netstat -nat | grep LISTEN
+ping host				# ping host and output results
+fping					# 
+whois domain				# get whois information for domain
+jwhois					# 
+dig domain				# 
+dig mx domain				# get DNS information for domain
+dig -x host				# reverse lookup host
+wget file				# download file
+wget -c file				# continue a stopped download
+host					# 
+nslookup				# 
+nmap					# 
+traceroute				# 
+netstat -nat | grep LISTEN		# 
 
 
 
@@ -322,22 +330,22 @@ rpm -ql PACKAGE				# view the files that are associated in the bash package
 rpm -qf PACKAGE				# view the package that is associated with the file
 rpm -qa --last | less			#
 	Remove Kernels In /boot 
-		df -h
-		uname -r
-		dpkg -l | grep linux-image
-		dpkg -r linux-image-3.2.0-65-generic
-		dpkg --purge linux-image-3.2.0-65-generic
-		df -h
+		df -h			# 
+		uname -r		# 
+		dpkg -l | grep linux-image	# 
+		dpkg -r linux-image-3.2.0-65-generic	#
+		dpkg --purge linux-image-3.2.0-65-generic	#
+		df -h			# 
 lsmod					#
 modprobe				#
 
 
 
 ### gpg ###
-gpg --gen-key
-gpg --list-keys
-gpg --list-secret-keys
-gpg --keyserver pgp.mit.edu --search-keys user@example.com
+gpg --gen-key				# 
+gpg --list-keys				# 
+gpg --list-secret-keys			# 
+gpg --keyserver pgp.mit.edu --search-keys user@example.com	# 
 https://kb.iu.edu/d/awiu
 https://pgp.mit.edu/
 https://futureboy.us/pgp.html
@@ -348,45 +356,48 @@ http://www.thegeekstuff.com/2012/10/gnupg-basics/
 
 
 ### Logs ###
-/var/log/
-/etc/cron.daily/logrotate
-/etc/logrotate.conf
-/etc/logrotate.d/
-logrotate -d /etc/logrotate.conf
-logrotate -f /etc/logrotate.conf
-zcat
-zless
-zmore
-multitail *.log
-logstalgia - graphical log tool.
+/var/log/				# 
+/etc/cron.daily/logrotate		# 
+/etc/logrotate.conf			# 
+/etc/logrotate.d/			# 
+logrotate -d /etc/logrotate.conf	# 
+logrotate -f /etc/logrotate.conf	# 
+zcat					# 
+zless					# 
+zmore					# 
+multitail *.log				# 
+logstalgia - graphical log tool.	# 
 
 
 
 ### Cron ### 
-/etc/crontab
-/etc/cron.hourly/, /etc/cron.daily/, /etc/cron.weekly/, /etc/cron.monthly/
-/etc/cron.d/
-/var/spool/cron/crontabs/
+/etc/crontab				# 
+/etc/cron.hourly/			# 
+/etc/cron.daily/			# 
+/etc/cron.weekly/			# 
+/etc/cron.monthly/			# 
+/etc/cron.d/				# 
+/var/spool/cron/crontabs/		# 
 
 
 
 ### iptables / Rate Limiting ###
-iptables -L -v
-iptables -L -vt nat
-iptables-save | less
-iptables -L --line-numbers
-fail2ban - http://www.fail2ban.org/
-/var/log/secure fail2ban scans this file for multiple login attempts
-/etc/fail2ban/
-denyhosts
-https://en.wikipedia.org/wiki/Iptables
+iptables -L -v				# 
+iptables -L -vt nat			# 
+iptables-save | less			# 
+iptables -L --line-numbers		# 
+fail2ban - http://www.fail2ban.org/	# 
+/var/log/secure				# fail2ban scans this file for multiple login attempts
+/etc/fail2ban/				# 
+denyhosts				# 
+https://en.wikipedia.org/wiki/Iptables 
 
 
 
 ### SSH ### 
-ssh user@host  connect to host as user
-ssh -p port user@host  connect to host on port
-ssh-copy-id user@host  add your key to host for user to enable a keyed or passwordless login
+ssh user@host				# connect to host as user
+ssh -p port user@host			# connect to host on port
+ssh-copy-id user@host			# add your key to host for user to enable a keyed or passwordless login
 http://blog.trackets.com/2014/05/17/ssh-tunnel-local-and-remote-port-forwarding-explained-with-examples.html
 
 
@@ -460,29 +471,29 @@ https://www.mail-tester.com/spf-dkim-check
 
 
 ### Editors ###
-vi,vim
-vi -r .file.swp
-nano
-emacs
-pico
-gvim
-gedit
-geany
+vi,vim					# 
+vi -r .file.swp				# 
+nano					# 
+emacs					# 
+pico					# 
+gvim					# 
+gedit					# 
+geany					# 
 
 
 
 ### RAID ###
 http://en.wikipedia.org/wiki/Standard_RAID_levels Standard RAID Levels
 http://en.wikipedia.org/wiki/Nested_RAID_levels Nested RAID Levels
-/proc/mdstat
+/proc/mdstat				# 
 mdadm - assemble, build, create, monitor, grow, manage, and misc
 
 
 
 ### Hardware ###
-dmesg 
-dmesg | grep -i usb 
-lsusb
+dmesg 					# 
+dmesg | grep -i usb			# 
+lsusb					# 
 
 
 
@@ -586,16 +597,6 @@ echo $(( ... ))
 
 
 
-### Programming ###
-bash
-python
-perl
-C,C++
-Java
-php
-
-
-
 ### Processes ###
 postfix, /usr/libexec/postfix/master, /etc/postfix/main.cf, /etc/postfix/virtual
 cyrus, /etc/sasl2/smtpd.conf, /etc/imapd.conf
@@ -603,7 +604,17 @@ cyrus, /etc/sasl2/smtpd.conf, /etc/imapd.conf
 
 
 ### Languages ###
+Python
 Perl
+Bash
+C++
+C
+PHP
+Java
+HTML
+JavaScript
+JSON
+XML
 CPAN
 
 
@@ -617,9 +628,9 @@ CPAN
 
 
 ### Screen ###
-You can disconnect from the screen with Ctrl-A and 'd'
-And then reconnect to the screen with 'screen -x'
-
+Ctrl-A and 'd'					# You can disconnect from the screen with 
+screen -x					# And then reconnect to the screen with
+screen						# 
 
 
 ### End Of Life ###
