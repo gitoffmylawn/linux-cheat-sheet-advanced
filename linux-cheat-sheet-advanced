@@ -83,7 +83,7 @@ sudo -u USER COMMAND			# run a COMMAND as USER
 sudo -s					# run the shell specified by the SHELL environment variable
 sudo -i					# login specific resource files will be loaded (e.g. .profile, .login) 
 sudo !!					# run the previous command as sudo if you forgot to the first time 
-su - ryan				# change the user to ryan and navigate ryan's home directory 
+su - USER				# change the user to ryan and navigate ryan's home directory 
 su ryan					# change the user to ryan and stay in the current directory 
 visudo					# edits the sudoers file in a safe fashion 
 exit					# exits a shell 
@@ -95,13 +95,15 @@ https://prasadlinuxblog.wordpress.com/2012/09/04/392/ # su vs sudo vs runuser
 STDIN (0)				# Standard input (data fed into the program)
 STDOUT (1)				# Standard output (data printed by the program, defaults to the terminal)
 STDERR (2)				# Standard error (for error messages, also defaults to the terminal)
->					# 
->>					# 
-<					# 
-2>					# 
-command > /dev/null 2>&1		# Sends all output to /dev/null
-command &>/dev/null			# Sends all output to /dev/null
-command 1>&- 2>&-			# Closes stdout and stderror for command 
+COMMAND > FILE				# write STDOUT of COMMAND to FILE
+COMMAND >> FILE				# append STDOUT of COMMAND to FILE
+COMMAND 2> FILE				# write STDERR of COMMAND to FILE
+COMMAND 2>> FILE			# append STDERR of COMMAND to FILE
+COMMAND &> FILE				# write both STDOUT and STDERR of COMMAND to FILE
+COMMAND < FILE				# 
+COMMAND > /dev/null 2>&1		# Sends all output to /dev/null
+COMMAND &>/dev/null			# Sends all output to /dev/null
+COMMAND 1>&- 2>&-			# Closes stdout and stderror for command 
 |					# 
 &					#
 ~					#
