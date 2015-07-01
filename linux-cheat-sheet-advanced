@@ -1,6 +1,6 @@
-#############################################################
-# This is a linux cheat sheet for beginner to advanced users. 
-#############################################################
+###############################
+# This is a linux cheat sheet # 
+###############################
 
 ####### Linux Cheat Sheet #######
 
@@ -42,9 +42,9 @@ head file				# output the first 10 lines of file
 tail file				# output the last 10 lines of file
 	tail -f file			# output the contents of file as it grows, starting with the last 10 lines
 	tail -n 3 file			# output the last 3 lines of file
-wc					# 
+wc					# print newline, word, and byte counts for each file
 	echo -n string | wc -m		# counts the characters in a string
-xargs					#
+xargs					# build and execute command lines from standard input
 	find . -name "*.c" | xargs rm -rf	# remove all files ending in .c
 	find . -name '*.c' | xargs grep 'stdlib.h'	# find files whose name ends in .c and stdlib.h is in the file
 cat file				# prints a file to standard out
@@ -57,7 +57,7 @@ less file				# scrolls through a file
 man command				# view the linux manual for the specified command 
 	man man				# useful for looking at manual sections ( e.g. ls(1) )
 	man -S 1 ls			# view the man page, section 1, of ls, also, man 1 ls works 
-info					#
+info					# read info documents
 	info ls				# some mor info on the ls command 
 ls | tee file 				# read from standard input and write to standard output and files
 	ls | tee -a file		# read from standard input and write to standard output and append to files
@@ -362,8 +362,8 @@ http://www.thegeekstuff.com/2012/10/gnupg-basics/
 /etc/cron.daily/logrotate		# 
 /etc/logrotate.conf			# 
 /etc/logrotate.d/			# 
-logrotate -d /etc/logrotate.conf	# 
-logrotate -f /etc/logrotate.conf	# 
+logrotate -d /etc/logrotate.d/FILE	# 
+logrotate -f /etc/logrotate.d/FILE	# 
 zcat					# 
 zless					# 
 zmore					# 
@@ -383,7 +383,7 @@ logstalgia - graphical log tool.	#
 
 
 
-### iptables / Rate Limiting ###
+### iptables / Rate Limiting / Hash Limiting ###
 iptables -L -v				# 
 iptables -L -vt nat			# 
 iptables-save | less			# 
@@ -405,6 +405,8 @@ http://blog.trackets.com/2014/05/17/ssh-tunnel-local-and-remote-port-forwarding-
 
 
 ### Web Servers ###
+## Apache ## 
+## Nginx ## 
 https://en.wikipedia.org/wiki/Comparison_of_web_server_software
 
 
@@ -412,6 +414,19 @@ https://en.wikipedia.org/wiki/Comparison_of_web_server_software
 ### Web Browsers ###
 https://en.wikipedia.org/wiki/Comparison_of_web_browsers
 http://html5test.com
+
+
+
+### Monitoring ###
+## Munin ## 
+munin-node-configure --suggest 
+munin-node-configure --shell
+munin-run PLUGIN
+munin-run PLUGIN config
+/etc/munin/plugins/
+## Nagios ##
+## Opsview ## 
+https://en.wikipedia.org/wiki/Comparison_of_network_monitoring_systems
 
 
 
@@ -435,11 +450,6 @@ rsync -havPn $FILE root@$HOSTNAME:/$RESTORE-DIR
 		zpool history
 		zfs get all pool/dataset
 		Oracle ZFS Docs - http://docs.oracle.com/cd/E18752_01/html/819-5461/zfsover-1.html
-
-
-
-### Monitoring ###
-https://en.wikipedia.org/wiki/Comparison_of_network_monitoring_systems
 
 
 
@@ -469,6 +479,30 @@ https://en.wikipedia.org/wiki/List_of_email_archive_software
 https://en.wikipedia.org/wiki/Sender_Policy_Framework
 https://en.wikipedia.org/wiki/DomainKeys_Identified_Mail
 https://www.mail-tester.com/spf-dkim-check
+
+
+
+### VPN ### 
+
+
+
+### Proxy ###
+
+
+
+### LDAP ### 
+
+
+
+### Samba ###
+
+
+
+### PXE ###
+
+
+
+### Virtualization ###
 
 
 
@@ -618,14 +652,6 @@ JavaScript
 JSON
 XML
 CPAN
-
-
-
-### VPN ###
-
-
-
-### Proxy ###
 
 
 
