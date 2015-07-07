@@ -68,6 +68,7 @@ file FILE				# displays the file type
 ### Miscellaneous Commands ###
 clear					# clears output of the terminal 
 apropos					# search the manual page names and descriptions
+yes					# 
 
 
 
@@ -88,6 +89,47 @@ su ryan					# change the user to ryan and stay in the current directory
 visudo					# edits the sudoers file in a safe fashion 
 exit					# exits a shell 
 https://prasadlinuxblog.wordpress.com/2012/09/04/392/ # su vs sudo vs runuser
+
+
+
+### Path Info ###
+/bin					# originally intended for programs that needed to be on a small / partition before 
+					  the larger /usr, etc. partitions were mounted, now it mostly serves as a standard 
+					  location for key programs like /bin/sh. 
+/sbin					# Same as above but for scripts with superuser privileges
+/usr/bin				# for distribution-managed normal user programs
+/usr/sbin				# for distribution-managed superuser programs 
+/usr/local/bin				# for normal user programs not managed by the distribution package manager, e.g. 
+					  locally compiled packages. You should not install them into /usr/bin because future 
+					  distribution upgrades may modify or delete them without warning.h
+/usr/local/sbin				# same as above but restricted to superuser access 
+/boot					# Holds important files during boot-up process, including Linux Kernel.
+/dev					# Contains device files for all the hardware devices on the machine e.g., cdrom, cpu, etc
+/etc					# Contains Application’s configuration files, startup, shutdown, start, stop script for 
+					  every individual program.
+/home					# Home directory of the users. Every time a new user is created, a directory in the name 
+					  of user is created within home directory which contains other directories like Desktop, 
+					  Downloads, Documents, etc.
+/lib					# The Lib directory contains kernel modules and shared library images required to boot 
+					  the system and run commands in root file system.
+/lost+found				# This Directory is installed during installation of Linux, useful for recovering files 
+					  which may be broken due to unexpected shut-down.
+/media					# Temporary mount directory is created for removable devices viz., media/cdrom.
+/mnt					# Temporary mount directory for mounting file system.
+/opt					# Optional is abbreviated as opt. Contains third party application software. Viz., Java, etc.
+/proc					# A virtual and pseudo file-system which contains information about running process with 
+					  a particular Process-id aka pid.
+/root					# This is the home directory of root user and should never be confused with ‘/‘
+/run					# This directory is the only clean solution for early-runtime-dir problem.
+/srv					# Service is abbreviated as ‘srv‘. This directory contains server specific and service related files.
+/sys					# Modern Linux distributions include a /sys directory as a virtual filesystem, which stores 
+					  and allows modification of the devices connected to the system.
+/tmp					# System’s Temporary Directory, Accessible by users and root. Stores temporary files for user 
+					  and system, till next boot.
+/usr					# Contains executable binaries, documentation, source code, libraries for second level program.
+/var					# Stands for variable. The contents of this file is expected to grow. This directory contains 
+					  log, lock, spool, mail and temp files.
+
 
 
 
@@ -261,7 +303,7 @@ http://www.subnet-calculator.com/cidr.php CIDR Calculator
 date					# show the current date and time
 cal					# show this month's calendar
 uptime					# show current uptime
-w					# display who is online
+w					# display who is logged in and what they are doing 
 whoami					# who you are logged in as
 finger user				# display information about user
 uname -a  show kernel information	# 
@@ -307,14 +349,30 @@ nslookup				#
 nmap					# 
 traceroute				# 
 netstat -nat | grep LISTEN		# 
+lo
+eth0
+wlan0
+tun3
+/etc/hosts
+/etc/hosts.conf
+/etc/resolv.conf
+/etc/network/interfaces
+/etc/network/options
+/etc/inetd.conf
+/etc/sysconfig/network-scripts
+arp 
+nmap
+
 
 
 
 ### Packaging Commands ###
 Install from source: ./configure -&gt; make -&gt; make install
+## Debian Based ##
 apt-get -s upgrade			# lists the packages to be upgraded 
 apt-get update				# updates the repos 
 apt-get upgrade				# updates the packages
+apt-get dist-upgrade			# 
 apt-get autoremove			# 
 apt-get autoclean			#
 dpkg -i pkg.deb				# install a package 
@@ -322,6 +380,14 @@ dpkg -l | grep PACKAGE			# see if a package is installed
 dpkg -s PACKAGE				# see if package is installed and get info 
 dpkg-query -L PACKAGE			# view the files that are associated in the bash package
 dpkg -S file				# view the package that is associated with the file 
+		Remove Old Kernels In /boot 
+		df -h			# 
+		uname -r		# 
+		dpkg -l | grep linux-image	# 
+		dpkg -r linux-image-3.2.0-65-generic	#
+		dpkg --purge linux-image-3.2.0-65-generic	#
+		df -h			# 
+## Red Hat Based ##
 yum check-update			# lists the packages to be upgraded 
 yum update				# updates the system 
 yum history list PACKAGE		# 
@@ -330,14 +396,10 @@ rpm -Uvh pkg.rpm			# install a package
 rpm -qa | grep PACKAGE			# see if a package is installed 
 rpm -ql PACKAGE				# view the files that are associated in the bash package 
 rpm -qf PACKAGE				# view the package that is associated with the file
-rpm -qa --last | less			#
-	Remove Kernels In /boot 
-		df -h			# 
-		uname -r		# 
-		dpkg -l | grep linux-image	# 
-		dpkg -r linux-image-3.2.0-65-generic	#
-		dpkg --purge linux-image-3.2.0-65-generic	#
-		df -h			# 
+rpm -qa --last | less			# 
+yum remove PACKAGE			# 
+rpm -e 					# 
+repoquery -i PACKAGE			# 
 lsmod					#
 modprobe				#
 
@@ -424,8 +486,10 @@ munin-node-configure --shell
 munin-run PLUGIN
 munin-run PLUGIN config
 /etc/munin/plugins/
+http://munin-monitoring.org/
 ## Nagios ##
 ## Opsview ## 
+
 https://en.wikipedia.org/wiki/Comparison_of_network_monitoring_systems
 
 
@@ -448,7 +512,8 @@ rsync -havPn $FILE root@$HOSTNAME:/$RESTORE-DIR
 		zfs mount
 		zpool status
 		zpool history
-		zfs get all pool/dataset
+	    zpool list
+    	zfs get all pool/dataset
 		Oracle ZFS Docs - http://docs.oracle.com/cd/E18752_01/html/819-5461/zfsover-1.html
 
 
@@ -479,6 +544,10 @@ https://en.wikipedia.org/wiki/List_of_email_archive_software
 https://en.wikipedia.org/wiki/Sender_Policy_Framework
 https://en.wikipedia.org/wiki/DomainKeys_Identified_Mail
 https://www.mail-tester.com/spf-dkim-check
+
+
+
+### SE Linux ###
 
 
 
@@ -860,4 +929,6 @@ kabana
 reddis
 https://en.wikipedia.org/wiki/PHP
 http://oss.oetiker.ch/rrdtool/
+http://www.aboutdebian.com/network.htm
+grep 'warning\|error\|critical' /var/log/messages 
 
