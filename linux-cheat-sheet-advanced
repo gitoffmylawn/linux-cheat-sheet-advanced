@@ -432,6 +432,7 @@ zless					#
 zmore					# 
 multitail *.log				# 
 logstalgia - graphical log tool.	# 
+logstash
 
 
 
@@ -476,7 +477,17 @@ Multiplexers
 
 ### Web Servers ###
 ## Apache ## 
+## Debian Based ##
+a2query
+a2enconf
+a2disconf
+a2enmod
+a2dismod
+a2ensite
+a2dissite
 ## Nginx ## 
+## Debian Based ##
+
 https://en.wikipedia.org/wiki/Comparison_of_web_server_software
 
 
