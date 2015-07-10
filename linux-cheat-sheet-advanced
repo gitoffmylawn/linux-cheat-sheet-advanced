@@ -253,6 +253,7 @@ grep -B 1 pattern dir			# search for pattern and print line as well as one line 
 grep -A 1 pattern dir			# search for pattern and print line as well as one line after
 command | grep pattern			# search for pattern in the output of command
 locate file				# find all instances of file
+    locate -i FILE      # locate is case sensitive, use the -i option to ignore case 
 sudo updatedb				# updates the database that locate uses to search for files.
 find					# 
 find -maxdepth 1 -type f -mtime +60 -exec ls -l {} \;	# 
@@ -463,6 +464,13 @@ ssh user@host				# connect to host as user
 ssh -p port user@host			# connect to host on port
 ssh-copy-id user@host			# add your key to host for user to enable a keyed or passwordless login
 http://blog.trackets.com/2014/05/17/ssh-tunnel-local-and-remote-port-forwarding-explained-with-examples.html
+ssh -L 9000:localhost:80 HOST
+ssh -L 9000:HOST2:80 HOST1
+ssh -D 9999 HOST
+ssh -R 9090:HOST2:8000 HOST1 
+Host *.lan
+ProxyCommand ssh -W %h:22 HOST2
+Multiplexers 
 
 
 
@@ -725,9 +733,21 @@ CPAN
 
 
 ### Screen ###
-Ctrl-A and 'd'					# You can disconnect from the screen with 
-screen -x					# And then reconnect to the screen with
-screen						# 
+screen -S session               # creates a session 
+screen                          # creates a screen
+Ctrl+a+d    					# You can detach from the screen with 
+screen -ls                      # list available sessions
+screen -r                       # reattach to a session 
+screen -x USER/SESSION          # 
+screen -x   					# And then reconnect to the screen with
+screen -L -S session1           # create a session with a log 
+screen -h 20000 -L -S session1  # Create a session with a log and 20000 lines of scrollback in the terminal
+Ctrl+a+c                        # Create a new window
+Ctrl+a+n                        # Switch between windows 
+Ctrl+a+x                        # Locks screen session by password 
+exit                            # While in a screen, type exit to close the session 
+/etc/screenrc, .screenrc        #  
+
 
 
 ### End Of Life ###
@@ -850,6 +870,9 @@ vmstat
 tcpdump
 iotop
 iostat
+systat
+dstat
+sar
 iptraf
 ifhogs
 iftop
