@@ -14,61 +14,92 @@ ls					# directory listing
 	ls -m				# shows files and directories comma separated
 	ls --full-time			# formatted listing with year
 	ls -R				# list files and subdirectories recursively
-cd dir					# change directory to dir
+cd DIR					# change directory to DIR
 	cd				# change to home directory
 pwd					# show current directory 
-mkdir dir				# create a directory dir
-	mkdir -p ./parentdir/childdir/	# creates parentdir as well as childdir
+mkdir DIR				# create a directory DIR
+	mkdir -p ./PARENTDIR/CHILDDIR/	# creates PARENTDIR as well as CHILDDIR
 rmdir					# remove an empty directory
-rm file					# delete file
-	rm -r dir			# delete directory dir
-	rm -f file			# force remove file
-	rm -rf dir			# force remove directory dir
-	rm -i file			# asks before file is deleted 
-cp file1 file2				# copy file1 to file2
-	cp -r dir1 dir2			# copy dir1 to dir2; create dir2 if it doesn't exist
-	cp -a dir1 dir2			# copies entire directory tree
-	cp -u dir1 dir2			# prevents overwriting identically-named newer files
-mv file1 file2  			# rename or move file1 to file2
-ln -s TARGET LINK_NAME			# create symbolic link link to TARGET
+rm FILE					# delete FILE
+	rm -r DIR			# delete directory DIR
+	rm -f FILE			# force remove FILE
+	rm -rf DIR			# force remove directory DIR
+	rm -i FILE			# asks before FILE is deleted 
+cp FILE1 FILE2				# copy FILE1 to FILE2
+	cp -r DIR1 DIR2			# copy DIR1 to DIR2; create DIR2 if it doesn't exist
+	cp -a DIR1 DIR2			# copies entire directory tree
+	cp -u DIR1 DIR2			# prevents overwriting identically-named newer files
+mv FILE1 FILE2  			# rename or move FILE1 to FILE2
+ln -s TARGET LINK_NAME			# create symbolic link, LINK_NAME, link to TARGET
 	ln TARGET LINK_NAME		# hard link, points to inode instead of filename
-touch file				# create or update file
-	touch -d "two hours ago" filename	# change the modified time of file
-stat -c %Y test | gawk '{print strftime("%c", $0)}'	# output of this and below command will be the same if file's mod time wasn't touched
-stat -c %Z test | gawk '{print strftime("%c", $0)}'	# output of this will show when the file was last touched or modified
-cat > file				# places standard input into file
-head file				# output the first 10 lines of file
-	head -n 3 file			# output the first 3 lines of file
-tail file				# output the last 10 lines of file
-	tail -f file			# output the contents of file as it grows, starting with the last 10 lines
-	tail -n 3 file			# output the last 3 lines of file
-wc					# print newline, word, and byte counts for each file
-	echo -n string | wc -m		# counts the characters in a string
+touch FILE				# create or update FILE 
+	touch -d "two hours ago" FILE	# change the modified time of FILE
+stat -c %Y FILE | gawk '{print strftime("%c", $0)}'	# output of this and below command will be the same if FILE's mod time wasn't touched
+stat -c %Z FILE | gawk '{print strftime("%c", $0)}'	# output of this will show when the FILE was last touched or modified
+cat > FILE				# places standard input into FILE
+head FILE				# output the first 10 lines of FILE
+	head -n 3 FILE			# output the first 3 lines of FILE
+tail FILE				# output the last 10 lines of FILE
+	tail -f FILE			# output the contents of FILE as it grows, starting with the last 10 lines
+	tail -n 3 FILE			# output the last 3 lines of FILE
+wc FILE					# print newline, word, and byte counts for a FILE 
+	echo -n STRING | wc -m		# counts the characters in a STRING
 xargs					# build and execute command lines from standard input
 	find . -name "*.c" | xargs rm -rf	# remove all files ending in .c
 	find . -name '*.c' | xargs grep 'stdlib.h'	# find files whose name ends in .c and stdlib.h is in the file
-cat file				# prints a file to standard out
-	cat score.txt names.txt > report.txt	# concatenates two files into one.
-tac file				# prints a file to standard out in reverse order
-rev file				# prints the characters in a line in reverse order
-echo text				# prints to standard out
-more file				# primitive version of less, use less
-less file				# scrolls through a file
-man command				# view the linux manual for the specified command 
+cat FILE				# prints a FILE to standard out
+	cat FILE1 FILE2 > FILE3		# concatenates FILE1 and FILE2 into FILE3 .
+tac FILE				# prints a FILE to standard out in reverse order
+rev FILE				# prints the characters of a FILE in a line in reverse order
+echo STRING				# prints STRING to standard out
+more FILE				# primitive version of less, use less
+less FILE				# scrolls through a FILE
+man COMMAND				# view the linux manual for the specified COMMAND 
 	man man				# useful for looking at manual sections ( e.g. ls(1) )
-	man -S 1 ls			# view the man page, section 1, of ls, also, man 1 ls works 
-info					# read info documents
-	info ls				# some mor info on the ls command 
-ls | tee file 				# read from standard input and write to standard output and files
-	ls | tee -a file		# read from standard input and write to standard output and append to files
-file FILE				# displays the file type
+	man 1 ls			# view the man page, section 1, of ls 
+info COMMAND				# some more info on COMMAND
+ls | tee FILE 				# read from standard input and write to standard output and FILE
+	ls | tee -a FILE		# read from standard input and write to standard output and append to FILe
+file FILE				# displays the file type of FILE
+awk
+sed
+cut
+tr
+
+
+### SSH ### 
+ssh USER@HOST				# connect to HOST as USER
+ssh -p PORT USER@HOST			# connect to HOST on PORT
+~/.ssh/					# the current user's ssh directory, mportant files are, config, authorized_keys, and known_hosts. 
+ssh-copy-id USER@HOST			# add your key to HOST for USER to enable a keyed or passwordless login 
+http://blog.trackets.com/2014/05/17/ssh-tunnel-local-and-remote-port-forwarding-explained-with-examples.html
+ssh -L 9000:localhost:80 HOST		# connects to HOST's localhost port 80 via HOST, view this connection on your localhost port 9000
+ssh -L 9000:HOST2:80 HOST1		# connects to HOST2 port 80 via HOST1, view this connection on your localhost port 9000
+ssh -D 9999 HOST			# 
+ssh -R 9090:HOST2:8000 HOST1		# 
+https://help.ubuntu.com/community/SSH/OpenSSH/PortForwarding 
+mussh
+cssh
+Multiplexers				
+
+
+
+### Remote File Copying ###
+scp - tends to be slower 
+rsync - rsync tends to be faster 
+rysnc -havP /usr/local/ 1.2.3.4:/usr/local/
+rsync -havP -e "ssh -p6127" /usr/local/ 1.2.3.4:/usr/local/
+ssh-keygen -f "/root/.ssh/known_hosts" -R [1.2.3.4]:6127
+rsync -havP -e "ssh -p6127" /usr/local/ 1.2.3.4:/usr/local/
+ftp - 
+sftp - 
 
 
 
 ### Miscellaneous Commands ###
 clear					# clears output of the terminal 
-apropos					# search the manual page names and descriptions
-yes					# 
+apropos COMMAND				# search the manual page names and descriptions using the keyword COMMAND
+yes					# try it! Fun for stress testing your machine 
 
 
 
@@ -88,48 +119,56 @@ su - USER				# change the user to ryan and navigate ryan's home directory
 su ryan					# change the user to ryan and stay in the current directory 
 visudo					# edits the sudoers file in a safe fashion 
 exit					# exits a shell 
-https://prasadlinuxblog.wordpress.com/2012/09/04/392/ # su vs sudo vs runuser
+https://prasadlinuxblog.wordpress.com/2012/09/04/392/ # su vs sudo vs runuser 
 
+
+
+### TTY ###
+Ctrl+Alt+F1,F2,F3...
+tty					# print the file name of the terminal connected to standard input
+# The following are not commands, just info. You will see these outputs when running 'w' 
+tty					# is a native terminal device, kernel emulated or hardware emulated 
+ptmx					# pseudoterminal master that creates slaves, /etc/ptmx
+pts					# pseudoterminal slave, /dev/pts/*
 
 
 ### Path Info ###
 /bin					# originally intended for programs that needed to be on a small / partition before 
 					  the larger /usr, etc. partitions were mounted, now it mostly serves as a standard 
 					  location for key programs like /bin/sh. 
-/sbin					# Same as above but for scripts with superuser privileges
+/sbin					# same as above but for scripts with superuser privileges
 /usr/bin				# for distribution-managed normal user programs
 /usr/sbin				# for distribution-managed superuser programs 
 /usr/local/bin				# for normal user programs not managed by the distribution package manager, e.g. 
 					  locally compiled packages. You should not install them into /usr/bin because future 
-					  distribution upgrades may modify or delete them without warning.h
+					  distribution upgrades may modify or delete them without warning. 
 /usr/local/sbin				# same as above but restricted to superuser access 
-/boot					# Holds important files during boot-up process, including Linux Kernel.
-/dev					# Contains device files for all the hardware devices on the machine e.g., cdrom, cpu, etc
-/etc					# Contains Application’s configuration files, startup, shutdown, start, stop script for 
+/boot					# holds important files during boot-up process, including Linux Kernel.
+/dev					# contains device files for all the hardware devices on the machine e.g., cdrom, cpu, etc
+/etc					# contains application’s configuration files, startup, shutdown, start, stop script for 
 					  every individual program.
-/home					# Home directory of the users. Every time a new user is created, a directory in the name 
+/home					# home directory of the users. Every time a new user is created, a directory in the name 
 					  of user is created within home directory which contains other directories like Desktop, 
 					  Downloads, Documents, etc.
-/lib					# The Lib directory contains kernel modules and shared library images required to boot 
+/lib					# the lib directory contains kernel modules and shared library images required to boot 
 					  the system and run commands in root file system.
-/lost+found				# This Directory is installed during installation of Linux, useful for recovering files 
+/lost+found				# this directory is installed during installation of Linux, useful for recovering files 
 					  which may be broken due to unexpected shut-down.
-/media					# Temporary mount directory is created for removable devices viz., media/cdrom.
-/mnt					# Temporary mount directory for mounting file system.
-/opt					# Optional is abbreviated as opt. Contains third party application software. Viz., Java, etc.
-/proc					# A virtual and pseudo file-system which contains information about running process with 
-					  a particular Process-id aka pid.
-/root					# This is the home directory of root user and should never be confused with ‘/‘
-/run					# This directory is the only clean solution for early-runtime-dir problem.
-/srv					# Service is abbreviated as ‘srv‘. This directory contains server specific and service related files.
-/sys					# Modern Linux distributions include a /sys directory as a virtual filesystem, which stores 
+/media					# temporary mount directory is created for removable devices viz., media/cdrom.
+/mnt					# temporary mount directory for mounting file system.
+/opt					# optional is abbreviated as opt. Contains third party application software. Viz., Java, etc.
+/proc					# a virtual and pseudo file-system which contains information about running process with 
+					  a particular process-id aka pid.
+/root					# this is the home directory of root user and should never be confused with ‘/‘
+/run					# this directory is the only clean solution for early-runtime-dir problem.
+/srv					# service is abbreviated as ‘srv‘. This directory contains server specific and service related files.
+/sys					# modern Linux distributions include a /sys directory as a virtual filesystem, which stores 
 					  and allows modification of the devices connected to the system.
-/tmp					# System’s Temporary Directory, Accessible by users and root. Stores temporary files for user 
+/tmp					# system’s Temporary Directory, Accessible by users and root. Stores temporary files for user 
 					  and system, till next boot.
-/usr					# Contains executable binaries, documentation, source code, libraries for second level program.
-/var					# Stands for variable. The contents of this file is expected to grow. This directory contains 
+/usr					# contains executable binaries, documentation, source code, libraries for second level program.
+/var					# stands for variable. The contents of this file is expected to grow. This directory contains 
 					  log, lock, spool, mail and temp files.
-
 
 
 
@@ -226,7 +265,8 @@ sudo update-rc.d -f process remove	#
 sudo chkconfig apache2 off		# 
 pgrep					# 
 pstree					# 
-
+fuser -vn tcp 443
+fuser -n tcp 22
 
 
 ### Permissions ###
@@ -247,12 +287,13 @@ chown --preserve-root			#
 
 
 ### Searching ###
-grep pattern files			# search for pattern in files
-grep -r pattern dir			# search recursively for pattern in dir
-grep -B 1 pattern dir			# search for pattern and print line as well as one line before 
-grep -A 1 pattern dir			# search for pattern and print line as well as one line after
-command | grep pattern			# search for pattern in the output of command
-locate file				# find all instances of file
+grep PATTERN DIR			# search for PATTERN in DIR
+grep 'A\|B\|C' DIR			# search for A B or C in DIR
+grep -r PATTERN DIR			# search recursively for PATTERN in DIR
+grep -B 1 PATTERN DIR			# search for PATTERN in DIR and print line as well as one line before 
+grep -A 1 PATTERN DIR			# search for PATTERN in DIR and print line as well as one line after
+COMMAND | grep PATTERN			# search for PATTERN in the output of COMMAND
+locate FILE				# find all instances of FILE
     locate -i FILE      # locate is case sensitive, use the -i option to ignore case 
 sudo updatedb				# updates the database that locate uses to search for files.
 find					# 
@@ -264,11 +305,14 @@ find -maxdepth 1 -type f -mtime +60 -exec ls -l {} \;	#
 df					# show disk usage
 	df -ih				# 
 	df -h				# 
+	df -T				# prints filesystem type
+	df -a				# includes dummy sytems
 find / -xdev -printf '%h\n' | sort | uniq -c | sort -k 1 -n	# 
 du					# show directory space usage
 	du -sch *			# 
 	du -sch .[!.]* * |sort -h	# 
 fdisk					# 
+lsblk
 
 
 
@@ -283,7 +327,7 @@ tcsh					#
 
 ### File Comparison ###
 diff -u file1 file2 > file3		# 
-md5sum file				# useful for comparing two files, not secure, use sha for more security  
+md5sum file				# useful for comparing two files, not secure for scripting use sha for more security  
 comm					# 
 
 
@@ -297,15 +341,22 @@ http://vlsm-calc.net/ipclasses.php IP Address Classes (Replaced by http://en.wik
 http://en.wikipedia.org/wiki/Reserved_IP_addresses Reserved IP Addresses
 http://www.subnet-calculator.com/subnet.php IP Subnet Calculator
 http://www.subnet-calculator.com/cidr.php CIDR Calculator
+http://www.iplocation.net/
 
 
 
 ### System Info ###
 date					# show the current date and time
 cal					# show this month's calendar
+cal 09 1987
+date, date --set='19 september 2015 12:00
 uptime					# show current uptime
 w					# display who is logged in and what they are doing 
 whoami					# who you are logged in as
+who
+last					
+lastb					
+history
 finger user				# display information about user
 uname -a  show kernel information	# 
 cat /proc/cpuinfo  cpu information	# 
@@ -363,7 +414,15 @@ tun3
 /etc/sysconfig/network-scripts
 arp 
 nmap
-
+ngrep
+tcpdump
+tcpdump -lni any port 25
+http://www.aboutdebian.com/network.htm 
+nmap/zenmap - network trouble shooting tool.
+wireshark 
+mtr
+fuser
+netcat
 
 
 
@@ -406,7 +465,7 @@ modprobe				#
 
 
 
-### gpg ###
+### Encryption ###
 gpg --gen-key				# 
 gpg --list-keys				# 
 gpg --list-secret-keys			# 
@@ -417,6 +476,8 @@ https://futureboy.us/pgp.html
 https://www.gnupg.org/index.html
 https://www.digitalocean.com/community/tutorials/how-to-use-gpg-to-encrypt-and-sign-messages-on-an-ubuntu-12-04-vps
 http://www.thegeekstuff.com/2012/10/gnupg-basics/
+md5sum
+sha1sum
 
 
 
@@ -436,7 +497,7 @@ logstash
 
 
 
-### Cron ### 
+### Cron/Anacron/At ### 
 /etc/crontab				# 
 /etc/cron.hourly/			# 
 /etc/cron.daily/			# 
@@ -444,7 +505,11 @@ logstash
 /etc/cron.monthly/			# 
 /etc/cron.d/				# 
 /var/spool/cron/crontabs/		# 
-
+at, at -l, at -r 
+atq
+atrm
+batch
+atd 
 
 
 ### iptables / Rate Limiting / Hash Limiting ###
@@ -460,21 +525,6 @@ https://en.wikipedia.org/wiki/Iptables
 
 
 
-### SSH ### 
-ssh user@host				# connect to host as user
-ssh -p port user@host			# connect to host on port
-ssh-copy-id user@host			# add your key to host for user to enable a keyed or passwordless login
-http://blog.trackets.com/2014/05/17/ssh-tunnel-local-and-remote-port-forwarding-explained-with-examples.html
-ssh -L 9000:localhost:80 HOST
-ssh -L 9000:HOST2:80 HOST1
-ssh -D 9999 HOST
-ssh -R 9090:HOST2:8000 HOST1 
-Host *.lan
-ProxyCommand ssh -W %h:22 HOST2
-Multiplexers 
-
-
-
 ### Web Servers ###
 ## Apache ## 
 ## Debian Based ##
@@ -487,7 +537,6 @@ a2ensite
 a2dissite
 ## Nginx ## 
 ## Debian Based ##
-
 https://en.wikipedia.org/wiki/Comparison_of_web_server_software
 
 
@@ -508,7 +557,8 @@ munin-run PLUGIN config
 http://munin-monitoring.org/
 ## Nagios ##
 ## Opsview ## 
-
+## Wormly ##
+## Pingdom ##
 https://en.wikipedia.org/wiki/Comparison_of_network_monitoring_systems
 
 
@@ -566,7 +616,10 @@ https://www.mail-tester.com/spf-dkim-check
 
 
 
-### SE Linux ###
+### SELinux ###
+vi /etc/selinux/config
+Change the SELINUX line to: SELINUX=disable
+SELinux/AppArmor
 
 
 
@@ -591,6 +644,11 @@ https://www.mail-tester.com/spf-dkim-check
 
 
 ### Virtualization ###
+
+
+
+### Remote Desktop ###
+https://en.wikipedia.org/wiki/Comparison_of_remote_desktop_software
 
 
 
@@ -660,6 +718,7 @@ xinput, xinput disable
 lsmod
 lspci
 netstat -pnatu
+/proc/*
 
 
 
@@ -682,6 +741,10 @@ svn diff -r r12345
 
 
 ### DDoS ###
+fail2ban-client status apache
+ab -n 1000 -c 100 http://1.2.3.4/
+siege -g 1.2.3.4
+siege -d10 -c50 http://1.2.3.4/
 https://en.wikipedia.org/wiki/Null_route
 http://www.cyberciti.biz/tips/how-do-i-drop-or-block-attackers-ip-with-null-routes.html
 http://www.tummy.com/blogs/2006/07/27/the-difference-between-iptables-drop-and-null-routing/
@@ -695,13 +758,16 @@ http://en.wikipedia.org/wiki/List_of_HTTP_status_codes >HTTP Error Codes
 
 
 
-### File Systems ###
+### File Systems/Partitioning ###
 http://en.wikipedia.org/wiki/Comparison_of_file_systems >Comparison
 http://en.wikipedia.org/wiki/List_of_file_systems >List of File Systems
 df -T
 http://en.wikipedia.org/wiki/Network_File_System >NFS
 http://en.wikipedia.org/wiki/ZFS >ZFS
-
+dd
+parted
+fdisk -l
+lsblk
 
 
 ### FTP ###
@@ -733,7 +799,7 @@ Perl
 Bash
 C++
 C
-PHP
+PHP				# https://en.wikipedia.org/wiki/PHP 
 Java
 HTML
 JavaScript
@@ -746,16 +812,18 @@ CPAN
 ### Screen ###
 screen -S session               # creates a session 
 screen                          # creates a screen
-Ctrl+a+d    					# You can detach from the screen with 
+Ctrl+a then d			# You can detach from the screen with 
 screen -ls                      # list available sessions
 screen -r                       # reattach to a session 
 screen -x USER/SESSION          # 
-screen -x   					# And then reconnect to the screen with
+screen -x   			# And then reconnect to the screen with
 screen -L -S session1           # create a session with a log 
 screen -h 20000 -L -S session1  # Create a session with a log and 20000 lines of scrollback in the terminal
-Ctrl+a+c                        # Create a new window
-Ctrl+a+n                        # Switch between windows 
-Ctrl+a+x                        # Locks screen session by password 
+Ctrl+a then c			# Create a new window
+Ctrl+a then n			# Switch between windows 
+Ctrl+a then x			# Locks screen session by password 
+Ctrl+a then [			# enters copy mode, and allows you to scroll 
+Ctrl+a then ?			# a help page
 exit                            # While in a screen, type exit to close the session 
 /etc/screenrc, .screenrc        #  
 
@@ -782,48 +850,26 @@ https://en.wikipedia.org/wiki/List_of_Linux_distributions
 
 
 ### TODO ###
-mount, umount 
-dd
-parted 
+mount, umount  
 mkfs  
 xinput, xinput disable NUMBER
-lsblk
-fdisk -l
 drbd
 heartbeat
-dd
-df, df -a, df -h
-uname, uname -a
-history
-cut
-apt, apt-get, apt-cache
+apt-cache
 tar
-screen
-cal, cal 09 1987
-date, date --set='19 september 2015 12:00
-cat, cat a b ab
-wc, wc -l
 http://www.server-world.info/en/note?os=CentOS_6&p=initial_conf&f=4
-pandoc --template=/Documentation/default.latex foo.md -o
-foo.pdf
+pandoc --template=/Documentation/default.latex foo.md -o foo.pdf
 rpm -qi httpd --changelog | less
-tcpdump -lni any port 25
-http://www.iplocation.net/
 apf
 netstat -pnat |grep :80 | awk '{print $5}' |sort
-netstat -plan|grep :80|awk {'print $5'}|cut -d: -f 1|sort|uniq -c|sort -nk
-1
+netstat -plan|grep :80|awk {'print $5'}|cut -d: -f 1|sort|uniq -c|sort -nk 1
 id -u 
 Security
   lock down ssh
     restrict ips in iptables
     change ssh port to a nonstandard port
     disable password authenticaton
-    fail2ban or denyhosts
-updates
-backups
-monitoring 
-central logging 
+    fail2ban or denyhosts  
 rpm -Va --dbpath /var/lib/dbbackup/path/to/backed/up/database/
 rpm --rebuilddb --dbpath /path/to/backed/up/database/
 http://dkimvalidator.com/
@@ -835,9 +881,7 @@ Remove kernels CentOS
 PAE
 https://confluence.atlassian.com/display/STASH/Basic+Git+commands
 http://irc.dttinc.com/
-cat /proc/cpuinfo
 free -m
-fdisk -l
 http://howdoesinternetwork.com/2013/radius-infrastructure
 http://www.watchguard.com/help/docs/wsm/xtm_11/en-US/index.html#cshid=en-US/authentication/radius_how_works_c.html
 http://www.cisco.com/c/en/us/support/docs/security-vpn/remote-authentication-dial-user-service-radius/12433-32.html
@@ -847,61 +891,33 @@ https://confluence.atlassian.com/display/STASH/Basic+Git+commands
 http://kernelnewbies.org/KernelBuild
 http://www.opsschool.org/en/latest/
 Blocking ip: arp -s ip_of_host 0, Unblocking ip: arp -d ip_blocked
-for i in `postqueue -p | awk '/^[0-9,A-F]/ {print $1}'`; do sudo postcat -q
-$i | grep
+for i in `postqueue -p | awk '/^[0-9,A-F]/ {print $1}'`; do sudo postcat -q$i | grep
 Final-Recipient: | awk '{print $3}'; done > bounces
 cat bounces | sort | uniq -c
 http://www.tecmint.com/rsync-local-remote-file-synchronization-commands/
-http://www.root-servers.org/
-fail2ban-client status apache
-ab -n 1000 -c 100 http://1.2.3.4/
-siege -g 1.2.3.4
-siege -d10 -c50 http://1.2.3.4/  
+http://www.root-servers.org/  
 https://help.ubuntu.com/community/LinuxLogFiles
 http://www.thegeekstuff.com/2011/08/linux-var-log-files/
 chkconfig
 ubuntu version of chkconfig
-last
-lastb
 shutdown
 login
 init
-http://en.wikipedia.org/wiki/Comparison_of_web_server_software
 smem
-for file in /proc/*/status ; do awk '/VmSwap|Name/{printf $2 " " $3}END{
-print ""}' $file; done | sort -k 2 -n -r | less
-at, at -l, at -r 
-atq
-atrm
-batch
-atd 
+for file in /proc/*/status ; do awk '/VmSwap|Name/{printf $2 " " $3}END{print ""}' $file; done | sort -k 2 -n -r | less
 umask
 lsof 
 vmstat
-tcpdump
-iotop
 iostat
-systat
-dstat
 sar
-iptraf
-ifhogs
-iftop
 nproc 
 tcptrack 
 maillog
 VMware, proxmox
-Nagios, Opsview, external via
-   Wormly, Pingdom
 pgrep bash
-pstree 
 bzip2
 pbzip
-iostat
-vmstat
-postcat 
-cssh 
-mussh 
+postcat  
 route 
 fallocate, mkswap, swapon
 netstat -ntu | awk "{print $5}" | cut -d: -f1 | sort | uniq -c | sort -n
@@ -909,14 +925,8 @@ iostat -x 1
 killall -9 httpd
 lshw
 nc
-vi /etc/selinux/config
-Change the SELINUX line to: SELINUX=disable
 rpm -qa | sort > installedpackages-20150128
 tgpw
-rysnc -havP /usr/local/ 1.2.3.4:/usr/local/
-rsync -havP -e "ssh -p6127" /usr/local/ 1.2.3.4:/usr/local/
-ssh-keygen -f "/root/.ssh/known_hosts" -R [1.2.3.4]:6127
-rsync -havP -e "ssh -p6127" /usr/local/ 1.2.3.4:/usr/local/
 fsck
 EPEL, rpm forge
 host google.com 127.0.0.1
@@ -924,45 +934,20 @@ Ctrl+W ? erases one word in the current line
 Ctrl+U ? erases the whole line
 Ctrl+R ? type to bring up a recent command
 exit ? log out of current session
-awk
-sed
-perl
-netcat
-dd
-tcpdump
-rsync
-fuser -vn tcp 443
-fuser -n tcp 22
 lsof
 ufw
 logfile | awk '{print $1}' | sort | uniq -c | sort -n
 /usr/local/nagios/libexec/check_procs --help
-mtr
-zfs list backups
 gnome-open test.pdf / open pdf in Ubuntu
-nmap/zenmap - network trouble shooting tool.
-wireshark
 vnc
-openVPN
-chrome Remote Desktop
 KVM
-SELinux/AppArmor
-Samba
-Nagios/Opsview
 Clonezilla
-Blender
 vmstat
 ps awwlx --sort=vsz" will show the largest processes
-log file location differences 
 https://www.digitalocean.com/community/tutorials/how-to-use-arch-linux-package-management
 When package was installed 
 /var/lib/dpkg/info timestamp 
 elastic search
-logstash 
 kabana
 reddis
-https://en.wikipedia.org/wiki/PHP
-http://oss.oetiker.ch/rrdtool/
-http://www.aboutdebian.com/network.htm
-grep 'warning\|error\|critical' /var/log/messages 
 
