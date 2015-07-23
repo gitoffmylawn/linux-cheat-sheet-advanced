@@ -61,15 +61,27 @@ info COMMAND				# some more info on COMMAND
 ls | tee FILE 				# read from standard input and write to standard output and FILE
 	ls | tee -a FILE		# read from standard input and write to standard output and append to FILe
 file FILE				# displays the file type of FILE
-awk
-sed
-cut
-tr
+awk					# pattern scanning and processing language
+	ls -l | awk '{print $3}'	# awk will print the 3rd value 
+	echo 'a:b' | awk -F ':' '{print $1}'	# using ':' as a delimeter print the first value. 
+sed					# sed is a stream editor for filtering and trasforming text
+	echo 'day day' | sed s:day:night:	# this example will print 'night day' to the console. 
+	echo 'day day' | sed -e 's:day:night:g'	# this example will print 'night night' to the console. 'g' meaning global substitution 
+cut					# remove sections from each line of files 
+	cut -c2 test.txt		# 
+	cut -c1-3 test.txt		# 
+	cut -c3- test.txt		# 
+	cut -c-8 test.txt		#
+	cut -d ':' -f1 /etc/passwd	# 
+tr					# 
+sort					# 
+uniq					# 
+
 
 
 ### SSH ### 
 ssh USER@HOST				# connect to HOST as USER
-ssh -p PORT USER@HOST			# connect to HOST on PORT
+ssh -p PORT USER@HOST			# connect to HOST as USER on port PORT
 ~/.ssh/					# the current user's ssh directory, mportant files are, config, authorized_keys, and known_hosts. 
 ssh-copy-id USER@HOST			# add your key to HOST for USER to enable a keyed or passwordless login 
 http://blog.trackets.com/2014/05/17/ssh-tunnel-local-and-remote-port-forwarding-explained-with-examples.html
@@ -261,7 +273,11 @@ COMMAND &				# runs command in the background
 fg n%					# brings job n to the foreground
 kill n%					# kills job n
 jobs					# lists jobs
-sudo update-rc.d -f process remove	# 
+update-rc.d -f process remove		# 
+update-rc.d apache2 defaults
+update-rc.d apache2 defaults 91
+http://www.debuntu.org/how-to-managing-services-with-update-rc-d/
+ls -C /etc/rc*.d/ | less
 sudo chkconfig apache2 off		# 
 pgrep					# 
 pstree					# 
@@ -584,6 +600,10 @@ rsync -havPn $FILE root@$HOSTNAME:/$RESTORE-DIR
 	    zpool list
     	zfs get all pool/dataset
 		Oracle ZFS Docs - http://docs.oracle.com/cd/E18752_01/html/819-5461/zfsover-1.html
+
+
+
+### Hardware ###
 
 
 
@@ -950,4 +970,8 @@ When package was installed
 elastic search
 kabana
 reddis
+bootchart 
+ip addr ls
+http://www.crn.com/slide-shows/data-center/240159618/server-showdown-top-10-server-brands.htm/pgno/0/9
+gnome-help
 
