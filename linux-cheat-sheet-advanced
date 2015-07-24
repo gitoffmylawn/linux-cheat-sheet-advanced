@@ -62,62 +62,74 @@ ls | tee FILE 				# read from standard input and write to standard output and FI
 	ls | tee -a FILE		# read from standard input and write to standard output and append to FILe
 file FILE				# displays the file type of FILE
 awk					# pattern scanning and processing language
-	ls -l | awk '{print $3}'	# awk will print the 3rd value 
+	ls -l | awk '{print $3}'	# awk will print the 3rd value of ls -l 
 	echo 'a:b' | awk -F ':' '{print $1}'	# using ':' as a delimeter print the first value. 
 sed					# sed is a stream editor for filtering and trasforming text
 	echo 'day day' | sed s:day:night:	# this example will print 'night day' to the console. 
 	echo 'day day' | sed -e 's:day:night:g'	# this example will print 'night night' to the console. 'g' meaning global substitution 
 cut					# remove sections from each line of files 
-	cut -c2 test.txt		# 
-	cut -c1-3 test.txt		# 
-	cut -c3- test.txt		# 
-	cut -c-8 test.txt		#
-	cut -d ':' -f1 /etc/passwd	# 
-tr					# 
-sort					# 
-uniq					# 
+	cut -c2 FILE			# prints the 2nd character on each line of FILE 
+	cut -c1-3 FILE			# prints characters 1-3 on each line of FILE 
+	cut -c3- FILE			# prints the 3rd character to the last character on each line of FILE 
+	cut -c-8 FILE			# prints the first 8 characters on each line of FILE 
+	cut -d ':' -f1 /etc/passwd	# prints field 1 using delimeter ':' on each line of /etc/passwd 
+tr					# translate or delete characters
+	ls -m | tr -d '\n'		# removes new line characters from ls -m 
+	echo 'linux' | tr "[:lower:]" "[:upper:]"	# prints 'LINUX' 
+	tr -cd "[:print:]" < FILE	# removes all non-printable characters from FILE 
+sort					# sort lines of text files
+	sort FILE			# sorts each line of FILE in alphabetical order 
+	sort -u FILE			# sorts each line of FILE in alphabetical order removing duplicates 
+	sort -n FILE			# sorts each line of FILE numerically 
+uniq					# report or omit repeated lines
+	uniq -c				# prefix lines by the number of occurrences 
+	uniq -d				# only print duplicate lines 
+	uniq -i				# ignore differences in case when comparing 
+	uniq -u				# only print unique lines 
 
 
 
 ### SSH ### 
 ssh USER@HOST				# connect to HOST as USER
 ssh -p PORT USER@HOST			# connect to HOST as USER on port PORT
-~/.ssh/					# the current user's ssh directory, mportant files are, config, authorized_keys, and known_hosts. 
+~/.ssh/					# the current user's ssh directory, important files are, config, authorized_keys, and known_hosts. 
 ssh-copy-id USER@HOST			# add your key to HOST for USER to enable a keyed or passwordless login 
-http://blog.trackets.com/2014/05/17/ssh-tunnel-local-and-remote-port-forwarding-explained-with-examples.html
 ssh -L 9000:localhost:80 HOST		# connects to HOST's localhost port 80 via HOST, view this connection on your localhost port 9000
 ssh -L 9000:HOST2:80 HOST1		# connects to HOST2 port 80 via HOST1, view this connection on your localhost port 9000
 ssh -D 9999 HOST			# 
-ssh -R 9090:HOST2:8000 HOST1		# 
-https://help.ubuntu.com/community/SSH/OpenSSH/PortForwarding 
-mussh
-cssh
+ssh -R 9090:HOST2:8000 HOST1		#  
+mussh					# 
+cssh					# 
 Multiplexers				
+http://blog.trackets.com/2014/05/17/ssh-tunnel-local-and-remote-port-forwarding-explained-with-examples.html
+https://help.ubuntu.com/community/SSH/OpenSSH/PortForwarding
 
 
 
 ### Remote File Copying ###
-scp - tends to be slower 
-rsync - rsync tends to be faster 
-rysnc -havP /usr/local/ 1.2.3.4:/usr/local/
-rsync -havP -e "ssh -p6127" /usr/local/ 1.2.3.4:/usr/local/
-ssh-keygen -f "/root/.ssh/known_hosts" -R [1.2.3.4]:6127
-rsync -havP -e "ssh -p6127" /usr/local/ 1.2.3.4:/usr/local/
-ftp - 
-sftp - 
+scp - tends to be slower than rsync	#
+rsync - rsync tends to be faster than scp	# 
+rysnc -havPn /usr/local/ 1.2.3.4:/usr/local/	#
+rysnc -havP /usr/local/ 1.2.3.4:/usr/local/	#
+rsync -havP -e "ssh -p6127" /usr/local/ 1.2.3.4:/usr/local/	#
+ssh-keygen -f "/root/.ssh/known_hosts" -R [1.2.3.4]:6127	#
+rsync -havP -e "ssh -p6127" /usr/local/ 1.2.3.4:/usr/local/	#
+ftp - 					# 
+sftp -					# 
 
 
 
 ### Miscellaneous Commands ###
 clear					# clears output of the terminal 
 apropos COMMAND				# search the manual page names and descriptions using the keyword COMMAND
-yes					# try it! Fun for stress testing your machine 
+yes					# Fun for stress testing your machine 
 
 
 
 ### Miscellaneous Programs ### 
 pip install speedtest-cli		# a program to test the download and upload speed of your network 
 vimtutor				# a Vim tutor 
+htop					# 
 
 
 
@@ -127,8 +139,8 @@ sudo -u USER COMMAND			# run a COMMAND as USER
 sudo -s					# run the shell specified by the SHELL environment variable
 sudo -i					# login specific resource files will be loaded (e.g. .profile, .login) 
 sudo !!					# run the previous command as sudo if you forgot to the first time 
-su - USER				# change the user to ryan and navigate ryan's home directory 
-su ryan					# change the user to ryan and stay in the current directory 
+su - USER				# change the user to USER and navigate USER's home directory 
+su USER					# change the user to USER and stay in the current directory 
 visudo					# edits the sudoers file in a safe fashion 
 exit					# exits a shell 
 https://prasadlinuxblog.wordpress.com/2012/09/04/392/ # su vs sudo vs runuser 
@@ -136,7 +148,7 @@ https://prasadlinuxblog.wordpress.com/2012/09/04/392/ # su vs sudo vs runuser
 
 
 ### TTY ###
-Ctrl+Alt+F1,F2,F3...
+Ctrl+Alt+{F1,F2,F3...}			# switch you ttys
 tty					# print the file name of the terminal connected to standard input
 # The following are not commands, just info. You will see these outputs when running 'w' 
 tty					# is a native terminal device, kernel emulated or hardware emulated 
@@ -157,7 +169,7 @@ pts					# pseudoterminal slave, /dev/pts/*
 /usr/local/sbin				# same as above but restricted to superuser access 
 /boot					# holds important files during boot-up process, including Linux Kernel.
 /dev					# contains device files for all the hardware devices on the machine e.g., cdrom, cpu, etc
-/etc					# contains application’s configuration files, startup, shutdown, start, stop script for 
+/etc					# contains application's configuration files, startup, shutdown, start, stop script for 
 					  every individual program.
 /home					# home directory of the users. Every time a new user is created, a directory in the name 
 					  of user is created within home directory which contains other directories like Desktop, 
@@ -171,12 +183,12 @@ pts					# pseudoterminal slave, /dev/pts/*
 /opt					# optional is abbreviated as opt. Contains third party application software. Viz., Java, etc.
 /proc					# a virtual and pseudo file-system which contains information about running process with 
 					  a particular process-id aka pid.
-/root					# this is the home directory of root user and should never be confused with ‘/‘
+/root					# this is the home directory of root user and should never be confused with '/'
 /run					# this directory is the only clean solution for early-runtime-dir problem.
-/srv					# service is abbreviated as ‘srv‘. This directory contains server specific and service related files.
+/srv					# service is abbreviated as 'srv'. This directory contains server specific and service related files.
 /sys					# modern Linux distributions include a /sys directory as a virtual filesystem, which stores 
 					  and allows modification of the devices connected to the system.
-/tmp					# system’s Temporary Directory, Accessible by users and root. Stores temporary files for user 
+/tmp					# system's Temporary Directory, Accessible by users and root. Stores temporary files for user 
 					  and system, till next boot.
 /usr					# contains executable binaries, documentation, source code, libraries for second level program.
 /var					# stands for variable. The contents of this file is expected to grow. This directory contains 
@@ -184,7 +196,7 @@ pts					# pseudoterminal slave, /dev/pts/*
 
 
 
-### Command Line Operators ### 
+### Linux Redirection and Command Line Operators ### 
 STDIN (0)				# Standard input (data fed into the program)
 STDOUT (1)				# Standard output (data printed by the program, defaults to the terminal)
 STDERR (2)				# Standard error (for error messages, also defaults to the terminal)
@@ -193,22 +205,22 @@ COMMAND >> FILE				# append STDOUT of COMMAND to FILE
 COMMAND 2> FILE				# write STDERR of COMMAND to FILE
 COMMAND 2>> FILE			# append STDERR of COMMAND to FILE
 COMMAND &> FILE				# write both STDOUT and STDERR of COMMAND to FILE
-COMMAND < FILE				# 
+COMMAND < FILE				# COMMAND accepting input from FILE 
 COMMAND > /dev/null 2>&1		# Sends all output to /dev/null
 COMMAND &>/dev/null			# Sends all output to /dev/null
 COMMAND 1>&- 2>&-			# Closes stdout and stderror for command 
-|					# 
-&					#
+COMMAND1 | COMMAND2			# Sends STDOUT of COMMAND1 to STDIN of COMMAND2 
+COMMAND &				#
 ~					#
 *					#
-;					#
+COMMNAD1;COMMAND2			# Runs COMMAND1 then COMMAND2 
 /					#
 &&					#
 ||					#
 && and ||				# 
 !					#
 !!					#
-``					# (backticks)
+``					# (backticks) 
 for in do				# 
 	
 	
@@ -258,7 +270,6 @@ http://www.tldp.org/LDP/lame/LAME/linux-admin-made-easy/shadow-file-formats.html
 ps					# display your currently active processes
 ps auwx					# 
 ps axf					# lists processes in a tree view
-ps axf | grep raid			# 
 top					# display all running processes
 htop					# 
 kill pid				# kill process id pid
@@ -412,7 +423,7 @@ dig mx domain				# get DNS information for domain
 dig -x host				# reverse lookup host
 wget file				# download file
 wget -c file				# continue a stopped download
-host					# 
+host					# useful for forward and reverse dns lookups 
 nslookup				# 
 nmap					# 
 traceroute				# 
@@ -443,14 +454,14 @@ netcat
 
 
 ### Packaging Commands ###
-Install from source: ./configure -&gt; make -&gt; make install
+Install from source: ./configure, make, make install
 ## Debian Based ##
 apt-get -s upgrade			# lists the packages to be upgraded 
 apt-get update				# updates the repos 
 apt-get upgrade				# updates the packages
 apt-get dist-upgrade			# 
 apt-get autoremove			# 
-apt-get autoclean			#
+apt-get autoclean			# 
 dpkg -i pkg.deb				# install a package 
 dpkg -l | grep PACKAGE			# see if a package is installed 
 dpkg -s PACKAGE				# see if package is installed and get info 
@@ -460,8 +471,8 @@ dpkg -S file				# view the package that is associated with the file
 		df -h			# 
 		uname -r		# 
 		dpkg -l | grep linux-image	# 
-		dpkg -r linux-image-3.2.0-65-generic	#
-		dpkg --purge linux-image-3.2.0-65-generic	#
+		dpkg -r linux-image-3.2.0-65-generic	# 
+		dpkg --purge linux-image-3.2.0-65-generic	# 
 		df -h			# 
 ## Red Hat Based ##
 yum check-update			# lists the packages to be upgraded 
@@ -521,6 +532,7 @@ logstash
 /etc/cron.monthly/			# 
 /etc/cron.d/				# 
 /var/spool/cron/crontabs/		# 
+anacron
 at, at -l, at -r 
 atq
 atrm
@@ -974,4 +986,22 @@ bootchart
 ip addr ls
 http://www.crn.com/slide-shows/data-center/240159618/server-showdown-top-10-server-brands.htm/pgno/0/9
 gnome-help
-
+gpg --keyserver pgp.mit.edu --send-keys $MYKEYID
+dd
+findmnt
+getfacl
+hostname
+lsmod 
+mountpoint 
+netcat 
+pidof
+run-parts
+sleep 
+ss 
+tempfile
+true 
+false 
+which 
+ifup 
+ifdown 
+route 
