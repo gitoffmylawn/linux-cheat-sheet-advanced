@@ -16,6 +16,7 @@ ls					# directory listing
 	ls -R				# list files and subdirectories recursively
 cd DIR					# change directory to DIR
 	cd				# change to home directory
+	cd -				# returns you to the previous directory 
 pwd					# show current directory 
 mkdir DIR				# create a directory DIR
 	mkdir -p ./PARENTDIR/CHILDDIR/	# creates PARENTDIR as well as CHILDDIR
@@ -25,6 +26,8 @@ rm FILE					# delete FILE
 	rm -f FILE			# force remove FILE
 	rm -rf DIR			# force remove directory DIR
 	rm -i FILE			# asks before FILE is deleted 
+	rm -- -rf			# remove files that start with "-", (or rm ./-rf) 
+	find . -inum INODE -exec rm -i {} \;	# removes an inode, useful for files like "la*
 cp FILE1 FILE2				# copy FILE1 to FILE2
 	cp -r DIR1 DIR2			# copy DIR1 to DIR2; create DIR2 if it doesn't exist
 	cp -a DIR1 DIR2			# copies entire directory tree
@@ -33,10 +36,10 @@ mv FILE1 FILE2  			# rename or move FILE1 to FILE2
 ln -s TARGET LINK_NAME			# create symbolic link, LINK_NAME, link to TARGET
 	ln TARGET LINK_NAME		# hard link, points to inode instead of filename
 touch FILE				# create or update FILE 
-	touch -d "two hours ago" FILE	# change the modified time of FILE
-stat -c %Y FILE | gawk '{print strftime("%c", $0)}'	# output of this and below command will be the same if FILE's mod time wasn't touched
-stat -c %Z FILE | gawk '{print strftime("%c", $0)}'	# output of this will show when the FILE was last touched or modified
-cat > FILE				# places standard input into FILE
+	touch -d "00:00" FILE		# change the modified time of FILE to midnight 
+stat FILE				# display file or file system status
+	stat -c %Y FILE | gawk '{print strftime("%c", $0)}'	# output of this will show when the FILE was last modified (modified time can be changed) 
+	stat -c %Z FILE | gawk '{print strftime("%c", $0)}'	# output of this will show when the FILE was last changed 
 head FILE				# output the first 10 lines of FILE
 	head -n 3 FILE			# output the first 3 lines of FILE
 tail FILE				# output the last 10 lines of FILE
@@ -49,6 +52,7 @@ xargs					# build and execute command lines from standard input
 	find . -name '*.c' | xargs grep 'stdlib.h'	# find files whose name ends in .c and stdlib.h is in the file
 cat FILE				# prints a FILE to standard out
 	cat FILE1 FILE2 > FILE3		# concatenates FILE1 and FILE2 into FILE3 .
+	cat > FILE			# places standard input into FILE
 tac FILE				# prints a FILE to standard out in reverse order
 rev FILE				# prints the characters of a FILE in a line in reverse order
 echo STRING				# prints STRING to standard out
@@ -86,6 +90,64 @@ uniq					# report or omit repeated lines
 	uniq -d				# only print duplicate lines 
 	uniq -i				# ignore differences in case when comparing 
 	uniq -u				# only print unique lines 
+seq					# print a sequence of numbers 
+	seq 1 7				# prints a sequence of numbers, useful for iterations 
+clear					# clears output of the terminal 
+apropos COMMAND				# search the manual page names and descriptions using the keyword COMMAND
+yes					# Fun for stress testing your machine. Also used like yes | yum update 
+time COMMAND				# measures the amount of time a COMMAND takes 
+watch COMMAND				# executes COMMAND periodically showing output fullscreen 
+	watch -n 1 COMMAND		# changes the update interval to 1 second 
+
+
+
+### System Info ###
+date					# show the current date and time
+	date --set='19 september 2015 12:00'	# 
+hwclock	-r				# read the hardware clock and print the time on standard output 
+	hwclock -s			# set the system time from the hardware clock
+	hwclock -w			# set the hardware clock from the system time 
+cal					# show this month's calendar
+	cal 07 1969			# shows the calendar for teh month of July 1969 
+	cal -3				# shows the previous, current, and prior month 
+uptime					# time, uptime, # of users logged on, and system load averages for the past 1, 5, and 15 minutes 
+	uptime --pretty			# shows the uptime 
+w					# display who is logged in and what they are doing 
+who					# shows who is logged on 
+whoami					# who you are logged in as 
+last					# 
+lastb					# 
+history					# 
+finger user				# display information about user
+uname -a 				# show kernel information
+cat /proc/cpuinfo			# cpu informatio
+	cat /proc/meminfo  		# memory information
+	cat /proc/version  		# version information
+cat /etc/*-release  			# distribution and version	
+lsb_release -a				# distribution and version
+cat /etc/issue				# distribution and version
+man command				# show the manual for command
+free					# show memory and swap usage
+whereis app				# show possible locations of app
+which app				# show which app will be run by default
+ls -l /usr/share/xsessions		# show desktop environments
+
+
+
+### Administrative Commands ###
+sudo COMMAND				# run a COMMAND as root 
+sudo -u USER COMMAND			# run a COMMAND as USER 
+sudo -s					# run the shell specified by the SHELL environment variable
+sudo -i					# login specific resource files will be loaded (e.g. .profile, .login) 
+sudo !!					# run the previous command as sudo if you forgot to the first time 
+su					# logs into new shell as root user 
+sudo su					# run su as root user, eliminates the need for a password assuming the current user has sudo privileges
+su - USER				# change the user to USER and navigate USER's home directory 
+su USER					# change the user to USER and stay in the current directory 
+visudo					# edits the sudoers file in a safe fashion 
+usermod -aG sudo USER			# adds a USER to the sudo group, eliminates the need to edit the sudoers file 
+exit					# exits a shell 
+https://prasadlinuxblog.wordpress.com/2012/09/04/392/ # su vs sudo vs runuser 
 
 
 
@@ -98,8 +160,10 @@ ssh -L 9000:localhost:80 HOST		# connects to HOST's localhost port 80 via HOST, 
 ssh -L 9000:HOST2:80 HOST1		# connects to HOST2 port 80 via HOST1, view this connection on your localhost port 9000
 ssh -D 9999 HOST			# 
 ssh -R 9090:HOST2:8000 HOST1		#  
-mussh					# 
-cssh					# 
+mussh					# multihost SSH 
+mussh -H FILE -c 'COMMAND'		# ssh into each host in FILE and execute COMMAND 
+cssh					# cluster administration tool 
+cssh -c FILE GROUP			# graphically ssh into all hosts in GROUP that reside in the config file FILE 
 Multiplexers				
 http://blog.trackets.com/2014/05/17/ssh-tunnel-local-and-remote-port-forwarding-explained-with-examples.html
 https://help.ubuntu.com/community/SSH/OpenSSH/PortForwarding
@@ -107,96 +171,21 @@ https://help.ubuntu.com/community/SSH/OpenSSH/PortForwarding
 
 
 ### Remote File Copying ###
-scp - tends to be slower than rsync	#
-rsync - rsync tends to be faster than scp	# 
-rysnc -havPn /usr/local/ 1.2.3.4:/usr/local/	#
-rysnc -havP /usr/local/ 1.2.3.4:/usr/local/	#
-rsync -havP -e "ssh -p6127" /usr/local/ 1.2.3.4:/usr/local/	#
-ssh-keygen -f "/root/.ssh/known_hosts" -R [1.2.3.4]:6127	#
-rsync -havP -e "ssh -p6127" /usr/local/ 1.2.3.4:/usr/local/	#
+scp					# tends to be slower than rsync
+rsync					# rsync tends to be faster than scp 
+rysnc -havPn /usr/local/ 1.2.3.4:/usr/local/	# dry run, sends recursively, preserves symbolic links, file permissions, user & group ownerships and timestamps
+rysnc -havP /usr/local/ 1.2.3.4:/usr/local/	# sends recursively, preserves symbolic links, file permissions, user & group ownerships and timestamps
+rysnc -hrvPn /usr/local/ 1.2.3.4:/usr/local/	# dry run, sends recursively, but doesn’t preserve timestamps and permission while transferring data
+rysnc -hrvP /usr/local/ 1.2.3.4:/usr/local/	# sends recursively, but doesn’t preserve timestamps and permission while transferring data 
+rsync -havP -e "ssh -p6127" /usr/local/ 1.2.3.4:/usr/local/	# the -e option specifies the protocol ssh, useful for specifying the ssh port as well 
+ssh-keygen -f "/root/.ssh/known_hosts" -R [1.2.3.4]:6127	# 
+rsync -havP -e "ssh -p6127" /usr/local/ 1.2.3.4:/usr/local/	# 
 ftp - 					# 
 sftp -					# 
 
 
 
-### Miscellaneous Commands ###
-clear					# clears output of the terminal 
-apropos COMMAND				# search the manual page names and descriptions using the keyword COMMAND
-yes					# Fun for stress testing your machine 
-
-
-
-### Miscellaneous Programs ### 
-pip install speedtest-cli		# a program to test the download and upload speed of your network 
-vimtutor				# a Vim tutor 
-htop					# 
-
-
-
-### Administrative Commands ###
-sudo COMMAND				# run a COMMAND as root 
-sudo -u USER COMMAND			# run a COMMAND as USER 
-sudo -s					# run the shell specified by the SHELL environment variable
-sudo -i					# login specific resource files will be loaded (e.g. .profile, .login) 
-sudo !!					# run the previous command as sudo if you forgot to the first time 
-su - USER				# change the user to USER and navigate USER's home directory 
-su USER					# change the user to USER and stay in the current directory 
-visudo					# edits the sudoers file in a safe fashion 
-exit					# exits a shell 
-https://prasadlinuxblog.wordpress.com/2012/09/04/392/ # su vs sudo vs runuser 
-
-
-
-### TTY ###
-Ctrl+Alt+{F1,F2,F3...}			# switch you ttys
-tty					# print the file name of the terminal connected to standard input
-# The following are not commands, just info. You will see these outputs when running 'w' 
-tty					# is a native terminal device, kernel emulated or hardware emulated 
-ptmx					# pseudoterminal master that creates slaves, /etc/ptmx
-pts					# pseudoterminal slave, /dev/pts/*
-
-
-### Path Info ###
-/bin					# originally intended for programs that needed to be on a small / partition before 
-					  the larger /usr, etc. partitions were mounted, now it mostly serves as a standard 
-					  location for key programs like /bin/sh. 
-/sbin					# same as above but for scripts with superuser privileges
-/usr/bin				# for distribution-managed normal user programs
-/usr/sbin				# for distribution-managed superuser programs 
-/usr/local/bin				# for normal user programs not managed by the distribution package manager, e.g. 
-					  locally compiled packages. You should not install them into /usr/bin because future 
-					  distribution upgrades may modify or delete them without warning. 
-/usr/local/sbin				# same as above but restricted to superuser access 
-/boot					# holds important files during boot-up process, including Linux Kernel.
-/dev					# contains device files for all the hardware devices on the machine e.g., cdrom, cpu, etc
-/etc					# contains application's configuration files, startup, shutdown, start, stop script for 
-					  every individual program.
-/home					# home directory of the users. Every time a new user is created, a directory in the name 
-					  of user is created within home directory which contains other directories like Desktop, 
-					  Downloads, Documents, etc.
-/lib					# the lib directory contains kernel modules and shared library images required to boot 
-					  the system and run commands in root file system.
-/lost+found				# this directory is installed during installation of Linux, useful for recovering files 
-					  which may be broken due to unexpected shut-down.
-/media					# temporary mount directory is created for removable devices viz., media/cdrom.
-/mnt					# temporary mount directory for mounting file system.
-/opt					# optional is abbreviated as opt. Contains third party application software. Viz., Java, etc.
-/proc					# a virtual and pseudo file-system which contains information about running process with 
-					  a particular process-id aka pid.
-/root					# this is the home directory of root user and should never be confused with '/'
-/run					# this directory is the only clean solution for early-runtime-dir problem.
-/srv					# service is abbreviated as 'srv'. This directory contains server specific and service related files.
-/sys					# modern Linux distributions include a /sys directory as a virtual filesystem, which stores 
-					  and allows modification of the devices connected to the system.
-/tmp					# system's Temporary Directory, Accessible by users and root. Stores temporary files for user 
-					  and system, till next boot.
-/usr					# contains executable binaries, documentation, source code, libraries for second level program.
-/var					# stands for variable. The contents of this file is expected to grow. This directory contains 
-					  log, lock, spool, mail and temp files.
-
-
-
-### Linux Redirection and Command Line Operators ### 
+### Bash Redirection and Command Line Operators and More ### 
 STDIN (0)				# Standard input (data fed into the program)
 STDOUT (1)				# Standard output (data printed by the program, defaults to the terminal)
 STDERR (2)				# Standard error (for error messages, also defaults to the terminal)
@@ -206,26 +195,35 @@ COMMAND 2> FILE				# write STDERR of COMMAND to FILE
 COMMAND 2>> FILE			# append STDERR of COMMAND to FILE
 COMMAND &> FILE				# write both STDOUT and STDERR of COMMAND to FILE
 COMMAND < FILE				# COMMAND accepting input from FILE 
-COMMAND > /dev/null 2>&1		# Sends all output to /dev/null
-COMMAND &>/dev/null			# Sends all output to /dev/null
-COMMAND 1>&- 2>&-			# Closes stdout and stderror for command 
-COMMAND1 | COMMAND2			# Sends STDOUT of COMMAND1 to STDIN of COMMAND2 
-COMMAND &				#
-~					#
-*					#
-COMMNAD1;COMMAND2			# Runs COMMAND1 then COMMAND2 
-/					#
-&&					#
-||					#
-&& and ||				# 
-!					#
-!!					#
-``					# (backticks) 
-for in do				# 
-	
+COMMAND <<WORD HEREDOC DELIMETER	# info bash for more details on this one 
+COMMAND <<<STRING			# prints STRING to STDOUT
+COMMAND > /dev/null 2>&1		# sends all output to /dev/null
+COMMAND &>/dev/null			# sends all output to /dev/null
+COMMAND 1>&- 2>&-			# closes STDOUT and STDERR for COMMAND 
+COMMAND1 | COMMAND2			# sends STDOUT of COMMAND1 to STDIN of COMMAND2 
+COMMAND &	print the strings of printable characters in files			# puts COMMAND in background 
+COMMAND ~				# the ~ is simply the current user's home directory 
+COMMNAD1;COMMAND2			# runs COMMAND1 then COMMAND2 
+COMMAND1 && COMMAND2			# runs COMMAND2 if COMMAND1 succeeds 
+COMMAND1 || COMMAND2			# runs COMMAND2 only if COMMAND1 fails 
+COMMAND1 && COMMAND2 ||	COMMAND3	# if COMMAND1 then run COMMAND2 else run COMMAND3 
+if COMMAND1; then COMMAND2; else COMMAND3; fi	# same logic as above 
+!STRING					# run the last command that starts with STRING 
+VARIABLE='STRING'			# sets a shell variable 
+Alt+.					# brings up the last parameters used 
+!!					# runs the last command 
+COMMAND1 `COMMAND2`			# backticks will execute COMMAND2 first and use that output as part of COMMAND1 
+for i in `COMMAND1`; do echo $i; done	# iterates through output of COMMAND1 and, in this case, echos $i 
+printenv, env				# print runtime variables 
+set					# print shell variables 
+strings /usr/bin/who			# 	
 	
 	
 ### Shell Variables ###
+$?					# returns the exit status of the last program that ran 
+$!					# pid of last forked process 
+	true; echo $?			# will print 0 to STDOUT
+	false; echo $?			# will print 1 to STDOUT
 $0, $1, $2, $3...			# positional parameters
 ${10} ... ${N}				# positional parameters beyond 9
 $* - $1 $2 $3 ... ${N}			# 
@@ -247,6 +245,7 @@ account:password:UID:GID:GECOS:directory:shell	#
 /etc/sudoers				# 
 useradd -G GROUPNAME USERNAME		# 
 useradd -m -g INITIALGROUP -G ADDITIONALGROUPS -s LOGINSHELL USERNAME	# 
+usermod					# 
 passwd, passwd USER			# 
 chfn					# 
 chage					# 
@@ -281,8 +280,8 @@ Control + z				# stops the current command, resume with fg in the foreground or 
 bg					# lists stopped or background jobs; resume a stopped job in the background
 fg					# brings the most recent job to foreground
 COMMAND &				# runs command in the background
-fg n%					# brings job n to the foreground
-kill n%					# kills job n
+fg n					# brings job n to the foreground
+kill n					# kills job n
 jobs					# lists jobs
 update-rc.d -f process remove		# 
 update-rc.d apache2 defaults
@@ -305,9 +304,9 @@ stat -c %G /media/sf_Shared/		#
 stat -c %A /media/sf_Shared/		# 
 find / -group [group]			# 
 find / -user [user]			# 
-chown --preserve-root			# 
+chown --preserve-root			# it's a good idea to always use --preserve-root for the sake of caution, and try not to use wildcards unless you know what you are doing 
 	chown --preserve-root user:group -R /home/user/*	# chowns all files except hidden files
-	chown --preserve-root user:group -R /home/user/.*	# DO NOT DO THIS (This command will start chowning .. directories)
+*** Don't do this ***	chown --preserve-root user:group -R /home/user/.*	# DO NOT DO THIS (This command will start chowning .. directories)
 	chown --preserve-root user:group -R /home/user/.[^.]* 	# chowns all hidden files
 	chown --preserve-root user:group -R /home/user		# chowns all files in user but also chows the directory user
 
@@ -330,21 +329,21 @@ find -maxdepth 1 -type f -mtime +60 -exec ls -l {} \;	#
 
 ### Disk Usage ###
 df					# show disk usage
-	df -ih				# 
-	df -h				# 
+	df -i				# show inode usage 
+	df -h				# show disk usage in human-readable format 
 	df -T				# prints filesystem type
-	df -a				# includes dummy sytems
+	df -a				# includes dummy systems
 find / -xdev -printf '%h\n' | sort | uniq -c | sort -k 1 -n	# 
 du					# show directory space usage
-	du -sch *			# 
-	du -sch .[!.]* * |sort -h	# 
+	du -sch *			# shows largest visible files and directories not sorted 
+	du -sch .[!.]* * |sort -h	# one of my favorites, shows the largest files and directories including those that are hidden 
 fdisk					# 
 lsblk
 
 
 
 ### Shells ###
-sh					# 
+sh					# typically a soft link to another shell 
 bash					# 
 dash					# 
 csh					# 
@@ -355,48 +354,21 @@ tcsh					#
 ### File Comparison ###
 diff -u file1 file2 > file3		# 
 md5sum file				# useful for comparing two files, not secure for scripting use sha for more security  
+sha1sum					#
 comm					# 
 
 
 
 ### IP Addresses ###
-ifconfig				# 
-ip addr show | perl -ne '/inet\s*([\d\.]+).*global/ &amp;&amp; do {print "$1\n"}'	# 
-	ip addr | grep inet		# 
+ifconfig				#   
+ip addr					# 
+ip addr show				# 
 curl ifconfig.me			# 
 http://vlsm-calc.net/ipclasses.php IP Address Classes (Replaced by http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing >CIDR)
 http://en.wikipedia.org/wiki/Reserved_IP_addresses Reserved IP Addresses
 http://www.subnet-calculator.com/subnet.php IP Subnet Calculator
 http://www.subnet-calculator.com/cidr.php CIDR Calculator
 http://www.iplocation.net/
-
-
-
-### System Info ###
-date					# show the current date and time
-cal					# show this month's calendar
-cal 09 1987
-date, date --set='19 september 2015 12:00
-uptime					# show current uptime
-w					# display who is logged in and what they are doing 
-whoami					# who you are logged in as
-who
-last					
-lastb					
-history
-finger user				# display information about user
-uname -a  show kernel information	# 
-cat /proc/cpuinfo  cpu information	# 
-	cat /proc/meminfo  memory information	# 
-	cat /proc/version  version information	# 
-cat /etc/*-release  			# distribution and version	
-lsb_release -a				# distribution and version
-cat /etc/issue				# distribution and version
-man command				# show the manual for command
-free					# show memory and swap usage
-whereis app				# show possible locations of app
-which app				# show which app will be run by default
-ls -l /usr/share/xsessions		# show desktop environments
 
 
 
@@ -454,7 +426,7 @@ netcat
 
 
 ### Packaging Commands ###
-Install from source: ./configure, make, make install
+Install from source: ./configure, make, make install	# probably a better idea to use a package manager when possible so the package will get updated 
 ## Debian Based ##
 apt-get -s upgrade			# lists the packages to be upgraded 
 apt-get update				# updates the repos 
@@ -468,12 +440,11 @@ dpkg -s PACKAGE				# see if package is installed and get info
 dpkg-query -L PACKAGE			# view the files that are associated in the bash package
 dpkg -S file				# view the package that is associated with the file 
 		Remove Old Kernels In /boot 
-		df -h			# 
-		uname -r		# 
-		dpkg -l | grep linux-image	# 
-		dpkg -r linux-image-3.2.0-65-generic	# 
-		dpkg --purge linux-image-3.2.0-65-generic	# 
-		df -h			# 
+		df -h			# check the disk usage in /boot 
+		uname -r		# check which kernel you are currently using so as not to remove it 
+		dpkg -l | grep linux-image	# view all the kernels that are installed 
+		dpkg -r linux-image-3.2.0-65-generic	# remove the kernal
+		dpkg --purge linux-image-3.2.0-65-generic	# purge 
 ## Red Hat Based ##
 yum check-update			# lists the packages to be upgraded 
 yum update				# updates the system 
@@ -489,6 +460,9 @@ rpm -e 					#
 repoquery -i PACKAGE			# 
 lsmod					#
 modprobe				#
+ldd PATH				# ldd may execute the program to find the dependencies 
+objdump -p PATH | grep NEEDED		# safer to use objdump 
+apt-cache rdepends PACKAGE		# 
 
 
 
@@ -505,6 +479,7 @@ https://www.digitalocean.com/community/tutorials/how-to-use-gpg-to-encrypt-and-s
 http://www.thegeekstuff.com/2012/10/gnupg-basics/
 md5sum
 sha1sum
+apg 
 
 
 
@@ -525,19 +500,20 @@ logstash
 
 
 ### Cron/Anacron/At ### 
-/etc/crontab				# 
-/etc/cron.hourly/			# 
-/etc/cron.daily/			# 
-/etc/cron.weekly/			# 
-/etc/cron.monthly/			# 
-/etc/cron.d/				# 
-/var/spool/cron/crontabs/		# 
+/etc/crontab				# sytem wide crontab, (min, hour, dom, mon, dow, user, command)
+/etc/cron.hourly/			# hourly crontab for scripts
+/etc/cron.daily/			# daily crontab for scripts
+/etc/cron.weekly/			# weekly crontab for scripts
+/etc/cron.monthly/			# monthly crontab for scripts
+/etc/cron.d/				# crontab for scripts 
+/var/spool/cron/crontabs/		# user crontabs, (min, hour, dom, mon, dow, command), same as crontab -e 
 anacron
 at, at -l, at -r 
 atq
 atrm
 batch
 atd 
+
 
 
 ### iptables / Rate Limiting / Hash Limiting ###
@@ -616,10 +592,52 @@ rsync -havPn $FILE root@$HOSTNAME:/$RESTORE-DIR
 
 
 ### Hardware ###
+http://www.supermicro.com/index_home.cfm
+http://dcc-online.com/wordpress/?p=322
+http://www.newegg.com/
+
+
+
+### Mounting/NFS ###
+df -t nfs				# list all currently mounted filesystems 
+df -a					# 
+/etc/fstab				# filesystems to mount at boot 
+/etc/mtab				# filesystems currently mounted 
+mount					# 
+umount					# 
+mountall				# 
+
+
+
+### Tracing System Calls and Program Debugging ### 
+strace PROGRAM				# trace the execution of PROGRAM
+strace -e open PROGRAM			# display only the 'open' call when tracing PROGRAM 
+strace -e trace=open,read PROGRAM	# display the 'open' call and the 'read' call when tracing PROGRAM 
+strace -o OUTPUT PROGRAM		# stores output of strace to OUTPUT when running PROGRAM
+sudo strace -p PID			# run strace on a running process 
+strace -t -e open PROGRAM		# print timestamp 
+strace -r PROGRAM			# print reletive time 
+strace -c PROGRAM			# generate report of calls 
+strace -f -ff -p PID PROGRAM
+
+
+
+### Progam Profiling ###
+top -b -p `pidof a.out`
+top -b -p `pidof a.out` -n 100
+perf
+valgrind
 
 
 
 ### Databases ###
+## MySQL ##
+sed -n '/^-- Current Database: `DATABASE`/,/^-- Current Database: `/p' MYSQLDUMP > output.sql	# extracts a DATABASE from a MYSQLDUMP 
+https://gist.github.com/leoromanovsky/2015361	# contains the extract_sql.pl script 
+http://www.tsheets.com/downloads/oss/extract_sql.pl	# download the extract_sql.pl script 
+cat mysql-2015-07-20 | ./extract_sql.pl --listTables > test.out.1	# lists the tables in the dump 
+cat mysql-2015-07-20 | ./extract_sql.pl -t nlb_players > nlb_players-20150720.sql	# extracts a table from a dump 
+## PSQL ##
 psql -d DATABASE
 \l
 \dt
@@ -628,7 +646,7 @@ psql -d DATABASE
 https://en.wikipedia.org/wiki/Comparison_of_relational_database_management_systems
 https://en.wikipedia.org/wiki/Comparison_of_object-relational_database_management_systems
 https://en.wikipedia.org/wiki/Comparison_of_database_tools
-http://www.tsheets.com/downloads/oss/extract_sql.pl
+
 
 
 ### Mail Servers ###
@@ -679,6 +697,19 @@ SELinux/AppArmor
 
 
 
+### Miscellaneous Programs ### 
+pip install speedtest-cli		# a program to test the download and upload speed of your network 
+vimtutor				# a Vim tutor 
+htop					# 
+
+
+### TTY ###
+Ctrl+Alt+{F1,F2,F3...}			# switch your ttys
+tty					# print the file name of the terminal connected to standard input
+# The following are not commands, just info. You will see these outputs when running 'w' 
+tty					# is a native terminal device, kernel emulated or hardware emulated 
+ptmx					# pseudoterminal master that creates slaves, /etc/ptmx
+pts					# pseudoterminal slave, /dev/pts/*
 ### Remote Desktop ###
 https://en.wikipedia.org/wiki/Comparison_of_remote_desktop_software
 
@@ -699,6 +730,7 @@ geany					#
 ### RAID ###
 http://en.wikipedia.org/wiki/Standard_RAID_levels Standard RAID Levels
 http://en.wikipedia.org/wiki/Nested_RAID_levels Nested RAID Levels
+http://www.pcmag.com/article2/0,2817,2370235,00.asp
 /proc/mdstat				# 
 mdadm - assemble, build, create, monitor, grow, manage, and misc
 
@@ -815,6 +847,7 @@ https://en.wikipedia.org/wiki/Comparison_of_antivirus_software
 
 
 ### Math ###
+expr 1000 / 100
 echo $(( ... ))
 
 
@@ -842,7 +875,7 @@ CPAN
 
 
 ### Screen ###
-screen -S session               # creates a session 
+screen -S SESSION               # creates a SESSION 
 screen                          # creates a screen
 Ctrl+a then d			# You can detach from the screen with 
 screen -ls                      # list available sessions
@@ -872,6 +905,8 @@ http://en.wikipedia.org/wiki/OpenSUSE#mw-content-text
 http://en.wikipedia.org/wiki/Oracle_Linux#Software_updates_and_version_history
 http://en.wikipedia.org/wiki/Scientific_Linux#Release_history
 http://www.crucialp.com/resources/tutorials/dedicated-server/unix-flavors-flavours-distributions/
+http://windows.microsoft.com/en-us/windows/lifecycle
+https://en.wikipedia.org/wiki/Microsoft_Windows
 
 
 
@@ -879,6 +914,47 @@ http://www.crucialp.com/resources/tutorials/dedicated-server/unix-flavors-flavou
 https://en.wikipedia.org/wiki/Comparison_of_operating_systems 
 https://en.wikipedia.org/wiki/Comparison_of_operating_system_kernels
 https://en.wikipedia.org/wiki/List_of_Linux_distributions
+
+
+
+### Path Info ###
+/bin					# originally intended for programs that needed to be on a small / partition before 
+					  the larger /usr, etc. partitions were mounted, now it mostly serves as a standard 
+					  location for key programs like /bin/sh. 
+/sbin					# same as above but for scripts with superuser privileges
+/usr/bin				# for distribution-managed normal user programs
+/usr/sbin				# for distribution-managed superuser programs 
+/usr/local/bin				# for normal user programs not managed by the distribution package manager, e.g. 
+					  locally compiled packages. You should not install them into /usr/bin because future 
+					  distribution upgrades may modify or delete them without warning. 
+/usr/local/sbin				# same as above but restricted to superuser access 
+/boot					# holds important files during boot-up process, including Linux Kernel.
+/dev					# contains device files for all the hardware devices on the machine e.g., cdrom, cpu, etc
+/etc					# contains application's configuration files, startup, shutdown, start, stop script for 
+					  every individual program.
+/home					# home directory of the users. Every time a new user is created, a directory in the name 
+					  of user is created within home directory which contains other directories like Desktop, 
+					  Downloads, Documents, etc.
+/lib					# the lib directory contains kernel modules and shared library images required to boot 
+					  the system and run commands in root file system.
+/lost+found				# this directory is installed during installation of Linux, useful for recovering files 
+					  which may be broken due to unexpected shut-down.
+/media					# temporary mount directory is created for removable devices viz., media/cdrom.
+/mnt					# temporary mount directory for mounting file system.
+/opt					# optional is abbreviated as opt. Contains third party application software. Viz., Java, etc.
+/proc					# a virtual and pseudo file-system which contains information about running process with 
+					  a particular process-id aka pid.
+/root					# this is the home directory of root user and should never be confused with '/'
+/run					# this directory is the only clean solution for early-runtime-dir problem.
+/srv					# service is abbreviated as 'srv'. This directory contains server specific and service related files.
+/sys					# modern Linux distributions include a /sys directory as a virtual filesystem, which stores 
+					  and allows modification of the devices connected to the system.
+/tmp					# system's Temporary Directory, Accessible by users and root. Stores temporary files for user 
+					  and system, till next boot.
+/usr					# contains executable binaries, documentation, source code, libraries for second level program.
+/var					# stands for variable. The contents of this file is expected to grow. This directory contains 
+					  log, lock, spool, mail and temp files.
+
 
 
 ### TODO ###
@@ -962,9 +1038,6 @@ tgpw
 fsck
 EPEL, rpm forge
 host google.com 127.0.0.1
-Ctrl+W ? erases one word in the current line
-Ctrl+U ? erases the whole line
-Ctrl+R ? type to bring up a recent command
 exit ? log out of current session
 lsof
 ufw
@@ -984,7 +1057,6 @@ kabana
 reddis
 bootchart 
 ip addr ls
-http://www.crn.com/slide-shows/data-center/240159618/server-showdown-top-10-server-brands.htm/pgno/0/9
 gnome-help
 gpg --keyserver pgp.mit.edu --send-keys $MYKEYID
 dd
@@ -1005,3 +1077,8 @@ which
 ifup 
 ifdown 
 route 
+http://2min2code.com/articles/memcache_srever_intro/check_memcached_statistics
+batch
+
+
+
