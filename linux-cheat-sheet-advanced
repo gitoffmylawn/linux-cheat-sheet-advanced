@@ -27,7 +27,7 @@ rm FILE					# delete FILE
 	rm -rf DIR			# force remove directory DIR
 	rm -i FILE			# asks before FILE is deleted 
 	rm -- -rf			# remove files that start with "-", (or rm ./-rf) 
-	find . -inum INODE -exec rm -i {} \;	# removes an inode, useful for files like "la*
+	find . -inum INODE -exec rm -i {} \;	# removes an INODE, useful for files like "la*
 cp FILE1 FILE2				# copy FILE1 to FILE2
 	cp -r DIR1 DIR2			# copy DIR1 to DIR2; create DIR2 if it doesn't exist
 	cp -a DIR1 DIR2			# copies entire directory tree
@@ -47,6 +47,7 @@ tail FILE				# output the last 10 lines of FILE
 	tail -n 3 FILE			# output the last 3 lines of FILE
 wc FILE					# print newline, word, and byte counts for a FILE 
 	echo -n STRING | wc -m		# counts the characters in a STRING
+	cat FILE | wc -l		# counts the lines in FILE 
 xargs					# build and execute command lines from standard input
 	find . -name "*.c" | xargs rm -rf	# remove all files ending in .c
 	find . -name '*.c' | xargs grep 'stdlib.h'	# find files whose name ends in .c and stdlib.h is in the file
@@ -58,6 +59,7 @@ rev FILE				# prints the characters of a FILE in a line in reverse order
 echo STRING				# prints STRING to standard out
 more FILE				# primitive version of less, use less
 less FILE				# scrolls through a FILE
+	less -N FILE			# opena FILE in less with line numbers 
 man COMMAND				# view the linux manual for the specified COMMAND 
 	man man				# useful for looking at manual sections ( e.g. ls(1) )
 	man 1 ls			# view the man page, section 1, of ls 
@@ -98,6 +100,7 @@ yes					# Fun for stress testing your machine. Also used like yes | yum update
 time COMMAND				# measures the amount of time a COMMAND takes 
 watch COMMAND				# executes COMMAND periodically showing output fullscreen 
 	watch -n 1 COMMAND		# changes the update interval to 1 second 
+echo hi | wall				# the wall command broadcasts a message to all users on a system 
 
 
 
@@ -124,13 +127,14 @@ cat /proc/cpuinfo			# cpu informatio
 	cat /proc/meminfo  		# memory information
 	cat /proc/version  		# version information
 cat /etc/*-release  			# distribution and version	
-lsb_release -a				# distribution and version
+lsbecho hi | wall_release -a				# distribution and version
 cat /etc/issue				# distribution and version
 man command				# show the manual for command
 free					# show memory and swap usage
 whereis app				# show possible locations of app
 which app				# show which app will be run by default
 ls -l /usr/share/xsessions		# show desktop environments
+hostname				# prints the hostname of the system 
 
 
 
@@ -164,6 +168,7 @@ mussh					# multihost SSH
 mussh -H FILE -c 'COMMAND'		# ssh into each host in FILE and execute COMMAND 
 cssh					# cluster administration tool 
 cssh -c FILE GROUP			# graphically ssh into all hosts in GROUP that reside in the config file FILE 
+rssh					# 
 Multiplexers				
 http://blog.trackets.com/2014/05/17/ssh-tunnel-local-and-remote-port-forwarding-explained-with-examples.html
 https://help.ubuntu.com/community/SSH/OpenSSH/PortForwarding
@@ -194,14 +199,14 @@ COMMAND >> FILE				# append STDOUT of COMMAND to FILE
 COMMAND 2> FILE				# write STDERR of COMMAND to FILE
 COMMAND 2>> FILE			# append STDERR of COMMAND to FILE
 COMMAND &> FILE				# write both STDOUT and STDERR of COMMAND to FILE
-COMMAND < FILE				# COMMAND accepting input from FILE 
+COMMAND < FILEprint the 				# COMMAND accepting input from FILE 
 COMMAND <<WORD HEREDOC DELIMETER	# info bash for more details on this one 
 COMMAND <<<STRING			# prints STRING to STDOUT
 COMMAND > /dev/null 2>&1		# sends all output to /dev/null
 COMMAND &>/dev/null			# sends all output to /dev/null
 COMMAND 1>&- 2>&-			# closes STDOUT and STDERR for COMMAND 
 COMMAND1 | COMMAND2			# sends STDOUT of COMMAND1 to STDIN of COMMAND2 
-COMMAND &	print the strings of printable characters in files			# puts COMMAND in background 
+COMMAND &				# puts COMMAND in background 
 COMMAND ~				# the ~ is simply the current user's home directory 
 COMMNAD1;COMMAND2			# runs COMMAND1 then COMMAND2 
 COMMAND1 && COMMAND2			# runs COMMAND2 if COMMAND1 succeeds 
@@ -216,7 +221,7 @@ COMMAND1 `COMMAND2`			# backticks will execute COMMAND2 first and use that outpu
 for i in `COMMAND1`; do echo $i; done	# iterates through output of COMMAND1 and, in this case, echos $i 
 printenv, env				# print runtime variables 
 set					# print shell variables 
-strings /usr/bin/who			# 	
+strings /usr/bin/who			# prints the strings of printable characters in a file 	
 	
 	
 ### Shell Variables ###
@@ -273,6 +278,8 @@ top					# display all running processes
 htop					# 
 kill pid				# kill process id pid
 killall proc				# kill all processes named proc *
+kill -l					# list all signals 
+kill -SIGNAL PID			# send a SIGNAL to a process PID, e.g. kill -2 1234 
 Control + c				# halts the current command
 Control + d				# log out of current session, similar to exit
 Control + s, Control + q		# stops output, resumes output
@@ -322,6 +329,7 @@ COMMAND | grep PATTERN			# search for PATTERN in the output of COMMAND
 locate FILE				# find all instances of FILE
     locate -i FILE      # locate is case sensitive, use the -i option to ignore case 
 sudo updatedb				# updates the database that locate uses to search for files.
+	updatedb -e FILE		# 
 find					# 
 find -maxdepth 1 -type f -mtime +60 -exec ls -l {} \;	# 
 
@@ -333,6 +341,7 @@ df					# show disk usage
 	df -h				# show disk usage in human-readable format 
 	df -T				# prints filesystem type
 	df -a				# includes dummy systems
+	df --total			# prints the total 
 find / -xdev -printf '%h\n' | sort | uniq -c | sort -k 1 -n	# 
 du					# show directory space usage
 	du -sch *			# shows largest visible files and directories not sorted 
@@ -365,7 +374,7 @@ ip addr					#
 ip addr show				# 
 curl ifconfig.me			# 
 http://vlsm-calc.net/ipclasses.php IP Address Classes (Replaced by http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing >CIDR)
-http://en.wikipedia.org/wiki/Reserved_IP_addresses Reserved IP Addresses
+http://en.wikipedia.org/wiki/Reserved_IP_addresses	# Reserved IP Addresses
 http://www.subnet-calculator.com/subnet.php IP Subnet Calculator
 http://www.subnet-calculator.com/cidr.php CIDR Calculator
 http://www.iplocation.net/
@@ -422,6 +431,7 @@ wireshark
 mtr
 fuser
 netcat
+bridging 
 
 
 
@@ -496,6 +506,7 @@ zmore					#
 multitail *.log				# 
 logstalgia - graphical log tool.	# 
 logstash
+logwatch
 
 
 
@@ -513,6 +524,23 @@ atq
 atrm
 batch
 atd 
+
+
+
+### Devices ###
+MAJOR and MINOR 
+/proc/devices
+ls -l /dev
+d (directory)
+c (character device)
+l (symlink)
+p (named pipe)
+s (socket)
+b (block device)
+D (door, not common on Linux systems, but has been ported)
+http://www.makelinux.net/ldd3/chp-3-sect-2
+mknod FILE p
+mkfifo FILE 
 
 
 
@@ -606,6 +634,7 @@ df -a					#
 mount					# 
 umount					# 
 mountall				# 
+mountpoint				# 
 
 
 
@@ -686,7 +715,7 @@ SELinux/AppArmor
 
 
 ### Samba ###
-
+smbclient 
 
 
 ### PXE ###
@@ -694,6 +723,11 @@ SELinux/AppArmor
 
 
 ### Virtualization ###
+https://en.wikipedia.org/wiki/Comparison_of_platform_virtualization_software
+vzlist 
+vzctl enter 100 
+
+### HAProxy ###
 
 
 
@@ -710,6 +744,9 @@ tty					# print the file name of the terminal connected to standard input
 tty					# is a native terminal device, kernel emulated or hardware emulated 
 ptmx					# pseudoterminal master that creates slaves, /etc/ptmx
 pts					# pseudoterminal slave, /dev/pts/*
+
+
+
 ### Remote Desktop ###
 https://en.wikipedia.org/wiki/Comparison_of_remote_desktop_software
 
@@ -748,8 +785,8 @@ lsusb					#
 /etc/httpd/conf.d/
 https://www.sslshopper.com/ssl-checker.html >SSL Checker
 SSL Generation
-	openssl req -out CSR.csr -sha256 -new -newkey rsa:2048 -nodes -keyout privateKey.key  Generate a new private key and Certificate Signing Request
-	openssl req -x509 -nodes -sha256 -days 365 -newkey rsa:2048 -keyout privateKey.key -out certificate.crt  Generate a self-signed
+	openssl req -out CSR.csr -sha256 -new -newkey rsa:4096 -nodes -keyout privateKey.key  Generate a new private key and Certificate Signing Request
+	openssl req -x509 -nodes -sha256 -days 365 -newkey rsa:4096 -keyout privateKey.key -out certificate.crt  Generate a self-signed
 certificate
 	openssl req -out CSR.csr -sha256 -key privateKey.key -new  Generate a certificate signing request (CSR) for an existing private
 key
@@ -801,6 +838,12 @@ svn diff -r r12345
 
 
 ### Git ###
+
+
+
+### rrdtool ###
+rrdtool fetch FILE AVERAGE
+rrdtool info FILE 
 
 
 
@@ -869,6 +912,7 @@ Java
 HTML
 JavaScript
 JSON
+	print json.dumps(JSONFILE, indent=4, sort_keys=True)	# in python prints json in a format that is nice 
 XML
 CPAN
 
@@ -907,6 +951,10 @@ http://en.wikipedia.org/wiki/Scientific_Linux#Release_history
 http://www.crucialp.com/resources/tutorials/dedicated-server/unix-flavors-flavours-distributions/
 http://windows.microsoft.com/en-us/windows/lifecycle
 https://en.wikipedia.org/wiki/Microsoft_Windows
+https://en.wikipedia.org/wiki/Proxmox_Virtual_Environment
+https://en.wikipedia.org/wiki/Xen
+https://en.wikipedia.org/wiki/FreeBSD 
+https://en.wikipedia.org/wiki/FreeNAS
 
 
 
@@ -958,7 +1006,6 @@ https://en.wikipedia.org/wiki/List_of_Linux_distributions
 
 
 ### TODO ###
-mount, umount  
 mkfs  
 xinput, xinput disable NUMBER
 drbd
@@ -1062,9 +1109,7 @@ gpg --keyserver pgp.mit.edu --send-keys $MYKEYID
 dd
 findmnt
 getfacl
-hostname
-lsmod 
-mountpoint 
+lsmod  
 netcat 
 pidof
 run-parts
@@ -1079,6 +1124,36 @@ ifdown
 route 
 http://2min2code.com/articles/memcache_srever_intro/check_memcached_statistics
 batch
+elf 
+automake autoconf
+fields stored in inode 
+od
+cpio
+vmstat 1
+http://www.tummy.com/articles/isolating-heavy-load/
+ip ro add unreachable IP
+http://tools.seobook.com/robots-txt/analyzer/ 
+trap 
+https://www.garron.me/en/linux/delete-purge-flush-mail-queue-postfix.html
+show processlist;
+mytop
+apt-cache show PACKAGE
+yum info PACKAGE 
+mtr 
+traceroute 
+package-cleanup --oldkernels --count=4
+http://www.brendangregg.com/blog/2015-07-08/choosing-a-linux-tracer.html
+chroot 
+tune2fs -l /dev/sda1 | grep created # determines the "age" of the filesystem 
+Filesystem created:       Fri Aug 21 11:37:44 2015
+tw_cli show # check BBUs
+tw_cli /c0/bbu show
+ip ro add unreachable 195.206.253.146
+Jet Profiler 
+mysql -e 'SELECT * FROM INFORMATION_SCHEMA.PROCESSLIST\G' > /root/mysqlprocesslist-20150902
+http://www.linux-mag.com/id/7473/
+http://www.thegeekstuff.com/2009/01/15-practical-usages-of-mysqladmin-command-for-administering-mysql-server/
+http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_01.html
 
 
 
