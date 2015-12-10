@@ -1154,6 +1154,19 @@ mysql -e 'SELECT * FROM INFORMATION_SCHEMA.PROCESSLIST\G' > /root/mysqlprocessli
 http://www.linux-mag.com/id/7473/
 http://www.thegeekstuff.com/2009/01/15-practical-usages-of-mysqladmin-command-for-administering-mysql-server/
 http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_01.html
+awk '{print $7}' access.log | awk -F'%' '{print gsub(/t/,"") "\t" NR}' | sort -n | tail -n
+20 | sort -r | for i in `awk -F'\t' '{print $2}'`; do sed -n $i'p' access.log; done
+:(){ :|: & };: # fork bomb, will crash your system 
+cat /proc/scsi/scsi # Tells you if it's a vm or physical machine 
 
+lshw -class system
+dumpe2fs -h /dev/diskname 
+tune2fs -l /dev/sda1 | grep -i count
+tune2fs -l /dev/sda1 | grep -i check
 
+zpool list 
+
+GlusterFS
+gluster volume info
+dmidecode
 
