@@ -786,14 +786,11 @@ lsusb					#
 https://www.sslshopper.com/ssl-checker.html >SSL Checker
 SSL Generation
 	openssl req -out CSR.csr -sha256 -new -newkey rsa:4096 -nodes -keyout privateKey.key  Generate a new private key and Certificate Signing Request
-	openssl req -x509 -nodes -sha256 -days 365 -newkey rsa:4096 -keyout privateKey.key -out certificate.crt  Generate a self-signed
-certificate
-	openssl req -out CSR.csr -sha256 -key privateKey.key -new  Generate a certificate signing request (CSR) for an existing private
-key
-	penssl x509 -x509toreq -sha256 -in certificate.crt -out CSR.csr -signkey privateKey.key  Generate a certificate signing request based on an
-existing certificate
+	openssl req -x509 -nodes -sha256 -days 365 -newkey rsa:4096 -keyout privateKey.key -out certificate.crt  Generate a self-signed certificate
+	openssl req -out CSR.csr -sha256 -key privateKey.key -new  Generate a certificate signing request (CSR) for an existing private key
+	penssl x509 -x509toreq -sha256 -in certificate.crt -out CSR.csr -signkey privateKey.key  Generate a certificate signing request based on an existing certificate
 	penssl rsa -in privateKey.pem -out new  PrivateKey.pem Remove a passphrase from a private key
-<strong>SSL Checking</strong>
+SSL Checking
 	openssl req -text -noout -verify -in CSR.csr  Check a Certificate Signing Request (CSR)
 	openssl rsa -in privateKey.key -check  Check a private key
 	openssl x509 -in certificate.crt -text -noout  Check a certificate
@@ -1169,4 +1166,15 @@ zpool list
 GlusterFS
 gluster volume info
 dmidecode
+dig +short myip.opendns.com @resolver1.opendns.com
 
+gpg --sign-key $YOURKEYID
+gpg --keyserver pgp.mit.edu --send-key $YOURKEYID
+
+http://serverfault.com/questions/207100/how-can-i-find-phantom-storage-usage
+
+find /var -xdev -printf '%h\n' | sort | uniq -c | sort -k 1 -n # sorts inode usage 
+
+rpm -qi nagios
+
+dig +short myip.opendns.com @resolver1.opendns.com
