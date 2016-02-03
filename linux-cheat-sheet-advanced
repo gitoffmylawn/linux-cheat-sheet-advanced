@@ -129,7 +129,6 @@ cat /proc/cpuinfo			# cpu informatio
 cat /etc/*-release  			# distribution and version	
 lsbecho hi | wall_release -a				# distribution and version
 cat /etc/issue				# distribution and version
-man command				# show the manual for command
 free					# show memory and swap usage
 whereis app				# show possible locations of app
 which app				# show which app will be run by default
@@ -267,7 +266,8 @@ SGIG					#
 Sticky Bits				# 
 UMASK					# 
 http://www.tldp.org/LDP/lame/LAME/linux-admin-made-easy/shadow-file-formats.html
-
+vipw
+vigr
 
 
 ### Process Management ###
@@ -1178,3 +1178,13 @@ find /var -xdev -printf '%h\n' | sort | uniq -c | sort -k 1 -n # sorts inode usa
 rpm -qi nagios
 
 dig +short myip.opendns.com @resolver1.opendns.com
+
+lsof -s | awk '$5 == "REG"' | sort -n -r -k 7,7 | head -n 50 # phantom disk usage 
+
+select user,host from mysql.user;
+SELECT * FROM information_schema.user_privileges where GRANTEE like '%user%';
+SELECT table_schema "Data Base Name",
+sum( data_length + index_length ) / 1024 / 1024 "Data Base Size in MB",
+sum( data_free )/ 1024 / 1024 "Free Space in MB"
+FROM information_schema.TABLES
+GROUP BY table_schema;
